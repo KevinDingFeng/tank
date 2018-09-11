@@ -15,6 +15,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shenghesun.tank.base.entity.BaseEntity;
 import com.shenghesun.tank.coach.entity.Coach;
 import com.shenghesun.tank.service.entity.Product;
@@ -37,7 +38,8 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 public class PlayOrder extends BaseEntity {
 	
-	@JsonIgnore
+//	@JsonIgnore
+	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 	@ManyToOne(cascade = { CascadeType.REFRESH }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "wx_user_id", nullable = false)
 	private WxUserInfo wxUser;
@@ -48,7 +50,8 @@ public class PlayOrder extends BaseEntity {
 	@Column(name = "wx_user_id", insertable = false, updatable = false, nullable = false)
 	private Long wxUserId;
 
-	@JsonIgnore
+//	@JsonIgnore
+	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 	@ManyToOne(cascade = { CascadeType.REFRESH }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "coach_id", nullable = false)
 	private Coach coach;
@@ -59,7 +62,8 @@ public class PlayOrder extends BaseEntity {
 	@Column(name = "coach_id", insertable = false, updatable = false, nullable = false)
 	private Long coachId;
 	
-	@JsonIgnore
+//	@JsonIgnore
+	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 	@ManyToOne(cascade = { CascadeType.REFRESH }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "executor_id", nullable = false)
 	private Coach executor;
@@ -128,6 +132,11 @@ public class PlayOrder extends BaseEntity {
 	 * 	等于0时为原生订单，值最大的为最新的订单修改结果
 	 */
 	private int seq = 0;
+	/**
+	 * 是否为 主 订单 信息
+	 * 	同一个 no 下，只有一个 playOrder 记录是 主订单，其余都是副订单。主订单用于列表展示和所有不需要展示修改订单历史记录的展示
+	 */
+	private boolean main = true;
 	
 	/**
 	 * 总金额
@@ -159,7 +168,7 @@ public class PlayOrder extends BaseEntity {
 	/**
 	 * 预留联系方式
 	 */
-	private String cellphoneNo;
+	private String cellphone;
 
 	/**
 	 * 状态

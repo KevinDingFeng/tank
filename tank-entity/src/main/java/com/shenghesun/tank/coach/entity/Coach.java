@@ -14,9 +14,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shenghesun.tank.base.entity.BaseEntity;
 import com.shenghesun.tank.service.entity.Course;
-import com.shenghesun.tank.service.entity.Product;
 import com.shenghesun.tank.system.entity.SysUser;
 
 import lombok.Data;
@@ -33,6 +33,7 @@ import lombok.ToString;
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class Coach extends BaseEntity {
 
 	@JsonIgnore
@@ -57,31 +58,38 @@ public class Coach extends BaseEntity {
 	private String name;
 	/**
 	 * 简介
+	 * 	一句话
 	 */
 	@Column(nullable = true, length = 255)
 	private String introduction;
+	/**
+	 * 描述
+	 * 	一段话
+	 */
+	@Column(nullable = true, length = 1024)
+	private String description;
 
 	private boolean active = true;
 	private boolean removed = false;
 	/**
 	 * 大神的介绍图片
 	 */
-	@OneToMany(cascade = { CascadeType.REFRESH }, fetch = FetchType.EAGER, mappedBy = "coach")
+	@OneToMany(cascade = { CascadeType.REFRESH }, fetch = FetchType.LAZY, mappedBy = "coach")
 	private List<CoachImage> imgs;
 	
 	/**
 	 * 大神所拥有的课程
 	 */
 	@JsonIgnore
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "coaches")
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY, mappedBy = "coaches")
 	private Set<Course> courses;
 	
-	/**
-	 * 大神提供的服务
-	 */
-	@JsonIgnore
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "coaches")
-	private Set<Product> products;
+//	/**
+//	 * 大神提供的服务 有点儿多余 通过报价获取大神支持的服务
+//	 */
+//	@JsonIgnore
+//	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY, mappedBy = "coaches")
+//	private Set<Product> products;
 }
 //暂时不用
 //private int orderCounts;

@@ -7,7 +7,7 @@ package com.shenghesun.tank.service.entity.model;
  */
 
 public enum DurationType {
-	Hour("时"),Day("天"),Week("周"),Month("月");
+	Hour("时"),Day("天"),Week("周"),Month("月"),NoLimitation("不限");
 	
 	private String text;
 	

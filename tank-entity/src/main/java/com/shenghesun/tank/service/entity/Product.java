@@ -1,7 +1,6 @@
 package com.shenghesun.tank.service.entity;
 
 import java.sql.Timestamp;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,15 +9,12 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shenghesun.tank.base.entity.BaseEntity;
-import com.shenghesun.tank.coach.entity.Coach;
 import com.shenghesun.tank.service.entity.model.DurationType;
 
 import lombok.Data;
@@ -66,13 +62,13 @@ public class Product extends BaseEntity {
 	@Column(nullable=true)
 	private Timestamp endTime;
 	
-	/**
-	 * 服务和可执行大神的关联关系
-	 */
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "product_coach_rel", inverseJoinColumns = { @JoinColumn(name = "product_id") }, joinColumns = {
-			@JoinColumn(name = "coach_id") })
-	private Set<Coach> coaches;
+//	/**
+//	 * 服务和可执行大神的关联关系 ；通过报价信息获取大神信息
+//	 */
+//	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+//	@JoinTable(name = "product_coach_rel", inverseJoinColumns = { @JoinColumn(name = "product_id") }, joinColumns = {
+//			@JoinColumn(name = "coach_id") })
+//	private Set<Coach> coaches;
 	
 	/**
 	 * 是否为活动，默认false

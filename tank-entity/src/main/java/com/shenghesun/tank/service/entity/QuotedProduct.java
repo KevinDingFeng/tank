@@ -32,7 +32,7 @@ import lombok.ToString;
 public class QuotedProduct extends BaseEntity {
 	
 	@JsonIgnore
-	@ManyToOne(cascade = { CascadeType.REFRESH }, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = { CascadeType.REFRESH }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "coach_id", nullable = false)
 	private Coach coach;
 	
@@ -44,7 +44,7 @@ public class QuotedProduct extends BaseEntity {
 	
 	@JsonIgnore
 //	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
-	@ManyToOne(cascade = { CascadeType.REFRESH }, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = { CascadeType.REFRESH }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
 
@@ -64,6 +64,11 @@ public class QuotedProduct extends BaseEntity {
 	 * 	小数，乘以 100% 为百分比；针对单价
 	 */
 	private BigDecimal surchargeRatio;
+	/**
+	 * 附加费
+	 * 	具体值，和 surchargeRatio 二选一
+	 */
+	private BigDecimal surcharge;
 	/**	
 	 * 单价
 	 */
