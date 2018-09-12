@@ -121,5 +121,6 @@
 		<module>tank-dao</module>
 		<module>tank-entity</module>
 		<module>tank-entity-base</module>
+		<module>tank-wxpay-demo</module>
 	</modules>
 </project>
