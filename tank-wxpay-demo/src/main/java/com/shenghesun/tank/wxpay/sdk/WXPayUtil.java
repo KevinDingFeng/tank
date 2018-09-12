@@ -20,8 +20,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -63,7 +63,7 @@ public class WXPayUtil {
             }
             return data;
         } catch (Exception ex) {
-            WXPayUtil.getLogger().warn("Invalid XML, can not convert to map. Error message: {}. XML content: {}", ex.getMessage(), strXML);
+//            WXPayUtil.getLogger().warn("Invalid XML, can not convert to map. Error message: {}. XML content: {}", ex.getMessage(), strXML);
             throw ex;
         }
 
@@ -277,10 +277,10 @@ public class WXPayUtil {
      * 日志
      * @return
      */
-    public static Logger getLogger() {
-        Logger logger = LoggerFactory.getLogger("wxpay java sdk");
-        return logger;
-    }
+//    public static Logger getLogger() {
+//        Logger logger = LoggerFactory.getLogger("wxpay java sdk");
+//        return logger;
+//    }
 
     /**
      * 获取当前时间戳，单位秒

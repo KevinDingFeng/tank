@@ -143,7 +143,7 @@ public class WXPayRequest {
             exception = ex;
             firstHasDnsErr = true;
             elapsedTimeMillis = WXPayUtil.getCurrentTimestampMs()-startTimestampMs;
-            WXPayUtil.getLogger().warn("UnknownHostException for domainInfo {}", domainInfo);
+//            WXPayUtil.getLogger().warn("UnknownHostException for domainInfo {}", domainInfo);
             WXPayReport.getInstance(config).report(
                     uuid,
                     elapsedTimeMillis,
@@ -160,7 +160,7 @@ public class WXPayRequest {
             exception = ex;
             firstHasConnectTimeout = true;
             elapsedTimeMillis = WXPayUtil.getCurrentTimestampMs()-startTimestampMs;
-            WXPayUtil.getLogger().warn("connect timeout happened for domainInfo {}", domainInfo);
+//            WXPayUtil.getLogger().warn("connect timeout happened for domainInfo {}", domainInfo);
             WXPayReport.getInstance(config).report(
                     uuid,
                     elapsedTimeMillis,
@@ -177,7 +177,7 @@ public class WXPayRequest {
             exception = ex;
             firstHasReadTimeout = true;
             elapsedTimeMillis = WXPayUtil.getCurrentTimestampMs()-startTimestampMs;
-            WXPayUtil.getLogger().warn("timeout happened for domainInfo {}", domainInfo);
+//            WXPayUtil.getLogger().warn("timeout happened for domainInfo {}", domainInfo);
             WXPayReport.getInstance(config).report(
                     uuid,
                     elapsedTimeMillis,

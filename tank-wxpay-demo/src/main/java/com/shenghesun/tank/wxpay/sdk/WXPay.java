@@ -290,7 +290,7 @@ public class WXPay {
                                     break;
                                 }
                                 else {
-                                    WXPayUtil.getLogger().info("microPayWithPos: try micropay again");
+//                                    WXPayUtil.getLogger().info("microPayWithPos: try micropay again");
                                     if (remainingTimeMs > 5*1000) {
                                         Thread.sleep(5*1000);
                                     }

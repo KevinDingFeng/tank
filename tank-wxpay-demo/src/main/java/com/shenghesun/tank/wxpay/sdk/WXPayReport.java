@@ -133,7 +133,7 @@ public class WXPayReport {
         });
 
         if (config.shouldAutoReport()) {
-            WXPayUtil.getLogger().info("report worker num: {}", config.getReportWorkerNum());
+//            WXPayUtil.getLogger().info("report worker num: {}", config.getReportWorkerNum());
             for (int i = 0; i < config.getReportWorkerNum(); ++i) {
                 executorService.execute(new Runnable() {
                     public void run() {
@@ -142,15 +142,15 @@ public class WXPayReport {
                             try {
                                 StringBuffer sb = new StringBuffer();
                                 String firstMsg = reportMsgQueue.take();
-                                WXPayUtil.getLogger().info("get first report msg: {}", firstMsg);
+//                                WXPayUtil.getLogger().info("get first report msg: {}", firstMsg);
                                 String msg = null;
                                 sb.append(firstMsg); //会阻塞至有消息
                                 int remainNum = config.getReportBatchSize() - 1;
                                 for (int j=0; j<remainNum; ++j) {
-                                    WXPayUtil.getLogger().info("try get remain report msg");
+//                                    WXPayUtil.getLogger().info("try get remain report msg");
                                     // msg = reportMsgQueue.poll();  // 不阻塞了
                                     msg = reportMsgQueue.take();
-                                    WXPayUtil.getLogger().info("get remain report msg: {}", msg);
+//                                    WXPayUtil.getLogger().info("get remain report msg: {}", msg);
                                     if (msg == null) {
                                         break;
                                     }
@@ -163,7 +163,7 @@ public class WXPayReport {
                                 WXPayReport.httpRequest(sb.toString(), DEFAULT_CONNECT_TIMEOUT_MS, DEFAULT_READ_TIMEOUT_MS);
                             }
                             catch (Exception ex) {
-                                WXPayUtil.getLogger().warn("report fail. reason: {}", ex.getMessage());
+//                                WXPayUtil.getLogger().warn("report fail. reason: {}", ex.getMessage());
                             }
                         }
                     }
@@ -198,7 +198,7 @@ public class WXPayReport {
                 firstDomain, primaryDomain, firstConnectTimeoutMillis, firstReadTimeoutMillis,
                 firstHasDnsError, firstHasConnectTimeout, firstHasReadTimeout);
         String data = reportInfo.toLineString(config.getKey());
-        WXPayUtil.getLogger().info("report {}", data);
+//        WXPayUtil.getLogger().info("report {}", data);
         if (data != null) {
             reportMsgQueue.offer(data);
         }
@@ -218,7 +218,7 @@ public class WXPayReport {
                     httpRequest(data, DEFAULT_CONNECT_TIMEOUT_MS, DEFAULT_READ_TIMEOUT_MS);
                 }
                 catch (Exception ex) {
-                    WXPayUtil.getLogger().warn("report fail. reason: {}", ex.getMessage());
+//                    WXPayUtil.getLogger().warn("report fail. reason: {}", ex.getMessage());
                 }
             }
         }).start();
