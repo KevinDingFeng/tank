@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Index</title>
+</head>
+<body>
+	
+
+	<input type="button" value="提交，后台生成订单，发送统一下单请求，返回预支付id" onclick="getPrepayId()"/>
+	
+	
+	<script src="jquery-2.1.4.min.js"></script>
+	<script>
+
+public getPrepayId(){
+	$.ajax({
+	    type: "GET",
+	    url: "http://localhost:2222/auth",
+	    data: {"name": "123", "password" : "123"},
+	    success: function(data){
+	    	console.log(data);	
+	    }
+	});
+}
+	
+	</script>	
+
+
+</body>
+</html>
+

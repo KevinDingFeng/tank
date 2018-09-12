@@ -5,9 +5,10 @@
 	<title>Index</title>
 </head>
 <body>
+	<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf92bc6eda94de282&redirect_uri=http%3a%2f%2fwxpay.dazonghetong.com%2fauth%2fcallback&response_type=code&scope=snsapi_userinfo&state=a123456#wechat_redirect">点击我授权</a>
+	<br />
 
-	<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf92bc6eda94de282&redirect_uri=http%3a%2f%2fwxpay.dazonghetong.com%2fauth%2fcallback&response_type=code&scope=snsapi_userinfo&state=a123456#wechat_redirect ">去往授权</a>
-
+	<button onclick="getToken()">点击我授权</button>
 	<br />
 
 	<input type="button" value="提交，后台生成订单，发送统一下单请求，返回预支付id" onclick="getPrepayId()"/>
@@ -15,12 +16,26 @@
 	
 	<script src="jquery-2.1.4.min.js"></script>
 	<script>
-public getPrepayId(){
+function getToken(){
+	
 	$.ajax({
 	    type: "GET",
-	    url: "http://localhost:2222/auth",
-	    data: {"name": "123", "password" : "123"},
+	    url: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf92bc6eda94de282&redirect_uri=http%3a%2f%2fwxpay.dazonghetong.com%2fauth%2fcallback&response_type=code&scope=snsapi_userinfo&state=a123456#wechat_redirect ",
+	    data: {},
+	    success: function(res){
+	    	alert(res);
+	    	console.log(res);
+	    	console.log(res.data);
+	    }
+	});
+}
+function getPrepayId(){
+	$.ajax({
+	    type: "GET",
+	    url: "https://wxpay.dazonghetong.com/order/unified",
+	    data: {},
 	    success: function(data){
+	    	alert(data);
 	    	console.log(data);	
 	    }
 	});

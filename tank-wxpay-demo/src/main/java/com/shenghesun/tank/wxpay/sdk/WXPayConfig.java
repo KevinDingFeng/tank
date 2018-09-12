@@ -11,7 +11,7 @@ public abstract class WXPayConfig {
      *
      * @return App ID
      */
-    abstract String getAppID();
+    public abstract String getAppID();
 
 
     /**
@@ -19,7 +19,7 @@ public abstract class WXPayConfig {
      *
      * @return Mch ID
      */
-    abstract String getMchID();
+    public abstract String getMchID();
 
 
     /**
@@ -27,7 +27,7 @@ public abstract class WXPayConfig {
      *
      * @return API密钥
      */
-    abstract String getKey();
+    public abstract String getKey();
 
 
     /**
@@ -35,7 +35,7 @@ public abstract class WXPayConfig {
      *
      * @return 商户证书内容
      */
-    abstract InputStream getCertStream();
+    public abstract InputStream getCertStream();
 
     /**
      * HTTP(S) 连接超时时间，单位毫秒
@@ -59,7 +59,7 @@ public abstract class WXPayConfig {
      * 获取WXPayDomain, 用于多域名容灾自动切换
      * @return
      */
-    abstract IWXPayDomain getWXPayDomain();
+    public abstract IWXPayDomain getWXPayDomain();
 
     /**
      * 是否自动上报。

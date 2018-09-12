@@ -29,21 +29,21 @@ public class HttpFactory {
 		
 		return httpget;
 	}
-	private HttpPost getHttpPost(String httpUrlAndParam, HttpEntity entity){
-		HttpPost httpPost = new HttpPost(
-				httpUrlAndParam);
-//		if(entity != null){
-//			httpPost.setEntity(entity); 
+//	private HttpPost getHttpPost(String httpUrlAndParam, HttpEntity entity){
+//		HttpPost httpPost = new HttpPost(
+//				httpUrlAndParam);
+////		if(entity != null){
+////			httpPost.setEntity(entity); 
+////		}
+//		StringEntity e;
+//		try {
+//			e = new StringEntity("{\"button\":[{\"type\":\"view\",\"name\":\"pureget\",\"url\":\"http://dsp.paiyue.com/\"}]}");
+//			httpPost.setEntity(e); 
+//		} catch (UnsupportedEncodingException e1) {
+//			e1.printStackTrace();
 //		}
-		StringEntity e;
-		try {
-			e = new StringEntity("{\"button\":[{\"type\":\"view\",\"name\":\"pureget\",\"url\":\"http://dsp.paiyue.com/\"}]}");
-			httpPost.setEntity(e); 
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-		return httpPost;
-	}
+//		return httpPost;
+//	}
 	
 	public HttpResponse getHttpResponse(String httpUrlAndParam) {
 		try {
@@ -58,16 +58,16 @@ public class HttpFactory {
 		}
 	}
 	
-	public HttpResponse getHttpPostResponse(String httpUrlAndParam, HttpEntity entity) {
-		try {
-			return this.getHttpClient().execute(
-					this.getHttpPost(httpUrlAndParam, entity));
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-			return null;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+//	public HttpResponse getHttpPostResponse(String httpUrlAndParam, HttpEntity entity) {
+//		try {
+//			return this.getHttpClient().execute(
+//					this.getHttpPost(httpUrlAndParam, entity));
+//		} catch (ClientProtocolException e) {
+//			e.printStackTrace();
+//			return null;
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//	}
 }

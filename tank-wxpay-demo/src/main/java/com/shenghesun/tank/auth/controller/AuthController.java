@@ -59,7 +59,11 @@ public class AuthController {
 			// sysUser.getPassword()));
 //			WxUserInfo wxUserInfo = wxUserInfoService.getOne(userInfoJson);
 //			wxUserInfo = wxUserInfoService.save(wxUserInfo);
-			return JsonUtils.getSuccessJSONObject(openId);
+			JSONObject json = new JSONObject();
+			json.put("openId", openId);
+			json.put("token", token);
+			json.put("state", state);
+			return JsonUtils.getSuccessJSONObject(json);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return JsonUtils.getFailJSONObject("后台获取用户信息发生错误");
