@@ -5,8 +5,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.validation.BindingResult;
@@ -25,13 +29,13 @@ import com.shenghesun.tank.coach.entity.Coach;
 import com.shenghesun.tank.order.PlayOrderService;
 import com.shenghesun.tank.order.entity.PlayOrder;
 import com.shenghesun.tank.order.entity.PlayOrder.OperationType;
-import com.shenghesun.tank.service.ProductService;
 import com.shenghesun.tank.service.ProductTypeService;
 import com.shenghesun.tank.service.QuotedProductService;
 import com.shenghesun.tank.service.entity.Product;
 import com.shenghesun.tank.service.entity.ProductType;
 import com.shenghesun.tank.service.entity.QuotedProduct;
 import com.shenghesun.tank.utils.JsonUtils;
+import com.shenghesun.tank.utils.RandomUtil;
 import com.shenghesun.tank.wx.WxUserInfoService;
 import com.shenghesun.tank.wx.entity.WxUserInfo;
 
@@ -49,8 +53,6 @@ public class PlayOrderController {
 	private ProductTypeService productTypeService;
 	@Autowired
 	private WxUserInfoService wxUserService;
-	@Autowired
-	private ProductService productService;
 
 	/**
 	 * 设置允许自动绑定的属性名称
@@ -124,20 +126,11 @@ public class PlayOrderController {
 		return JsonUtils.getSuccessJSONObject(json);
 	}
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public JSONObject save(@Validated @ModelAttribute("entity") PlayOrder playOrder, BindingResult result, 
-//			@RequestParam(value = "coachId") Long coachId,
-//			@RequestParam(value = "productId") Long productId
-			@RequestParam(value = "quotedProductId") Long quotedProductId 
-			) {
-		
-		if(result.hasErrors()) {
-			return JsonUtils.getFailJSONObject("提交信息有误");
-		}
-		
+	private void initPlayOrder(PlayOrder playOrder, Long qpId) {
+
 		WxUserInfo wxUser = wxUserService.findById(1L);
 		
-		QuotedProduct qp = quotedProductService.findById(quotedProductId);
+		QuotedProduct qp = quotedProductService.findById(qpId);
 		Coach coach = qp.getCoach();
 		Product product = qp.getProduct();
 		
@@ -158,17 +151,36 @@ public class PlayOrderController {
 
 		playOrder.setOperationType(OperationType.Create);
 		
-		
-		
-		playOrder.setNo(playOrderService.getNO());
-		playOrder.setViceNo(playOrderService.getViceNo());
-		
+		String no = this.getNo();
+		playOrder.setNo(no);
+		playOrder.setViceNo(no + 1);
 		
 		playOrder.setTotalFee(quotedProductService.getTotalFee(playOrder.getDuration(), qp.getPrice(), 
 				qp.getProduct().getDuration()));
-		playOrder = playOrderService.save(playOrder);
+	}
+	private String getNo() {
+		String no = System.currentTimeMillis() + RandomUtil.randomString(3);
+		return no;
+	}
+	/**
+	 * 生成订单，调用微信统一下单接口，生成预支付 id 返回到前端
+	 * @param playOrder
+	 * @param result
+	 * @param quotedProductId
+	 * @return
+	 */
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public JSONObject save(@Validated @ModelAttribute("entity") PlayOrder playOrder, BindingResult result, 
+//			@RequestParam(value = "coachId") Long coachId,
+//			@RequestParam(value = "productId") Long productId
+			@RequestParam(value = "quotedProductId") Long quotedProductId 
+			) {
 		
-
+		if(result.hasErrors()) {
+			return JsonUtils.getFailJSONObject("提交信息有误");
+		}
+		this.initPlayOrder(playOrder, quotedProductId);
+		playOrder = playOrderService.save(playOrder);
 		
 		//调用统一下单流程 TODO
 
@@ -176,5 +188,32 @@ public class PlayOrderController {
 		json.put("playOrder", playOrder);
 		return JsonUtils.getSuccessJSONObject(json);
 	}
-			
+	
+	//获取订单列表，根据普通用户id
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public JSONObject list(HttpServletRequest request) {
+		Long wxUserId = 1L;
+		Pageable pageable = this.getPageable();
+		Page<PlayOrder> page = playOrderService.findByWxUserId(wxUserId, pageable);
+		JSONObject json = new JSONObject();
+		json.put("page", page);
+		return JsonUtils.getSuccessJSONObject(json);
+	}
+	private Pageable getPageable() {
+		Sort sort = new Sort(Direction.DESC, "creation");
+		Pageable pageable = new PageRequest(0, 20, sort);
+		return pageable;
+	}
+	
+	//获取订单详细信息，根据订单编号和普通用户id
+	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
+	public JSONObject info(HttpServletRequest request,
+			@PathParam(value = "id") Long id) {
+		//TODO 校验 资源权限
+		PlayOrder order = playOrderService.findById(id);
+		JSONObject json = new JSONObject();
+		json.put("playOrder", order);
+		return JsonUtils.getSuccessJSONObject(json);
+	}
+
 }

@@ -22,17 +22,11 @@ public class PlayOrderService {
 		return playOrderDao.findOne(id);
 	}
 
-	public String getViceNo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getNO() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public PlayOrder save(PlayOrder entity) {
 		return playOrderDao.save(entity);
+	}
+
+	public Page<PlayOrder> findByWxUserId(Long wxUserId, Pageable pageable) {
+		return playOrderDao.findByWxUserId(wxUserId, pageable);
 	}
 }
