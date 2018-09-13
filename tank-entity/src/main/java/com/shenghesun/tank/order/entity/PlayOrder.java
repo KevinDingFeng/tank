@@ -142,6 +142,10 @@ public class PlayOrder extends BaseEntity {
 	 * 总金额
 	 */
 	private BigDecimal totalFee;
+	/**
+	 * 服务的时长
+	 */
+	private int duration;
 	
 	/**
 	 * 玩家确认完成时间
@@ -169,6 +173,10 @@ public class PlayOrder extends BaseEntity {
 	 * 预留联系方式
 	 */
 	private String cellphone;
+	/**
+	 * 微信账号
+	 */
+	private String wxAccount;
 
 	/**
 	 * 状态

@@ -21,4 +21,18 @@ public class PlayOrderService {
 	public PlayOrder findById(Long id) {
 		return playOrderDao.findOne(id);
 	}
+
+	public String getViceNo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getNO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public PlayOrder save(PlayOrder entity) {
+		return playOrderDao.save(entity);
+	}
 }

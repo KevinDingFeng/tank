@@ -86,4 +86,8 @@ public class WxUserInfoService {
 		return wxUserInfoDao.save(wxUserInfo);
 	}
 
+	public WxUserInfo findById(long id) {
+		return wxUserInfoDao.findOne(id);
+	}
+
 }

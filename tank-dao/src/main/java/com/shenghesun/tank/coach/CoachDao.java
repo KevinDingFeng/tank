@@ -9,4 +9,6 @@ import com.shenghesun.tank.coach.entity.Coach;
 @Repository
 public interface CoachDao extends JpaRepository<Coach, Long>, JpaSpecificationExecutor<Coach> {
 
+	Coach findBySpecial(boolean bool);
+
 }

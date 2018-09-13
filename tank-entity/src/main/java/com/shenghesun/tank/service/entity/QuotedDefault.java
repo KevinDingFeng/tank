@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shenghesun.tank.base.entity.BaseEntity;
 import com.shenghesun.tank.coach.entity.Coach;
 import com.shenghesun.tank.service.entity.model.DurationType;
@@ -34,7 +34,8 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 public class QuotedDefault extends BaseEntity {
 	
-	@JsonIgnore
+//	@JsonIgnore
+	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 	@OneToOne(cascade = { CascadeType.REFRESH }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "coach_id", nullable = false)
 	private Coach coach;
@@ -45,8 +46,8 @@ public class QuotedDefault extends BaseEntity {
 	@Column(name = "coach_id", insertable = false, updatable = false, nullable = false)
 	private Long coachId;
 	
-	@JsonIgnore
-//	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
+//	@JsonIgnore
+	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 	@ManyToOne(cascade = { CascadeType.REFRESH }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_type_id", nullable = false)
 	private ProductType productType;

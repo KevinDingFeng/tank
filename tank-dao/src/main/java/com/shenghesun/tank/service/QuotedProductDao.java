@@ -13,4 +13,10 @@ public interface QuotedProductDao extends JpaRepository<QuotedProduct, Long>, Jp
 
 	List<QuotedProduct> findByProductId(Long productId);
 
+	List<QuotedProduct> findByCoachId(Long coachId);
+
+	QuotedProduct findByCoachIdAndProductProductTypeCode(Long coachId, Integer code);
+
+	List<QuotedProduct> findByCoachIdAndProductProductTypeCodeIn(Long coachId, List<Integer> codes);
+
 }

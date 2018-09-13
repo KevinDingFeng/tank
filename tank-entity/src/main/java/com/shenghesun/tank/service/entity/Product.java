@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shenghesun.tank.base.entity.BaseEntity;
 import com.shenghesun.tank.service.entity.model.DurationType;
 
@@ -32,9 +32,9 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 public class Product extends BaseEntity {
 	
-	@JsonIgnore
-//	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
-	@ManyToOne(cascade = { CascadeType.REFRESH }, fetch = FetchType.LAZY)
+//	@JsonIgnore
+	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
+	@ManyToOne(cascade = { CascadeType.REFRESH }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_type_id", nullable = false)
 	private ProductType productType;
 

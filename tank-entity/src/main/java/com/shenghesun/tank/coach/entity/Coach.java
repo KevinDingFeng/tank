@@ -68,12 +68,23 @@ public class Coach extends BaseEntity {
 	 */
 	@Column(nullable = true, length = 1024)
 	private String description;
+	
+	/**
+	 * 大神有显示顺序，所以提供一个字段默认排序使用
+	 */
+	private int seqNum = 0;
 
+	/**
+	 * 是否为神秘大神，特殊大神
+	 */
+	private boolean special = false;
+	
 	private boolean active = true;
 	private boolean removed = false;
 	/**
 	 * 大神的介绍图片
 	 */
+	@JsonIgnore
 	@OneToMany(cascade = { CascadeType.REFRESH }, fetch = FetchType.LAZY, mappedBy = "coach")
 	private List<CoachImage> imgs;
 	
