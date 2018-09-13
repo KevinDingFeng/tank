@@ -14,7 +14,7 @@ import com.shenghesun.tank.service.entity.ProductType;
 import com.shenghesun.tank.utils.JsonUtils;
 
 @RestController
-@RequestMapping(value = "/order")
+@RequestMapping(value = "/product_type")
 public class ProductTypeController {
 	
 	@Autowired
