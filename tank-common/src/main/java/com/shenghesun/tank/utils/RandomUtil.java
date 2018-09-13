@@ -59,9 +59,10 @@ public class RandomUtil {
 		return randomNum(6);
 	}
 	
-//	public static void main(String[] args) {
+	public static void main(String[] args) {
 //		for(int i = 0 ; i < 10 ; i ++) {
 //			System.out.println(randomString());
 //		}
-//	}
+		System.out.println(randomString(20));
+	}
 }

@@ -9,4 +9,6 @@ import com.shenghesun.tank.system.entity.SysUser;
 public interface SysUserDao extends JpaRepository<SysUser, Long>, JpaSpecificationExecutor<SysUser> {
 
 	SysUser findByAccount(String account);
+
+	SysUser findByOpenId(String openId);
 }

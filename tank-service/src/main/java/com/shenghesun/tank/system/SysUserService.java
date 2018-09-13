@@ -15,5 +15,16 @@ public class SysUserService {
 		return userDao.findByAccount(account);
 	}
 
+	public SysUser findById(Long id) {
+		return userDao.findOne(id);
+	}
+
+	public SysUser findByOpenId(String openId) {
+		return userDao.findByOpenId(openId);
+	}
+
+	public SysUser save(SysUser entity) {
+		return userDao.save(entity);
+	}
 	
 }
