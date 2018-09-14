@@ -29,7 +29,6 @@ import com.shenghesun.tank.order.PlayOrderService;
 import com.shenghesun.tank.order.entity.PlayOrder;
 import com.shenghesun.tank.service.QuotedProductService;
 import com.shenghesun.tank.service.entity.QuotedProduct;
-import com.shenghesun.tank.utils.JsonUtils;
 
 @Controller
 @RequestMapping(value = "/play_order/assign")
@@ -64,7 +63,7 @@ public class PlayOrderAssignController {
 	}
 	private Pageable getListPageable(Integer pageNum) {
 		Sort sort = new Sort(Direction.DESC, "creation");
-		Pageable pageable = new PageRequest(pageNum, 10, sort);
+		Pageable pageable = new PageRequest(pageNum, 20, sort);
 		return pageable;
 	}
 	private Specification<PlayOrder> getSpecification(String keyword) {

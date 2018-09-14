@@ -59,7 +59,7 @@
           <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-file"></span> 订单管理  <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
           <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
         	<li><a href="/play_order/assign/list"><span class="am-icon-table"></span> 派单</a></li>
-        	<li><a href="javascript:;"><span class="am-icon-table"></span> 接单</a></li>
+        	<li><a href="/play_order/receive/list"><span class="am-icon-table"></span> 接单</a></li>
           </ul>
         </li>
       </ul>

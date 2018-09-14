@@ -109,7 +109,7 @@
           </div>
         </div>
         <div class="am-u-sm-12 am-u-md-3">
-          <form method="post" class="am-form" action="/play_order/assign/list" id="assignOrderForm">
+          <form method="post" class="am-form" action="/play_order/receive/list" id="receiveOrderForm">
           <div class="am-input-group am-input-group-sm">
               <input type="text" class="am-form-field" name="keyword" value="${keyword!}" placeholder="请输入手机号或订单号" />
 	          <span class="am-input-group-btn">
@@ -119,7 +119,7 @@
           </form>
           <script>
           	function doSearch(){
-          		$("#assignOrderForm").submit();
+          		$("#receiveOrderForm").submit();
           	}
           </script>
         </div>
@@ -166,7 +166,7 @@
                 <td>
                   <div class="am-btn-toolbar">
                     <div class="am-btn-group am-btn-group-xs">
-                      <a href="/play_order/assign/form?id=${em.id}" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 派单</a>
+                      <button onclick="exeComplete(${em.id}, ${em.no})" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 执行完成</button>
                     </div>
                   </div>
                 </td>
@@ -184,7 +184,7 @@
 			<@p.pageInfo page=pageInfo.page totalpages=pageInfo.totalPages 
 			rownum=pageInfo.rowNum totalrownums=pageInfo.totalRowNums toURL="/exp_audit/"/>
 			-->
-            <form method="post" class="am-form" action="/play_order/assign/list" id="assignOrderPageForm">
+            <form method="post" class="am-form" action="/play_order/receive/list" id="assignOrderPageForm">
           	<input type="hidden" name="keyword" value="${keyword!}" />
 	        <input type="hidden" id="pageNum" name="pageNum" value="${pageNum!}" />
             <div class="am-cf">
@@ -232,6 +232,25 @@
             function doPages(n){
             	$("#pageNum").val(n);
             	$("#assignOrderPageForm").submit();
+            }
+            function exeComplete(id, no){
+            	if(confirm("确定编号为" + no + "的订单已执行完成？")){
+            		$.ajax({
+					  type: 'POST',
+					  url: "/play_order/receive/exe/" + id,
+					  data: {},
+					  success: function(res){
+					  	console.log(res);
+					  	if(res.code == 200){
+							window.location.reload();
+					  	}else{
+					  		alert(res.data);
+					  	}
+					  }
+					});
+            	}else{
+            		console.log("选择了取消");
+            	}
             }
             </script>
             <hr />
