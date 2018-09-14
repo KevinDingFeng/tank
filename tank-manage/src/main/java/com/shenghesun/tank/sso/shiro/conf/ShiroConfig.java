@@ -50,6 +50,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/logout", "logout");
 		// 配置不会被拦截的链接 顺序判断
 		filterChainDefinitionMap.put("/static/**", "anon");
+		filterChainDefinitionMap.put("/assets/**", "anon");
 		filterChainDefinitionMap.put("/f/**", "anon");
 		filterChainDefinitionMap.put("/login", "anon");
 		filterChainDefinitionMap.put("/logout", "anon");
@@ -58,8 +59,8 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/index.html", "anon");
 		// filterChainDefinitionMap.put("/index", "anon");
 		// filterChainDefinitionMap.put("/auth", "anon");
-//		filterChainDefinitionMap.put("/**", "anon");
-		filterChainDefinitionMap.put("/**", "authc");
+		filterChainDefinitionMap.put("/**", "anon");
+//		filterChainDefinitionMap.put("/**", "authc");
 
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 		shiroFilterFactoryBean.setLoginUrl("/login");

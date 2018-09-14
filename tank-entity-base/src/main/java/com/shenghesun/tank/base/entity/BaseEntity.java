@@ -56,12 +56,12 @@ public class BaseEntity {
 	@Version
 	protected Long version = 0l;
 	
-	@JsonFormat(timezone="GMT+8")
+	@JsonFormat(timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
 	@Column(updatable=false, nullable=false)
 	protected Timestamp creation = new Timestamp(System.currentTimeMillis());
 	
 //	@Index(name="lastModified")
-	@JsonFormat(timezone="GMT+8")
+	@JsonFormat(timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
 	@Column(nullable=false)
 	protected Timestamp lastModified = new Timestamp(System.currentTimeMillis());
 	

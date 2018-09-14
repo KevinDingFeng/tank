@@ -17,12 +17,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSONObject;
 import com.shenghesun.tank.coach.CoachService;
 import com.shenghesun.tank.coach.entity.Coach;
 import com.shenghesun.tank.order.PlayOrderService;
@@ -31,7 +31,7 @@ import com.shenghesun.tank.service.QuotedProductService;
 import com.shenghesun.tank.service.entity.QuotedProduct;
 import com.shenghesun.tank.utils.JsonUtils;
 
-@RestController
+@Controller
 @RequestMapping(value = "/play_order/assign")
 public class PlayOrderAssignController {
 	
@@ -48,23 +48,23 @@ public class PlayOrderAssignController {
 	 * @param keyword
 	 * @return
 	 */
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public JSONObject list(
+	@RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
+	public String list(
 		@RequestParam(value = "pageNum", required = false) Integer pageNum,
-		@RequestParam(value = "keyword", required = false) String keyword) {
+		@RequestParam(value = "keyword", required = false) String keyword, Model model) {
 		//权限校验 TODO 判断当前登录用户，是否拥有 分派 订单的权限
-		
+		pageNum = pageNum == null ? 0 : pageNum;
 		Pageable pageable = this.getListPageable(pageNum);
 		Page<PlayOrder> page = playOrderService.findBySpecification(this.getSpecification(keyword), pageable);
-		
-		JSONObject json = new JSONObject();
-		json.put("page", page);
-		json.put("keyword", keyword);
-		return JsonUtils.getSuccessJSONObject(json);
+
+		model.addAttribute("page", page);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("pageNum", pageNum);
+		return "order_assign/list";
 	}
 	private Pageable getListPageable(Integer pageNum) {
 		Sort sort = new Sort(Direction.DESC, "creation");
-		Pageable pageable = new PageRequest(pageNum == null ? 0 : pageNum, 10, sort);
+		Pageable pageable = new PageRequest(pageNum, 10, sort);
 		return pageable;
 	}
 	private Specification<PlayOrder> getSpecification(String keyword) {
@@ -79,7 +79,7 @@ public class PlayOrderAssignController {
 				root.fetch("product", JoinType.LEFT);
 				
 				list.add(cb.equal(root.get("removed"), false));
-				list.add(cb.equal(root.get("main"), true));
+				list.add(cb.equal(root.get("main"), true));//因为订单实体设计时，加入了操作记录，所以每个订单编号是由多条组成，这里只找出其中最新的一条
 				
 				if (StringUtils.isNotBlank(keyword)) {
 					String t = "%" + keyword.trim() + "%";
@@ -103,8 +103,8 @@ public class PlayOrderAssignController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/coaches", method = RequestMethod.GET)
-	public JSONObject coaches(@RequestParam(value = "id") Long id) {
+	@RequestMapping(value = "/form", method = RequestMethod.GET)
+	public String form(@RequestParam(value = "id") Long id, Model model) {
 		//权限校验 TODO 判断当前登录用户，是否拥有 分派 订单的权限
 		PlayOrder playOrder = playOrderService.findById(id);
 		List<QuotedProduct> qpList = quotedProductService.findByProductId(playOrder.getProductId());
@@ -115,11 +115,26 @@ public class PlayOrderAssignController {
 		//考虑到 not in 关键词在 数据库中的执行效率不高，这里使用第二种方式，直接查出所有可用的coach信息，然后使用代码过滤掉 coaches中的 ids
 		List<Coach> all = coachService.findAll();
 		List<Coach> spareCoach = this.getSpareCoach(all, coaches);
-		JSONObject json = new JSONObject();
-		json.put("coaches", coaches);
-		json.put("spareCoach", spareCoach);
-		return JsonUtils.getSuccessJSONObject(json);
+		
+		model.addAttribute("coaches", coaches);
+		model.addAttribute("spareCoach", spareCoach);
+		
+		model.addAttribute("entity", playOrder);
+		return "order_assign/form";
 	}
+	
+	@RequestMapping(value = "/form", method = RequestMethod.POST)
+	public String form(@RequestParam(value = "id") Long id, 
+			@RequestParam(value = "coach") Long executorId, Model model) {
+		//权限校验 TODO 判断当前登录用户，是否拥有 分派 订单的权限
+		PlayOrder playOrder = playOrderService.findById(id);
+		playOrder.setExecutor(coachService.findById(executorId));
+		playOrder.setExecutorId(executorId);
+		playOrderService.save(playOrder);
+		return "redirect:/play_order/assign/list";
+	}
+	
+	
 	private List<Coach> getCoaches(List<QuotedProduct> qpList) {
 		if(qpList != null && qpList.size() > 0) {
 			List<Coach> list = new ArrayList<>();

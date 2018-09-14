@@ -94,9 +94,12 @@ public class AuthController {
 //			SecurityUtils.getSubject().login(new UsernamePasswordToken(sysUser.getAccount(), sysUser.getPassword()));
 			WxUserInfo wxUserInfo = wxUserInfoService.getOne(userInfoJson);
 			wxUserInfo = wxUserInfoService.save(wxUserInfo);
-			JSONObject jsonObject = JsonUtils.getSuccessJSONObject(wxUserInfo);
-			jsonObject.put("userInfo", sysUser);
-			return jsonObject;
+			JSONObject json = new JSONObject();
+			json.put("wxUser", wxUserInfo);
+			return JsonUtils.getSuccessJSONObject(json);
+//			JSONObject jsonObject = JsonUtils.getSuccessJSONObject(wxUserInfo);
+//			jsonObject.put("userInfo", sysUser);
+//			return jsonObject;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return JsonUtils.getFailJSONObject("后台获取用户信息发生错误");

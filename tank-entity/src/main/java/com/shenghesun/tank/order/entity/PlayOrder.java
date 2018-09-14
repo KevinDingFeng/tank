@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shenghesun.tank.base.entity.BaseEntity;
 import com.shenghesun.tank.coach.entity.Coach;
@@ -74,8 +73,8 @@ public class PlayOrder extends BaseEntity {
 	@Column(name = "executor_id", insertable = false, updatable = false, nullable = false)
 	private Long executorId;
 	
-	@JsonIgnore
-//	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
+//	@JsonIgnore
+	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 	@ManyToOne(cascade = { CascadeType.REFRESH }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
@@ -98,7 +97,7 @@ public class PlayOrder extends BaseEntity {
 		
 		private String text;
 		
-		public String text() {
+		public String getText() {
 			return this.text;
 		}
 		private OperationType(String text) {
@@ -190,7 +189,7 @@ public class PlayOrder extends BaseEntity {
 		
 		private String text;
 		
-		public String text() {
+		public String getText() {
 			return this.text;
 		}
 		private PlayOrderStatus (String text) {
