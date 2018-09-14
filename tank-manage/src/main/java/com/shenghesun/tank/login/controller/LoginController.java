@@ -95,7 +95,10 @@ public class LoginController {
 			if(subject.isPermitted("order:assign")) {
 				return "redirect:/play_order/assign/list";
 			}
-			return "redirect:/play_order/receive/list";
+			if(subject.isPermitted("order:receive")) {
+				return "redirect:/play_order/receive/list";
+			}
+			return "index";
 		} catch (AuthenticationException e) {
 			e.printStackTrace();
 			System.out.println("用户名密码错误");

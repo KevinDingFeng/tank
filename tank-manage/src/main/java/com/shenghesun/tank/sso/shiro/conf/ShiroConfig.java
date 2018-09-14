@@ -59,15 +59,15 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/index.html", "anon");
 		// filterChainDefinitionMap.put("/index", "anon");
 		// filterChainDefinitionMap.put("/auth", "anon");
-		filterChainDefinitionMap.put("/**", "anon");
-//		filterChainDefinitionMap.put("/**", "authc");
+//		filterChainDefinitionMap.put("/**", "anon");
+		filterChainDefinitionMap.put("/**", "authc");
 
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 		shiroFilterFactoryBean.setLoginUrl("/login");
 
 		Map<String, Filter> filters = new HashMap<>();
 		//添加支持跨域的过滤器
-		filters.put("crossDomainFilter", crossDomainFilter());
+//		filters.put("crossDomainFilter", crossDomainFilter());
 		shiroFilterFactoryBean.setFilters(filters);
 
 		return shiroFilterFactoryBean;

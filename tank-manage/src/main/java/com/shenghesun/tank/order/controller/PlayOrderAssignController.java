@@ -10,6 +10,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -51,7 +54,11 @@ public class PlayOrderAssignController {
 	public String list(
 		@RequestParam(value = "pageNum", required = false) Integer pageNum,
 		@RequestParam(value = "keyword", required = false) String keyword, Model model) {
-		//权限校验 TODO 判断当前登录用户，是否拥有 分派 订单的权限
+		//权限校验  判断当前登录用户，是否拥有 分派 订单的权限
+		Subject subject = SecurityUtils.getSubject();
+		if(!subject.isPermitted("order:assign")) {
+			throw new AuthorizationException("缺少派单权限");
+		}
 		pageNum = pageNum == null ? 0 : pageNum;
 		Pageable pageable = this.getListPageable(pageNum);
 		Page<PlayOrder> page = playOrderService.findBySpecification(this.getSpecification(keyword), pageable);
@@ -104,7 +111,11 @@ public class PlayOrderAssignController {
 	 */
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
 	public String form(@RequestParam(value = "id") Long id, Model model) {
-		//权限校验 TODO 判断当前登录用户，是否拥有 分派 订单的权限
+		//权限校验  判断当前登录用户，是否拥有 分派 订单的权限
+		Subject subject = SecurityUtils.getSubject();
+		if(!subject.isPermitted("order:assign")) {
+			throw new AuthorizationException("缺少派单权限");
+		}
 		PlayOrder playOrder = playOrderService.findById(id);
 		List<QuotedProduct> qpList = quotedProductService.findByProductId(playOrder.getProductId());
 		List<Coach> coaches = this.getCoaches(qpList);
@@ -125,7 +136,11 @@ public class PlayOrderAssignController {
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
 	public String form(@RequestParam(value = "id") Long id, 
 			@RequestParam(value = "coach") Long executorId, Model model) {
-		//权限校验 TODO 判断当前登录用户，是否拥有 分派 订单的权限
+		//权限校验  判断当前登录用户，是否拥有 分派 订单的权限
+		Subject subject = SecurityUtils.getSubject();
+		if(!subject.isPermitted("order:assign")) {
+			throw new AuthorizationException("缺少派单权限");
+		}
 		PlayOrder playOrder = playOrderService.findById(id);
 		playOrder.setExecutor(coachService.findById(executorId));
 		playOrder.setExecutorId(executorId);

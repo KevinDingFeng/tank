@@ -59,13 +59,19 @@
     <div class="am-offcanvas-bar admin-offcanvas-bar">
       <ul class="am-list admin-sidebar-list">
         <li><a href="javascript:;"><span class="am-icon-home"></span> 首页</a></li>
+        <@shiro.hasPermissionOne name=["order:assign","order:receive"]
         <li class="admin-parent">
           <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-file"></span> 订单管理  <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
           <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
+          	<@shiro.hasPermission name="order:assign">
         	<li><a href="/play_order/assign/list"><span class="am-icon-table"></span> 派单</a></li>
+        	</@shiro.hasPermission>
+        	<@shiro.hasPermission name="order:receive">
         	<li><a href="/play_order/receive/list"><span class="am-icon-table"></span> 接单</a></li>
+        	</@shiro.hasPermission>
           </ul>
         </li>
+        </@shiro.hasPermissionOne>
       </ul>
     </div>
   </div>
@@ -164,11 +170,13 @@
                 <td>${em.wxAccount!}</td>
                 <td>${em.status.text}</td>
                 <td>
+                  <#if em.status.name() == "Operation">
                   <div class="am-btn-toolbar">
                     <div class="am-btn-group am-btn-group-xs">
                       <a href="/play_order/assign/form?id=${em.id}" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 派单</a>
                     </div>
                   </div>
+                  </#if>
                 </td>
               </tr>
               </#list>

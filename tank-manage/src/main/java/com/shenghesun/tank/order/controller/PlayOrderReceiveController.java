@@ -10,6 +10,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +32,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.shenghesun.tank.order.PlayOrderService;
 import com.shenghesun.tank.order.entity.PlayOrder;
 import com.shenghesun.tank.order.entity.PlayOrder.PlayOrderStatus;
+import com.shenghesun.tank.sso.model.LoginInfo;
 import com.shenghesun.tank.utils.JsonUtils;
 
 @Controller
@@ -47,9 +51,13 @@ public class PlayOrderReceiveController {
 	public String list(
 		@RequestParam(value = "pageNum", required = false) Integer pageNum,
 		@RequestParam(value = "keyword", required = false) String keyword, Model model) {
-		//TODO 获取当前登录用户，判断当前用户是否有接单的权限
-		
-		Long loginUserId = 2L;
+		// 获取当前登录用户，判断当前用户是否有接单的权限
+		Subject subject = SecurityUtils.getSubject();
+		if(!subject.isPermitted("order:receive")) {
+			throw new AuthorizationException("缺少接单权限");
+		}
+		LoginInfo info = (LoginInfo)subject.getPrincipal();
+		Long loginUserId = info.getId();
 		
 		pageNum = pageNum == null ? 0 : pageNum;
 		Pageable pageable = this.getListPageable(pageNum);
@@ -97,8 +105,17 @@ public class PlayOrderReceiveController {
 	@ResponseBody
 	public JSONObject exeComplete(
 			@PathVariable("id") Long id) {
-		// TODO 校验当前登录用户是否有权限操作 该 订单
+		// 校验当前登录用户是否有权限操作 该 订单
+		Subject subject = SecurityUtils.getSubject();
+		if(!subject.isPermitted("order:receive")) {
+			throw new AuthorizationException("缺少接单权限");
+		}
 		PlayOrder order = playOrderService.findById(id);
+		LoginInfo info = (LoginInfo)subject.getPrincipal();
+		Long loginUserId = info.getId();
+		if(order.getExecutor().getSysUserId().longValue() != loginUserId.longValue()) {
+			throw new AuthorizationException("操作的订单不属于当前登录用户");
+		}
 		order.setStatus(PlayOrderStatus.Complete);
 		playOrderService.save(order);
 		
