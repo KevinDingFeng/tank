@@ -86,13 +86,15 @@ public class AuthController {
 			System.out.println(userInfoJson.toString());
 			// 保存 userInfo 到数据库，使用 openId 和用户信息匹配 TODO 正式 使用时需要修改逻辑
 			// redisUtils.set(OPEN_ID_KEY + openId, userInfoJson.toString(), 86400L);
-			SysUser sysUser = sysUserService.findByOpenId(openId);
+//			SysUser sysUser = sysUserService.findByOpenId(openId);
+			SysUser sysUser = sysUserService.findById(1L);//TODO
 			if (sysUser == null) {
 				sysUser = wxService.getWXSysUser(userInfoJson);
 			}
 			sysUser = sysUserService.save(sysUser);
 //			SecurityUtils.getSubject().login(new UsernamePasswordToken(sysUser.getAccount(), sysUser.getPassword()));
-			WxUserInfo wxUserInfo = wxUserInfoService.getOne(userInfoJson);
+//			WxUserInfo wxUserInfo = wxUserInfoService.getOne(userInfoJson);
+			WxUserInfo wxUserInfo = wxUserInfoService.findById(1L);
 			wxUserInfo = wxUserInfoService.save(wxUserInfo);
 			JSONObject json = new JSONObject();
 			json.put("wxUser", wxUserInfo);
