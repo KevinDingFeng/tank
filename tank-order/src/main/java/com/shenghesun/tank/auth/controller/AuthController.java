@@ -54,8 +54,8 @@ public class AuthController {
 	private WxAuthServiceImpl wxService;
 	// @Autowired
 	// private DefaultAuthServiceImpl wxService;
-	@Autowired
-	private RedisUtils redisUtils;
+//	@Autowired
+//	private RedisUtils redisUtils;
 
 	@Autowired
 	private SysUserService sysUserService;
@@ -77,7 +77,7 @@ public class AuthController {
 			String openId = tokenMsg.getString("openid");
 			String token = tokenMsg.getString("access_token");
 			// 保存 state 和 openId 的匹配记录
-			redisUtils.set(STATE_KEY + state, openId, 300L);
+//			redisUtils.set(STATE_KEY + state, openId, 300L);
 			// 根据 accessToke 和 opernId 获取用户的基础信息
 			JSONObject userInfoJson = wxService.getUserInfoJson(token, openId);
 			if (userInfoJson == null) {
@@ -108,22 +108,22 @@ public class AuthController {
 		}
 	}
 
-	@RequestMapping(value = "/user_info", method = RequestMethod.GET)
-	public JSONObject getUserInfo(HttpServletRequest req, HttpServletResponse res,
-			@RequestParam(value = "state") String state) {
-		if (redisUtils.exists(STATE_KEY + state)) {
-			String openId = redisUtils.get(STATE_KEY + state);
-			SysUser sysUser = sysUserService.findByOpenId(this.format(openId));
-			if (sysUser != null) {
-				return JsonUtils.getSuccessJSONObject(sysUser);
-			} else {
-				System.out.println("openId 不存在 " + openId);
-			}
-		} else {
-			System.out.println("state 不存在 " + state);
-		}
-		return JsonUtils.getFailJSONObject();
-	}
+//	@RequestMapping(value = "/user_info", method = RequestMethod.GET)
+//	public JSONObject getUserInfo(HttpServletRequest req, HttpServletResponse res,
+//			@RequestParam(value = "state") String state) {
+//		if (redisUtils.exists(STATE_KEY + state)) {
+//			String openId = redisUtils.get(STATE_KEY + state);
+//			SysUser sysUser = sysUserService.findByOpenId(this.format(openId));
+//			if (sysUser != null) {
+//				return JsonUtils.getSuccessJSONObject(sysUser);
+//			} else {
+//				System.out.println("openId 不存在 " + openId);
+//			}
+//		} else {
+//			System.out.println("state 不存在 " + state);
+//		}
+//		return JsonUtils.getFailJSONObject();
+//	}
 
 	@RequestMapping("/my_info")
 	public JSONObject getMyInfo() {

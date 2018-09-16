@@ -18,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -208,7 +209,7 @@ public class PlayOrderController {
 	//获取订单详细信息，根据订单编号和普通用户id
 	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
 	public JSONObject info(HttpServletRequest request,
-			@PathParam(value = "id") Long id) {
+			@PathVariable(value = "id") Long id) {
 		//TODO 校验 资源权限
 		PlayOrder order = playOrderService.findById(id);
 		JSONObject json = new JSONObject();
