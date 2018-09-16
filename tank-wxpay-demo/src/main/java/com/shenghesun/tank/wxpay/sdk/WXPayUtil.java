@@ -203,6 +203,7 @@ public class WXPayUtil {
         Set<String> keySet = data.keySet();
         String[] keyArray = keySet.toArray(new String[keySet.size()]);
         Arrays.sort(keyArray);
+        print(keyArray, data);
         StringBuilder sb = new StringBuilder();
         for (String k : keyArray) {
             if (k.equals(WXPayConstants.FIELD_SIGN)) {
@@ -221,6 +222,14 @@ public class WXPayUtil {
         else {
             throw new Exception(String.format("Invalid sign_type: %s", signType));
         }
+    }
+    private static void print(String[] keyArray, Map<String, String> data) {
+    	System.out.println("===========================");
+    	for(String s : keyArray) {
+    		System.out.println(s);
+    		System.out.println(data.get(s));
+    	}
+    	System.out.println("===========================");
     }
 
 

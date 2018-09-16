@@ -16,7 +16,9 @@ import com.shenghesun.tank.http.utils.MyWechatParam;
 import com.shenghesun.tank.utils.JsonUtils;
 import com.shenghesun.tank.utils.RandomUtil;
 import com.shenghesun.tank.wxpay.sdk.WXPay;
+import com.shenghesun.tank.wxpay.sdk.WXPayConstants;
 import com.shenghesun.tank.wxpay.sdk.WXPayUtil;
+import com.shenghesun.tank.wxpay.sdk.WXPayConstants.SignType;
 import com.shenghesun.tank.wxpay.sdk.impl.WXPayConfigImpl;
 
 @RestController
@@ -30,14 +32,22 @@ public class OrderController {
 		
 		
 		Map<String,String> map = new HashMap<>();
-        map.put("openId", "o8ood1Eo3QzMT1JyxqXtE9Xv_QR0");//用户标识openId
-        map.put("remoteIp",request.getRemoteAddr());//请求Ip地址
+        map.put("openid", "o8ood1Eo3QzMT1JyxqXtE9Xv_QR0");//用户标识openId
+        map.put("spbill_create_ip",request.getRemoteAddr());//请求Ip地址
+        map.put("body", "私人订制电竞服务-游戏");//商品描述			body 商家名称-销售商品类目
+        map.put("out_trade_no", System.currentTimeMillis() + RandomUtil.randomString(2));//商户订单号			out_trade_no
+        map.put("total_fee", "2");//标价金额			total_fee
+        map.put("trade_type", "JSAPI");//交易类型			trade_type
         //调用统一下单service
 //        Map<String,Object> resultMap = this.unifiedOrder(map);
         WXPay wxPay = new WXPay(new WXPayConfigImpl(), "https://wxpay.dazonghetong.com/wxpay/notify");
         Map<String,String> resultMap = wxPay.unifiedOrder(map);
         String returnCode = (String) resultMap.get("return_code");//通信标识
+        String returnMsg = (String) resultMap.get("return_msg");//通信错误信息
         String resultCode = (String) resultMap.get("result_code");//交易标识
+        System.out.println(returnCode);
+        System.out.println(returnMsg);
+        System.out.println(resultCode);
         //只有当returnCode与resultCode均返回“success”，才代表微信支付统一下单成功
 //        if (WeChatConstant.RETURN_SUCCESS.equals(resultCode)&&WeChatConstant.RETURN_SUCCESS.equals(returnCode)){
             String appId = (String) resultMap.get("appid");//微信公众号AppId
@@ -56,13 +66,30 @@ public class OrderController {
             json.put("timeStamp",timeStamp);
             json.put("nonceStr",nonceStr);
             json.put("prepayId",prepayId);
-            json.put("paySign",WXPayUtil.generateSignature(signMap, MyWechatParam.APP_SECRET));//获取签名
+            json.put("paySign",WXPayUtil.generateSignature(signMap, MyWechatParam.APP_SECRET));//获取签名 TODO 这个是错的，应该用支付的 key
 //        }else {
 //            logger.error("微信统一下单失败,订单编号:"+order.getOrderNumber()+",失败原因:"+resultMap.get("err_code_des"));
 //            return "redirect:/m/orderList";//支付下单失败，重定向至订单列表
 //        }
 		
-		return JsonUtils.getSuccessJSONObject(null);
+		return JsonUtils.getSuccessJSONObject(json);
+	}
+	
+	public static void main(String[] args) throws Exception {
+		Map<String, String> data = new HashMap<>();
+		data.put("openid", "o8ood1Eo3QzMT1JyxqXtE9Xv_QR0");//用户标识openId
+		data.put("spbill_create_ip","100.116.186.28");//请求Ip地址
+		data.put("body", "私人订制电竞服务-游戏");//商品描述			body 商家名称-销售商品类目
+		data.put("out_trade_no", System.currentTimeMillis() + RandomUtil.randomString(2));//商户订单号			out_trade_no
+		data.put("total_fee", "2");//标价金额			total_fee
+		data.put("trade_type", "JSAPI");//交易类型			trade_type
+		data.put("notify_url", "https://wxpay.dazonghetong.com/wxpay/notify");
+		data.put("appid", "wxf92bc6eda94de282");
+		data.put("mch_id", "1513993701");
+		data.put("nonce_str", WXPayUtil.generateNonceStr());
+    	data.put("sign_type", WXPayConstants.MD5);
+		String sign = WXPayUtil.generateSignature(data, MyWechatParam.APP_SECRET);//TODO 这个是错的，应该用支付的 key
+		System.out.println(sign);
 	}
 //	public Map<String, String> sendPrepaidTransactionRequest(PayOrder order)
 //			throws DocumentException {
