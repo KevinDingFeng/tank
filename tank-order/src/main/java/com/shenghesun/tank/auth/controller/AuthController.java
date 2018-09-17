@@ -17,7 +17,6 @@ import com.shenghesun.tank.http.utils.MyWechatSignatureUtil;
 import com.shenghesun.tank.system.SysUserService;
 import com.shenghesun.tank.system.entity.SysUser;
 import com.shenghesun.tank.utils.JsonUtils;
-import com.shenghesun.tank.utils.RedisUtils;
 import com.shenghesun.tank.wx.WxUserInfoService;
 import com.shenghesun.tank.wx.auth.service.WxAuthServiceImpl;
 import com.shenghesun.tank.wx.entity.WxUserInfo;
@@ -96,6 +95,7 @@ public class AuthController {
 //			WxUserInfo wxUserInfo = wxUserInfoService.getOne(userInfoJson);
 			WxUserInfo wxUserInfo = wxUserInfoService.findById(1L);
 			wxUserInfo = wxUserInfoService.save(wxUserInfo);
+//			redisUtil.set(accessToken, user.getId() + "", WxConfig.EXPIRE_TIME);// 缓存token 到 redis ，使用配置中的时长 TODO
 			JSONObject json = new JSONObject();
 			json.put("wxUser", wxUserInfo);
 			return JsonUtils.getSuccessJSONObject(json);
