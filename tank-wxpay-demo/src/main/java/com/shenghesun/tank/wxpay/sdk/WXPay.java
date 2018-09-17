@@ -154,7 +154,9 @@ public class WXPay {
                                      int connectTimeoutMs, int readTimeoutMs) throws Exception {
         String msgUUID = reqData.get("nonce_str");
         String reqBody = WXPayUtil.mapToXml(reqData);
-
+        System.out.println("--------------");
+        System.out.println(reqBody);
+        System.out.println("--------------");
         String resp = this.wxPayRequest.requestWithoutCert(urlSuffix, msgUUID, reqBody, connectTimeoutMs, readTimeoutMs, autoReport);
         return resp;
     }
@@ -362,6 +364,9 @@ public class WXPay {
             reqData.put("notify_url", this.notifyUrl);
         }
         String respXml = this.requestWithoutCert(url, this.fillRequestData(reqData), connectTimeoutMs, readTimeoutMs);
+        System.out.println("++++++++++");
+        System.out.println(respXml);
+        System.out.println("++++++++++");
         return this.processResponseXml(respXml);
     }
 

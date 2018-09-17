@@ -20,7 +20,8 @@ public class WXPayConfigImpl extends WXPayConfig {
 	}
 
 	public String getKey() {
-		return "301ef90ab54423a3c9a9b42d7246e096";//TODO 这个是错的，应该用支付的 key
+//		return "301ef90ab54423a3c9a9b42d7246e096";//TODO 这个是错的，应该用支付的 key
+		return "Shenghesun20180917shenghesun2018";
 	}
 	
 	public InputStream getCertStream() {
@@ -28,7 +29,7 @@ public class WXPayConfigImpl extends WXPayConfig {
 			return new FileInputStream(new File(""));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.printStackTrace(); 
 		}
 		return null;
 	}

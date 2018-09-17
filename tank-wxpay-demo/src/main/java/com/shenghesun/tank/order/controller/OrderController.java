@@ -88,7 +88,7 @@ public class OrderController {
 		data.put("mch_id", "1513993701");
 		data.put("nonce_str", WXPayUtil.generateNonceStr());
     	data.put("sign_type", WXPayConstants.MD5);
-		String sign = WXPayUtil.generateSignature(data, MyWechatParam.APP_SECRET);//TODO 这个是错的，应该用支付的 key
+		String sign = WXPayUtil.generateSignature(data, "");//TODO 这个是错的，应该用支付的 key
 		System.out.println(sign);
 	}
 //	public Map<String, String> sendPrepaidTransactionRequest(PayOrder order)
