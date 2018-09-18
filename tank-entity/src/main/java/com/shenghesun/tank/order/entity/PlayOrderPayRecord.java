@@ -1,6 +1,7 @@
 package com.shenghesun.tank.order.entity;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shenghesun.tank.base.entity.BaseEntity;
 
@@ -56,9 +58,15 @@ public class PlayOrderPayRecord extends BaseEntity {
 	}
 	/**
 	 * 支付id
+	 * 微信支付订单号
 	 */
 	@Column(nullable = true, length = 255)
 	private String prepayId;
+	/**
+	 * 支付时间
+	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	private Timestamp payTime;
 	/**
 	 * 支付金额
 	 */
