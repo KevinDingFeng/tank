@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
-import com.shenghesun.tank.http.utils.MyWechatParam;
 import com.shenghesun.tank.utils.JsonUtils;
 import com.shenghesun.tank.utils.RandomUtil;
 import com.shenghesun.tank.wxpay.sdk.WXPay;
+import com.shenghesun.tank.wxpay.sdk.WXPayConfig;
 import com.shenghesun.tank.wxpay.sdk.WXPayConstants;
 import com.shenghesun.tank.wxpay.sdk.WXPayUtil;
-import com.shenghesun.tank.wxpay.sdk.WXPayConstants.SignType;
 import com.shenghesun.tank.wxpay.sdk.impl.WXPayConfigImpl;
 
 @RestController
@@ -40,7 +39,8 @@ public class OrderController {
         map.put("trade_type", "JSAPI");//交易类型			trade_type
         //调用统一下单service
 //        Map<String,Object> resultMap = this.unifiedOrder(map);
-        WXPay wxPay = new WXPay(new WXPayConfigImpl(), "https://wxpay.dazonghetong.com/wxpay/notify");
+        WXPayConfig conf = new WXPayConfigImpl();
+        WXPay wxPay = new WXPay(conf, "https://wxpay.dazonghetong.com/wxpay/notify");
         Map<String,String> resultMap = wxPay.unifiedOrder(map);
         String returnCode = (String) resultMap.get("return_code");//通信标识
         String returnMsg = (String) resultMap.get("return_msg");//通信错误信息
@@ -51,7 +51,7 @@ public class OrderController {
         //只有当returnCode与resultCode均返回“success”，才代表微信支付统一下单成功
 //        if (WeChatConstant.RETURN_SUCCESS.equals(resultCode)&&WeChatConstant.RETURN_SUCCESS.equals(returnCode)){
             String appId = (String) resultMap.get("appid");//微信公众号AppId
-            String timeStamp = String.valueOf(System.currentTimeMillis()/1000);;//当前时间戳
+            String timeStamp = String.valueOf(System.currentTimeMillis()/1000);//当前时间戳
             String prepayId = "prepay_id="+resultMap.get("prepay_id");//统一下单返回的预支付id
             String nonceStr = RandomUtil.randomString(20);//不长于32位的随机字符串
             SortedMap<String, String> signMap = new TreeMap<>();//自然升序map
@@ -66,7 +66,8 @@ public class OrderController {
             json.put("timeStamp",timeStamp);
             json.put("nonceStr",nonceStr);
             json.put("prepayId",prepayId);
-            json.put("paySign",WXPayUtil.generateSignature(signMap, MyWechatParam.APP_SECRET));//获取签名 TODO 这个是错的，应该用支付的 key
+            json.put("signType", "MD5");
+            json.put("paySign",WXPayUtil.generateSignature(signMap, conf.getKey()));//获取签名 TODO 这个是错的，应该用支付的 key
 //        }else {
 //            logger.error("微信统一下单失败,订单编号:"+order.getOrderNumber()+",失败原因:"+resultMap.get("err_code_des"));
 //            return "redirect:/m/orderList";//支付下单失败，重定向至订单列表

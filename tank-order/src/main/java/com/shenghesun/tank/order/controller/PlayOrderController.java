@@ -1,11 +1,15 @@
 package com.shenghesun.tank.order.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,11 +43,15 @@ import com.shenghesun.tank.utils.JsonUtils;
 import com.shenghesun.tank.utils.RandomUtil;
 import com.shenghesun.tank.wx.WxUserInfoService;
 import com.shenghesun.tank.wx.entity.WxUserInfo;
+import com.shenghesun.tank.wxpay.sdk.WXPay;
+import com.shenghesun.tank.wxpay.sdk.WXPayConfig;
+import com.shenghesun.tank.wxpay.sdk.WXPayUtil;
+import com.shenghesun.tank.wxpay.sdk.impl.WXPayConfigImpl;
 
 @RestController
 @RequestMapping(value = "/order")
 public class PlayOrderController {
-	
+
 	@Autowired
 	private PlayOrderService playOrderService;
 	@Autowired
@@ -62,8 +70,7 @@ public class PlayOrderController {
 	 * @param req
 	 */
 	@InitBinder("entity")
-	private void initBinder(ServletRequestDataBinder binder,
-			HttpServletRequest req) {
+	private void initBinder(ServletRequestDataBinder binder, HttpServletRequest req) {
 		List<String> fields = new ArrayList<String>(Arrays.asList("wxAccount", "cellphone", "remark", "duration"));
 		switch (req.getMethod().toLowerCase()) {
 		case "post": // 新增 和 修改
@@ -82,9 +89,7 @@ public class PlayOrderController {
 	 * @return
 	 */
 	@ModelAttribute("entity")
-	public PlayOrder prepare(
-			@RequestParam(value = "id", required = false) Long id,
-			HttpServletRequest req) {
+	public PlayOrder prepare(@RequestParam(value = "id", required = false) Long id, HttpServletRequest req) {
 		String method = req.getMethod().toLowerCase();
 		if (id != null && id > 0 && "post".equals(method)) {// 修改表单提交后数据绑定之前执行
 			return playOrderService.findById(id);
@@ -94,103 +99,206 @@ public class PlayOrderController {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * 根据具体报价id，生成预订单信息
+	 * 
 	 * @param quotedProductId
 	 * @return
 	 */
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
-	public JSONObject form(
-			@RequestParam(value = "quotedProductId") Long quotedProductId) {
+	public JSONObject form(@RequestParam(value = "quotedProductId") Long quotedProductId) {
 		QuotedProduct qp = quotedProductService.findById(quotedProductId);
-		Coach coach = qp.getCoach();//大神
-		Product product = qp.getProduct();//服务
-		
-		
+		Coach coach = qp.getCoach();// 大神
+		Product product = qp.getProduct();// 服务
+
 		JSONObject json = new JSONObject();
 		json.put("coach", coach);
-		json.put("coaches", coachService.findAll(new Sort(Direction.DESC, "seqNum")));//获取所有大神-默认所有大神都可以支持所有类型的服务
-		ProductType typeLevel3 = product.getProductType();//level 3 的类型，parentCode 属性是 level 2的类型的 code
+		json.put("coaches", coachService.findAll(new Sort(Direction.DESC, "seqNum")));// 获取所有大神-默认所有大神都可以支持所有类型的服务
+		ProductType typeLevel3 = product.getProductType();// level 3 的类型，parentCode 属性是 level 2的类型的 code
 		ProductType typeLevel2 = productTypeService.findByCode(typeLevel3.getParentCode());
-		//获取 level 2 的类型集合
-		//level 2 的 parentCode 属性是 level 1 的类型的 code
-		List<ProductType> typeLevel2List = productTypeService.findByParentCode(typeLevel2.getParentCode()); 
-		
-		//获取 level 3 的类型集合，获取当前 level 2 对应的集合就可以
+		// 获取 level 2 的类型集合
+		// level 2 的 parentCode 属性是 level 1 的类型的 code
+		List<ProductType> typeLevel2List = productTypeService.findByParentCode(typeLevel2.getParentCode());
+
+		// 获取 level 3 的类型集合，获取当前 level 2 对应的集合就可以
 		List<ProductType> typeLevel3List = productTypeService.findByParentCode(typeLevel3.getParentCode());
 		json.put("typeLevel2List", typeLevel2List);
 		json.put("typeLevel3List", typeLevel3List);
-		
-		json.put("product", product);//服务
-		json.put("quotedProduct", qp);//具体报价
+
+		json.put("product", product);// 服务
+		json.put("quotedProduct", qp);// 具体报价
 		return JsonUtils.getSuccessJSONObject(json);
 	}
 
 	private void initPlayOrder(PlayOrder playOrder, Long qpId) {
 
-		WxUserInfo wxUser = wxUserService.findById(1L);
+		WxUserInfo wxUser = wxUserService.findById(1L);//TODO
 		
 		QuotedProduct qp = quotedProductService.findById(qpId);
 		Coach coach = qp.getCoach();
 		Product product = qp.getProduct();
-		
-//		Coach coach = coachService.findById(coachId);
-//		Product product = productService.findById(productId);
-		
+
+		// Coach coach = coachService.findById(coachId);
+		// Product product = productService.findById(productId);
+
 		playOrder.setWxUser(wxUser);
 		playOrder.setWxUserId(wxUser.getId());
-		
+
 		playOrder.setCoach(coach);
 		playOrder.setCoachId(coach.getId());
-		
+
 		playOrder.setExecutor(coach);
 		playOrder.setExecutorId(coach.getId());
-		
+
 		playOrder.setProduct(product);
 		playOrder.setProductId(product.getId());
 
 		playOrder.setOperationType(OperationType.Create);
-		
+
 		String no = this.getNo();
 		playOrder.setNo(no);
 		playOrder.setViceNo(no + 1);
-		
-		playOrder.setTotalFee(quotedProductService.getTotalFee(playOrder.getDuration(), qp.getPrice(), 
+
+		playOrder.setTotalFee(quotedProductService.getTotalFee(playOrder.getDuration(), qp.getPrice(),
 				qp.getProduct().getDuration()));
 	}
+
 	private String getNo() {
 		String no = System.currentTimeMillis() + RandomUtil.randomString(3);
 		return no;
 	}
+
 	/**
 	 * 生成订单，调用微信统一下单接口，生成预支付 id 返回到前端
+	 * 
 	 * @param playOrder
 	 * @param result
 	 * @param quotedProductId
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public JSONObject save(@Validated @ModelAttribute("entity") PlayOrder playOrder, BindingResult result, 
-//			@RequestParam(value = "coachId") Long coachId,
-//			@RequestParam(value = "productId") Long productId
-			@RequestParam(value = "quotedProductId") Long quotedProductId 
-			) {
-		
-		if(result.hasErrors()) {
+	public JSONObject save(HttpServletRequest request, @Validated @ModelAttribute("entity") PlayOrder playOrder,
+			BindingResult result,
+			// @RequestParam(value = "coachId") Long coachId,
+			// @RequestParam(value = "productId") Long productId
+			@RequestParam(value = "quotedProductId") Long quotedProductId) throws Exception {
+
+		if (result.hasErrors()) {
 			return JsonUtils.getFailJSONObject("提交信息有误");
 		}
 		this.initPlayOrder(playOrder, quotedProductId);
 		playOrder = playOrderService.save(playOrder);
-		
-		//调用统一下单流程 TODO
 
+		
+		// 调用统一下单流程 
+//		QuotedProduct qp = quotedProductService.findById(quotedProductId);
+//		BigDecimal totalFee = quotedProductService.getTotalFee(playOrder.getDuration(), qp.getPrice(), 
+//				qp.getProduct().getDuration());
+		String totalFeeStr = this.getTotalFeeStr(playOrder.getTotalFee());
+		String openId = request.getHeader("openId");
+		JSONObject prepay = this.prepay(playOrder.getNo(), openId, request.getRemoteAddr(), totalFeeStr);
+		if(prepay.getString("result") != null) {
+			System.out.println("预支付时出现错误");
+			return JsonUtils.getFailJSONObject(prepay.getString("result"));//预支付时出现错误
+		}
 		JSONObject json = new JSONObject();
 		json.put("playOrder", playOrder);
+		json.put("prepay", prepay);
 		return JsonUtils.getSuccessJSONObject(json);
 	}
 	
-	//获取订单列表，根据普通用户id
+	@RequestMapping(value = "/pay", method = RequestMethod.POST)
+	public JSONObject pay(HttpServletRequest request, @RequestParam(value = "no") String no) throws Exception {
+		
+		PlayOrder playOrder = playOrderService.findMainByNo(no);
+		String openId = request.getHeader("openId");
+		
+		String totalFeeStr = this.getTotalFeeStr(playOrder.getTotalFee());
+		JSONObject prepay = this.prepay(playOrder.getNo(), openId, request.getRemoteAddr(), totalFeeStr);
+		if(prepay.getString("result") != null) {
+			System.out.println("预支付时出现错误");
+			return JsonUtils.getFailJSONObject(prepay.getString("result"));//预支付时出现错误
+		}
+		JSONObject json = new JSONObject();
+		json.put("playOrder", playOrder);
+		json.put("prepay", prepay);
+		return JsonUtils.getSuccessJSONObject(json);
+	}
+
+	private JSONObject prepay(String orderNo, String openId, String ip, String totalFee) throws Exception {
+		//组织统一下单的数据，完成统一下单
+		Map<String, String> map = this.getUnifiedOrderData(orderNo, openId, ip, totalFee);
+		WXPayConfig conf = new WXPayConfigImpl();
+        WXPay wxPay = new WXPay(conf, "https://wxpay.dazonghetong.com/wxpay/notify");
+        Map<String,String> resultMap = wxPay.unifiedOrder(map);
+		//解析统一下单返回的信息，生成唤醒微信支付的数据
+        String returnCode = (String) resultMap.get("return_code");//通信标识
+        if ("SUCCESS".equals(returnCode.toUpperCase())){
+        	String resultCode = (String) resultMap.get("result_code");//交易标识
+        	if("SUCCESS".equals(resultCode.toUpperCase())) {
+        		String appId = (String) resultMap.get("appid");// 微信公众号AppId
+        		String prepayId = "prepay_id=" + resultMap.get("prepay_id");// 统一下单返回的预支付id
+        		String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);// 当前时间戳
+        		String nonceStr = RandomUtil.randomString(20);// 不长于32位的随机字符串
+        		String signType = "MD5";
+        		SortedMap<String, String> signMap = this.getSignMap(appId, prepayId, timeStamp, nonceStr, signType);
+        		JSONObject json = this.getPrepayJson(appId, prepayId, timeStamp, nonceStr, signType, signMap, conf.getKey());
+        		return json;
+        	}else {
+        		String errDes = (String) resultMap.get("err_code_des");//交易错误信息
+        		JSONObject json = new JSONObject();
+            	json.put("result", errDes);
+            	return json;	
+        	}
+        }else {
+        	String returnMsg = (String) resultMap.get("return_msg");//通信错误信息
+        	JSONObject json = new JSONObject();
+        	json.put("result", returnMsg);
+        	return json;
+        }
+	}
+	
+	private Map<String, String> getUnifiedOrderData(String orderNo, String openId, String ip, String totalFee){
+		Map<String,String> map = new HashMap<>();
+        map.put("openid", openId);//用户标识openId
+        map.put("spbill_create_ip", ip);//请求Ip地址
+        map.put("body", "私人订制电竞服务-游戏");//商品描述			body 商家名称-销售商品类目
+        map.put("out_trade_no", orderNo);//商户订单号			out_trade_no
+        map.put("total_fee", totalFee);//标价金额			total_fee
+        map.put("trade_type", "JSAPI");//交易类型			trade_type
+        return map;
+	}
+	
+	private SortedMap<String, String> getSignMap(String appId, String prepayId, String timeStamp, String nonceStr, String signType){
+		SortedMap<String, String> signMap = new TreeMap<>();// 自然升序map
+		signMap.put("appId", appId);
+		signMap.put("package", prepayId);
+		signMap.put("timeStamp", timeStamp);
+		signMap.put("nonceStr", nonceStr);
+		signMap.put("signType", signType);
+		return signMap;
+	}
+	private JSONObject getPrepayJson(String appId, String prepayId, String timeStamp, String nonceStr, String signType, SortedMap<String, String> signMap, String key) throws Exception {
+		JSONObject json = new JSONObject();
+		json.put("appId", appId);
+		json.put("timeStamp", timeStamp);
+		json.put("nonceStr", nonceStr);
+		json.put("prepayId", prepayId);
+		json.put("signType", signType);
+		json.put("paySign", WXPayUtil.generateSignature(signMap, key));
+		return json;
+	}
+	
+	private String getTotalFeeStr(BigDecimal totalFee) {
+		totalFee = totalFee.multiply(new BigDecimal(100));//转 元 为 角
+		totalFee = totalFee.setScale(0, BigDecimal.ROUND_HALF_UP);
+		
+		return totalFee.intValue() + "";
+	}
+
+	// 获取订单列表，根据普通用户id
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public JSONObject list(HttpServletRequest request) {
 		Long wxUserId = 1L;
@@ -200,17 +308,17 @@ public class PlayOrderController {
 		json.put("page", page);
 		return JsonUtils.getSuccessJSONObject(json);
 	}
+
 	private Pageable getPageable() {
 		Sort sort = new Sort(Direction.DESC, "creation");
 		Pageable pageable = new PageRequest(0, 20, sort);
 		return pageable;
 	}
-	
-	//获取订单详细信息，根据订单编号和普通用户id
+
+	// 获取订单详细信息，根据订单编号和普通用户id
 	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-	public JSONObject info(HttpServletRequest request,
-			@PathVariable(value = "id") Long id) {
-		//TODO 校验 资源权限
+	public JSONObject info(HttpServletRequest request, @PathVariable(value = "id") Long id) {
+		// TODO 校验 资源权限
 		PlayOrder order = playOrderService.findById(id);
 		JSONObject json = new JSONObject();
 		json.put("playOrder", order);

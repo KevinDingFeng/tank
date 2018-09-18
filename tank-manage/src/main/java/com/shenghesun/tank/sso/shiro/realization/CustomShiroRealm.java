@@ -38,8 +38,8 @@ public class CustomShiroRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 		System.out.println("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
-		String account = (String) principals.getPrimaryPrincipal();
-		SysUser sysUser = sysUserService.findByAccount(account);
+		LoginInfo info = (LoginInfo) principals.getPrimaryPrincipal();
+		SysUser sysUser = sysUserService.findByAccount(info.getAccount());
 		Set<SysRole> roles = sysUser.getRoles();
 		if(roles != null && roles.size() > 0) {
 			Iterator<SysRole> roleIt = roles.iterator();
@@ -51,7 +51,7 @@ public class CustomShiroRealm extends AuthorizingRealm {
 					Iterator<SysPermission> permIt = perms.iterator();
 					while(permIt.hasNext()) {
 						SysPermission perm = permIt.next();
-						authorizationInfo.addStringPermission(perm.getName());
+						authorizationInfo.addStringPermission(perm.getPerm());
 					}
 				}
 			}

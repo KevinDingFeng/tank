@@ -1,5 +1,7 @@
 package com.shenghesun.tank.order;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,5 +30,16 @@ public class PlayOrderService {
 
 	public Page<PlayOrder> findByWxUserId(Long wxUserId, Pageable pageable) {
 		return playOrderDao.findByWxUserId(wxUserId, pageable);
+	}
+
+	public PlayOrder findMainByNo(String no) {
+		List<PlayOrder> list = this.findByNoAndMain(no, true);
+		if(list != null) {
+			return list.get(0);
+		}
+		return null;
+	}
+	public List<PlayOrder> findByNoAndMain(String no, boolean bool){
+		return playOrderDao.findByNoAndMain(no, true);
 	}
 }

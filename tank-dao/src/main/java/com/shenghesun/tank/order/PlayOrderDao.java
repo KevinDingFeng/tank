@@ -1,5 +1,7 @@
 package com.shenghesun.tank.order;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,5 +14,7 @@ import com.shenghesun.tank.order.entity.PlayOrder;
 public interface PlayOrderDao extends JpaRepository<PlayOrder, Long>, JpaSpecificationExecutor<PlayOrder> {
 
 	Page<PlayOrder> findByWxUserId(Long wxUserId, Pageable pageable);
+
+	List<PlayOrder> findByNoAndMain(String no, boolean b);
 
 }

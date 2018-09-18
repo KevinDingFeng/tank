@@ -42,7 +42,12 @@ public class WxpayNotifyController {
 		
 		Element root = this.getRootElement(request);
 		String returnCode = root.element("return_code").getText();
-		String returnMsg = root.element("return_msg").getText();
+		Element e = root.element("return_msg");
+		String returnMsg = "success";//TODO
+		if(e != null) {
+			returnMsg = e.getText();
+		}
+		System.out.println(root);
 		if ("SUCCESS".equals(returnCode)) {
 			System.out.println("支付通知成功，" + returnMsg);
 		} else {

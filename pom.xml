@@ -122,5 +122,6 @@
 		<module>tank-entity</module>
 		<module>tank-entity-base</module>
 		<module>tank-wxpay-demo</module>
+		<module>tank-wxpay-sdk</module>
 	</modules>
 </project>
