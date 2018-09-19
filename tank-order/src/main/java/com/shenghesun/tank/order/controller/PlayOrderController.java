@@ -131,13 +131,13 @@ public class PlayOrderController {
 		return JsonUtils.getSuccessJSONObject(json);
 	}
 
-	private void initPlayOrder(PlayOrder playOrder, Long qpId) {
+	private void initPlayOrder(PlayOrder playOrder, Coach coach, Product product) {
 
 		WxUserInfo wxUser = wxUserService.findById(1L);//TODO
 		
-		QuotedProduct qp = quotedProductService.findById(qpId);
-		Coach coach = qp.getCoach();
-		Product product = qp.getProduct();
+		
+//		Coach coach = qp.getCoach();
+//		Product product = qp.getProduct();
 
 		// Coach coach = coachService.findById(coachId);
 		// Product product = productService.findById(productId);
@@ -160,8 +160,8 @@ public class PlayOrderController {
 		playOrder.setNo(no);
 		playOrder.setViceNo(no + 1);
 
-		playOrder.setTotalFee(quotedProductService.getTotalFee(playOrder.getDuration(), qp.getPrice(),
-				qp.getProduct().getDuration()));
+//		playOrder.setTotalFee(quotedProductService.getTotalFee(playOrder.getDuration(), qp.getPrice(),
+//				qp.getProduct().getDuration()));
 	}
 
 	private String getNo() {
@@ -183,12 +183,24 @@ public class PlayOrderController {
 			BindingResult result,
 			// @RequestParam(value = "coachId") Long coachId,
 			// @RequestParam(value = "productId") Long productId
-			@RequestParam(value = "quotedProductId") Long quotedProductId) throws Exception {
+			@RequestParam(value = "quotedProductId") Long qpId) throws Exception {
 
 		if (result.hasErrors()) {
 			return JsonUtils.getFailJSONObject("提交信息有误");
 		}
-		this.initPlayOrder(playOrder, quotedProductId);
+		QuotedProduct qp = quotedProductService.findById(qpId);
+		Product product = qp.getProduct();
+		this.initPlayOrder(playOrder, qp.getCoach(), product);
+		ProductType typeLevel3 = productTypeService.findByCode(product.getProductType().getCode());
+		ProductType typeLevel2 = productTypeService.findByCode(typeLevel3.getParentCode());
+		BigDecimal totalFee = BigDecimal.ZERO;
+		if(typeLevel2.getParentCode() == 11) {
+			totalFee = qp.getPrice();
+		}else {
+			totalFee = quotedProductService.getTotalFee(playOrder.getDuration(), qp.getPrice(), 
+					qp.getProduct().getDuration());
+		}
+		playOrder.setTotalFee(totalFee);
 		playOrder = playOrderService.save(playOrder);
 
 		
