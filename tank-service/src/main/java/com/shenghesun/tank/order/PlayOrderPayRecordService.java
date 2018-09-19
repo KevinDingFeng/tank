@@ -12,9 +12,9 @@ public class PlayOrderPayRecordService {
 	@Autowired
 	private PlayOrderPayRecordDao recordDao;
 
-	public PlayOrderPayRecord findByPlayOrderId(Long playOrderId) {
-		return recordDao.findByPlayOrderId(playOrderId);
-	}
+//	public PlayOrderPayRecord findByPlayOrderId(Long playOrderId) {
+//		return recordDao.findByPlayOrderId(playOrderId);
+//	}
 
 	public PlayOrderPayRecord getDefaultRecord(PlayOrder playOrder) {
 		PlayOrderPayRecord record = new PlayOrderPayRecord();
@@ -32,5 +32,9 @@ public class PlayOrderPayRecordService {
 
 	public PlayOrderPayRecord save(PlayOrderPayRecord record) {
 		return recordDao.save(record);
+	}
+
+	public PlayOrderPayRecord findByPrepayId(String prepayId) {
+		return recordDao.findByPrepayId(prepayId);
 	}
 }

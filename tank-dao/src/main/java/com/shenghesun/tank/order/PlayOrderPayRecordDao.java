@@ -9,6 +9,8 @@ import com.shenghesun.tank.order.entity.PlayOrderPayRecord;
 @Repository
 public interface PlayOrderPayRecordDao extends JpaRepository<PlayOrderPayRecord, Long>, JpaSpecificationExecutor<PlayOrderPayRecord> {
 
-	PlayOrderPayRecord findByPlayOrderId(Long playOrderId);
+//	PlayOrderPayRecord findByPlayOrderId(Long playOrderId);
+
+	PlayOrderPayRecord findByPrepayId(String prepayId);
 
 }

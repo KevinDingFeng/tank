@@ -55,12 +55,14 @@ public class WxpayNotifyController {
 							order.setStatus(PlayOrderStatus.Complete);
 							order = playOrderService.save(order);
 							// TODO 支付记录 多条订单对应一条支付记录
-							PlayOrderPayRecord record = recordService.findByPlayOrderId(order.getId());
+//							PlayOrderPayRecord record = recordService.findByPlayOrderId(order.getId());
+							String prepayId = this.formatString(root.element("transaction_id"));
+							PlayOrderPayRecord record = recordService.findByPrepayId(prepayId);
 							if (record == null || record.getId() == null) {
 								record = recordService.getDefaultRecord(order);
 								record.setAmount(this.formatBigDecimal(root.element("total_fee")));
 								record.setPayTime(this.formatTimestamp(root.element("time_end")));
-								record.setPrepayId(this.formatString(root.element("transaction_id")));
+								record.setPrepayId(prepayId);
 								recordService.save(record);
 							}
 						}
