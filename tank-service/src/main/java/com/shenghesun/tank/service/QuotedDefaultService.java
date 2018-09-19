@@ -1,5 +1,7 @@
 package com.shenghesun.tank.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,5 +16,13 @@ public class QuotedDefaultService {
 
 	public Page<QuotedDefault> findByProductTypeCode(Integer code, Pageable pageable) {
 		return quotedDefaultDao.findByProductTypeCode(code, pageable);
+	}
+
+	public List<QuotedDefault> findAll() {
+		return quotedDefaultDao.findAll();
+	}
+
+	public QuotedDefault findCoachIdAndProductTypeId(Long coachId, Long productTypeId) {
+		return quotedDefaultDao.findCoachIdAndProductTypeId(coachId, productTypeId);
 	}
 }

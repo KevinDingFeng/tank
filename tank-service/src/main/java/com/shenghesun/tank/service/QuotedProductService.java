@@ -52,4 +52,8 @@ public class QuotedProductService {
 		}
 		return totalFee;
 	}
+
+	public QuotedProduct save(QuotedProduct entity) {
+		return quotedProductDao.save(entity);
+	}
 }

@@ -1,5 +1,7 @@
 package com.shenghesun.tank.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,5 +15,13 @@ public class ProductService {
 
 	public Product findById(Long id) {
 		return productDao.findOne(id);
+	}
+
+	public Product save(Product entity) {
+		return productDao.save(entity);
+	}
+	
+	public List<Product> findAll(){
+		return productDao.findAll();
 	}
 }

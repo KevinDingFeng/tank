@@ -24,4 +24,8 @@ public class ProductTypeService {
 	public List<ProductType> findByParentCodeIn(List<Integer> parentCodes) {
 		return productTypeDao.findByParentCodeIn(parentCodes);
 	}
+
+	public List<ProductType> findAll() {
+		return productTypeDao.findAll();
+	}
 }

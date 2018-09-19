@@ -13,4 +13,6 @@ public interface QuotedDefaultDao extends JpaRepository<QuotedDefault, Long>, Jp
 
 	Page<QuotedDefault> findByProductTypeCode(Integer code, Pageable pageable);
 
+	QuotedDefault findCoachIdAndProductTypeId(Long coachId, Long productTypeId);
+
 }
