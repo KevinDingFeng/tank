@@ -22,7 +22,7 @@ public class QuotedDefaultService {
 		return quotedDefaultDao.findAll();
 	}
 
-	public QuotedDefault findCoachIdAndProductTypeId(Long coachId, Long productTypeId) {
-		return quotedDefaultDao.findCoachIdAndProductTypeId(coachId, productTypeId);
+	public QuotedDefault findByCoachIdAndProductTypeId(Long coachId, Long productTypeId) {
+		return quotedDefaultDao.findByCoachIdAndProductTypeId(coachId, productTypeId);
 	}
 }

@@ -59,7 +59,7 @@ public class TestController {
 				p.setCapacity(0);
 				//时长 和时长单位 ： 根据类型的默认报价中的参数设置
 				Coach coach = coachService.findBySpecial(true);
-				QuotedDefault d = defaultService.findCoachIdAndProductTypeId(coach.getId(), t.getId());
+				QuotedDefault d = defaultService.findByCoachIdAndProductTypeId(coach.getId(), t.getId());
 				p.setDuration(d.getDuration());
 				p.setDurationType(d.getDurationType());
 				p.setContent(t.getName());
@@ -80,7 +80,7 @@ public class TestController {
 					qp.setSurchargeRatio(BigDecimal.ZERO);
 					qp.setSurcharge(BigDecimal.ZERO);
 					//大神针对单个服务的报价，价格根据大神针对服务类型的默认报价设置
-					QuotedDefault d = defaultService.findCoachIdAndProductTypeId(c.getId(), p.getProductTypeId());
+					QuotedDefault d = defaultService.findByCoachIdAndProductTypeId(c.getId(), p.getProductTypeId());
 					if(p.getDurationType().name().equals(d.getDurationType().name())) {
 						System.out.println("设置价格");
 						if(p.getDuration() != 0 && d.getDuration() != 0) {

@@ -127,8 +127,17 @@ public class QuotedProductController {
 	public JSONObject totalFee(@RequestParam(value = "code") Integer code,
 			@RequestParam(value = "coachId") Long coachId,
 			@RequestParam(value = "duration") int duration) {
-
 		QuotedProduct quotes = quotedProductService.findByCoachIdAndProductProductTypeCode(coachId, code);
+		ProductType typeLevel3 = productTypeService.findByCode(code);
+		ProductType typeLevel2 = productTypeService.findByCode(typeLevel3.getParentCode());
+		BigDecimal totalFee = BigDecimal.ZERO;
+		if(typeLevel2.getParentCode() == 11) {
+			totalFee = quotes.getPrice();
+		}else {
+			totalFee = quotedProductService.getTotalFee(duration, quotes.getPrice(), 
+					quotes.getProduct().getDuration());
+		}
+
 //		BigDecimal totalFee = BigDecimal.ZERO;
 //		BigDecimal price = quotes.getPrice();//单价有效
 //		if(price != null && price.compareTo(BigDecimal.ZERO) > 0) {
@@ -138,8 +147,7 @@ public class QuotedProductController {
 //				totalFee = price.multiply(new BigDecimal(duration / dur)); 
 //			}
 //		}
-		BigDecimal totalFee = quotedProductService.getTotalFee(duration, quotes.getPrice(), 
-				quotes.getProduct().getDuration());
+		
 		JSONObject json = new JSONObject();
 		json.put("totalFee", totalFee);
 		return JsonUtils.getSuccessJSONObject(json);
