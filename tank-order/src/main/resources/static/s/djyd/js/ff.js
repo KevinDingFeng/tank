@@ -30,7 +30,7 @@ $(document).ready(function () {
 			gods_search("11");
 		}
 		
-		$(".Ringer_logo_right a").attr("href","Ringer_xq.html?id=9&code=13");
+		$(".Ringer_logo_right a").attr("href","Ringer_xq.html?id=9&code=11");
 		//导航显示 下面内容
 		$(".god_top a").click(function () {
 			$(this).addClass("active");
@@ -51,7 +51,7 @@ $(document).ready(function () {
 				$(".Ringer").css("display", "block");
 				$(".student").css("display", "none");
 				$(".ladder").css("display", "none");
-				$(".Ringer_logo_right a").attr("href","Ringer_xq.html?id=9&code=13");
+				$(".Ringer_logo_right a").attr("href","Ringer_xq.html?id=9&code=12");
 				$(".Ringer_logo_left span").html("陪玩大神")
 				gods_search("12");
 			}
