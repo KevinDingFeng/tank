@@ -29,26 +29,30 @@ $(document).ready(function() {
                 WeixinJSBridge.invoke('setFontSizeCallback', { 'fontSize': 0 });
             });
         }
-    })();	
+    })();
+	
 	//点击qq客服
 	$(".qq_kf").click(function(){
 		$("#cumtor").show();
-		$("#cumtor").empty();
-		$("#cumtor").append(`
-				<img src="images/qqcode.jpeg"/>
+		$("#cumtor_img").show();
+		$("#cumtor_img").empty();
+		$("#cumtor_img").append(`
+			<img src="images/qqcode.jpeg"/>
 		`);
 	})
 	//点击微信客服
 	$(".two_width").click(function(){
 		$("#cumtor").show();
-		$("#cumtor").empty();
-		$("#cumtor").append(`
-				<img src="images/wxcode.jpeg"/>
+		$("#cumtor_img").show();
+		$("#cumtor_img").empty();
+		$("#cumtor_img").append(`
+			<img src="images/wxcode.jpeg"/>
 		`);
 	})
 	//点击yy客服
 	//点击隐藏
 	$("#cumtor").click(function(){
 		$("#cumtor").hide();
+		$("#cumtor_img").hide();
 	})
 })

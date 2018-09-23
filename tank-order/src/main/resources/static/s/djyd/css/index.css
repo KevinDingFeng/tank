@@ -7,6 +7,12 @@ body{
 a{
 	text-decoration: none;
 }
+body {
+
+  padding-bottom: constant(safe-area-inset-bottom);
+
+}
+ 
 /* 遮盖层 */
 #cumtor{
 	z-index:999;
@@ -20,10 +26,17 @@ a{
     display: none;
     text-align: center;
 }
-#cumtor>img{
+
+#cumtor_img img{
+	position: absolute;
+	left: 11%;
+    top: 0px;
+	z-index:1999;
 	width:80%;
-	height: 70%;
-	margin-top:20%;
+	height: 50%;
+	margin-top:40%;
+	opacity: 1!important;
+	background:rgba(255,255,255,0.3);
 }
 .cl_b{
 	clear:both;
@@ -1305,6 +1318,7 @@ a{
 /* ff */
 .prise_left{
 	float:left;
+	width:17%;
 }
 .prise_right{
 	float:left;
@@ -1322,7 +1336,7 @@ a{
 	position: absolute;
 	top:-1px;
 	left:0;
-	height:1.22rem;
+	height:100%;
 	width:0.1rem;
 	background-color:#ffb033;
 }
@@ -1343,7 +1357,7 @@ a{
 	
 }
 .title_pname{
-	width:80%;
+	width:100%;
 }
 .title_price{
 	text-align:right;
@@ -1372,6 +1386,61 @@ a{
 .width_cc{
 	width: 96%;
 	text-align:center;
+}
+/* 适配iphonex */
+/*
+ *  iphoneX pulic  css
+ *  2018-01-01
+ */
+
+@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3){ 
+
+   body{
+      padding-bottom: constant(safe-area-inset-bottom);
+      padding-bottom: env(safe-area-inset-bottom);
+   }
+
+   .iphonex-pt{
+      padding-top: constant(safe-area-inset-top);
+      padding-top: env(safe-area-inset-top);
+   }
+   .iphonex-pb{
+      padding-bottom: constant(safe-area-inset-bottom);
+      padding-bottom: env(safe-area-inset-bottom);
+   }
+   .iphonex-mt{
+      margin-top: constant(safe-area-inset-top);
+      margin-top: env(safe-area-inset-top);
+   }
+   .iphonex-mb{
+      margin-bottom: constant(safe-area-inset-bottom);
+      margin-bottom: env(safe-area-inset-bottom);
+   }
+   .iphonex-pl{
+      padding-left: constant(safe-area-inset-left);
+      padding-left: env(safe-area-inset-left);
+   }
+   .iphonex-pr{
+      padding-right: constant(safe-area-inset-right);
+      padding-right: env(safe-area-inset-right);
+   }
+   .iphonex-ml{
+      margin-left: constant(safe-area-inset-left);
+      margin-left: env(safe-area-inset-left);
+   }
+   .iphonex-mr{
+      margin-right: constant(safe-area-inset-right);
+      margin-right: env(safe-area-inset-right);
+   }
+   .iphonex-bd-top-bg{
+      border-top: 88px solid transparent;
+   }
+   .iphonex-bd-top{
+      border-top: 44px solid transparent;
+   }
+   .iphonex-bd-bottom{
+      border-bottom: 34px solid transparent;
+   }
 }
 
 
