@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <title>测试首页</title>
+	    <script src="js/jquery.min.js"></script>
+	</head>
+	<body>
+	<h3>点击下面的链接，开启授权流程</h3>
+	<a id="authALink" target="_blank">开启授权</a>
+	<h3>点击下面的链接，开启支付流程</h3>
+	<a id="payALink" target="_blank">开启支付</a>
+	
+	<script>
+	$(document).ready(function(){
+		var _appid = "wx688d5b0204796195";
+		var _redirect_uri = "http%3A%2F%2Ftank.dazonghetong.com%2Fauth%2Fcallback";
+		var _state = "s123456789";
+		var _href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" 
+				+ _appid + "&redirect_uri="
+				+ _redirect_uri + "&response_type=code&scope=snsapi_userinfo&state="
+				+ _state + "#wechat_redirect"; 
+		/* var _href = "/auth/callback?code=asdfasdf&state=" + _state; */
+		$("#authALink").attr("href", _href);
+		console.log(_href);
+		var timeid ;
+		$("#authALink").click(function(){
+			//开启定时器读取用户信息
+			timeid = setInterval(getUserInfo,5000);
+		});
+		function getUserInfo(){
+			console.log("5 seconds");
+			$.get("/auth/user_info?state=" + _state, function(data, status){
+				console.log(data);
+				console.log(status);
+				//符合某种状态时 取消定时器
+				if(data.code == 200){
+					console.log("成功获取到信息");
+					clearInterval(timeid);				
+				}
+			});
+		}
+		
+		$("#payALink").click(function(){
+			//向后台发起请求，获取预支付 id 和订单 id 
+			$.post("/play_order/unified", {}, function(data, status){
+				console.log(data);
+				console.log(status);
+				onBridgeReady();
+			});
+		});
+		function onBridgeReady(){
+			WeixinJSBridge.invoke( 'getBrandWCPayRequest', 
+				{
+					"appId":"wx2421b1c4370ec43b",     //公众号名称，由商户传入     
+					"timeStamp":"1395712654",         //时间戳，自1970年以来的秒数     
+					"nonceStr":"e61463f8efa94090b1f366cccfbbb444", //随机串     
+					"package":"prepay_id=u802345jgfjsdfgsdg888",     
+					"signType":"MD5",         //微信签名方式：     
+					"paySign":"70EA570631E4BB79628FBCA90534C63FF7FADD89" //微信签名 
+				},
+				function(res){
+					if(res.err_msg == "get_brand_wcpay_request:ok" ){
+					// 使用以上方式判断前端返回,微信团队郑重提示：
+					      //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+					} 
+				}
+			); 
+		}
+			
+/* 		if (typeof WeixinJSBridge == "undefined"){
+			   if( document.addEventListener ){
+			       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+			   }else if (document.attachEvent){
+			       document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+			       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+			   }
+			}else{
+			   onBridgeReady();
+			} */
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		/* $.post("/experiment/remove/" + id,{}, function (data, status, jqXHR) {
+	    layer.alert(data, {
+	        title: "删除操作",
+	        btn: ['确定']
+	    },
+	        function (index, item) {
+	            //layer.close(index);
+	            location.reload();
+	        });
+	}); */
+	</script>
+	</body>
+</html>

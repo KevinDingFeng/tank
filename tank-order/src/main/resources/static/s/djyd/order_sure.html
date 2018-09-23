@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>确认订单</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="css/mobiscroll.custom.min.css"/>
+		<link rel="stylesheet" type="text/css" href="js/jq_weiui/css/jquery-weui.css"/>
+		<link rel="stylesheet" type="text/css" href="css/weiui/weui.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+		<style>
+			.weui-count .weui-count__increase{
+				background-color: #fff;
+			}
+			.weui-count .weui-count__increase:after, .weui-count .weui-count__increase:before{
+				background-color: #000;
+			}
+			.weui-count .weui-count__btn:after, .weui-count .weui-count__btn:before{
+				background-color: #000;
+			}
+			.weui-cell{
+				padding:10px 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="order_sure">
+			<div class="xx_sure xx_mar">
+				<p class="bor_yu"></p><span class="f_weight">服务类型</span>
+				<span class="sure_title f_weight">服务类型</span>
+			</div>
+			<div class="xx_sure_dw xx_mar">
+				<div class="dw_list">
+					<p class="bor_yu"></p><span class="f_weight">服务档位</span>
+				</div>
+				<ul class="dw_list xx_mar er_dj">
+					<!-- <li>练车</li>
+					<li class="dw_list_active">练车</li> -->
+				</ul>
+				<ul class="dw_list xx_mar zi_arr">
+					<!-- <li class=""three_list"zi_arr_active">练车</li>
+					<li class="three_list">练车</li> -->
+				</ul>	
+			</div>
+			<div class="xx_sure_dw xx_mar ">
+				<div class="dl_xz">
+					<div class="dw_list">
+						<p class="bor_yu"></p><span class="f_weight">服务时长</span>
+					</div>
+					<div class="sure_dw_js">
+						<!-- 时间插件  代练独有 -->
+						<div class="weui-cell">
+				            <div class="weui-cell__bd">
+				              <div class="weui-count bor_inpt">
+				                <a class="weui-count__btn weui-count__decrease"></a>
+				                <input class="weui-count__number show_num" type="number" value="" id="timeStart">
+				                <a class="weui-count__btn weui-count__increase"></a>
+				                <span class="price_time_dw"></span>
+				              </div>
+				            </div>
+				            <div class="weui-cell__ft">
+				             	￥<span class="price_col price_time " id="price_qd""></span><span class="c_type"></span>
+				            </div>
+				          </div>
+		         	</div>
+					<!-- 时间插件结束 -->
+				</div>
+				<div class="dw_list">
+					<p class="bor_yu"></p><span class="f_weight">教练</span>
+				</div>
+				<ul class="dw_list xx_mar zi_arr_jl">
+					<!-- <li class="zi_arr_active">刀爷</li>
+					<li>刀爷</li> -->
+				</ul>
+				
+				<div class="dw_list xx_mar">
+					<p class="bor_yu"></p><span class="f_weight">微信号</span>
+				</div>
+				<div class="dw_list xx_mar">
+					<input type="text" id="w_chart" class="inpt" placeholder="请输入微信号" style="width: 80%;"/>				
+				</div>
+				<div class="dw_list xx_mar">
+					<p class="bor_yu"></p><span class="f_weight">手机号</span>
+				</div>
+				<div class="dw_list xx_mar">
+					<input type="text" id="m_iphone" class="inpt" placeholder="请输入手机号" style="width: 80%;"/>				
+				</div>
+				<div class="dw_list xx_mar">
+					<p class="bor_yu"></p><span class="f_weight">微信支付</span>
+					<span class="sure_title1 f_weight">
+						<img  src="images/choose.jpg"/>
+					</span>
+				</div>
+			</div>
+			<div class="xx_sure_dw xx_mar">
+				<div class="dw_list">
+					<p class="bor_yu"></p><span class="f_weight">备注</span>
+				</div>
+				<div class="dw_list xx_mar">
+					<textarea id="m_remark" placeholder="补充需求，如：期望服务时间" style="width: 80%;"></textarea>
+				</div>
+				
+			</div>
+			<div class="xx_sure_dw xx_mar" style="padding:0 0.5rem 0.2rem 0.5rem;">
+				<div class="dw_list xx_mar">
+					<p class="bor_yu"></p><span class="f_weight">总计服务费</span>
+					<span class="sure_title_red f_weight"></span><span class="title_span">元</span>
+				</div>
+			</div>
+			<div class="pd_posi">
+				<span class="money">￥<span class="money_num"></span></span>
+				<span class="go_zf">去支付 ></span>
+			</div>
+		</div>
+	</body>
+	<script src="js/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/scroll.js"></script>
+	<script src="js/jq_weiui/js/jquery-weui.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script src="js/mobiscroll.custom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/order_sure.js" type="text/javascript" charset="utf-8"></script>
+</html>

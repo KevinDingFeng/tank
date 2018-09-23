@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>	
+		<link rel="stylesheet" type="text/css" href="js/jq_weiui/css/jquery-weui.css"/>
+		<link rel="stylesheet" type="text/css" href="css/weiui/weui.css"/>
+		<style>
+			.weui-loadmore{
+				font-size: 0.24rem;
+				position: relative;
+				top:50%;
+			}
+			body{
+				height: 6rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="weui-loadmore">
+		  	<i class="weui-loading"></i>
+		  	<span class="weui-loadmore__tips">正在加载</span>
+		</div>
+	</body>
+	<script src="js/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jq_weiui/js/jquery-weui.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		
+		//url取参
+		function getQueryString(name) {
+		    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+		    var r = window.location.search.substr(1).match(reg);
+		    if (r != null) {
+		        return unescape(r[2]);
+		    }
+		    return null;
+		}
+		//code
+		var _code = getQueryString("code");
+		console.log(_code);
+		//类型
+		var _state = getQueryString("state");
+		var _type =  getQueryString("type");
+		console.log(_state);
+		if(!_code){
+			window.location.href = $main_URL_yd+"/s/djyd/index.html";
+		}else{
+			$.ajax({
+				type: "GET",
+				url: $main_URL_yd+"/auth/callback_by_code?code="+_code+"&state="+_state,
+				dataType: "json",
+				async: true,
+				error: function(xhr, errorInfo, ex) {
+					$.toast("查询xx错误！错误信息:" + errorInfo, "forbidden");
+				},
+				success: function(resp) { //请求完成
+					console.log(resp);
+					isFirst = false;
+					if(resp.code == "200"){
+						var user_xx = resp.data;
+						sessionStorage.clear(); //清空session
+						sessionStorage.setItem("username", resp.data.nickName);
+						sessionStorage.setItem("usertitle", resp.data.headImgUrl);
+						window.location.href = $main_URL_yd+"/s/djyd/ff.html?type=" +_type;
+					
+					}
+				}
+			});
+		}
+	</script>
+</html>
