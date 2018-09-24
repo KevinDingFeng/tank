@@ -162,7 +162,7 @@ $(document).ready(function() {
 				list_2+=`
 					<div class="right_content">
 						<div class="title_top">
-							<p class="title_pname">${level3_list[i].product.productType.name}</p>
+							<p class="title_pname1">${level3_list[i].product.productType.name}</p>
 							<p class="title_price">￥<text class="font_col">${level3_list[i].price}</text>元</p>
 							<p class="title_text">${level3_list[i].product.productType.remark}</p>
 							<p class="title_xd">

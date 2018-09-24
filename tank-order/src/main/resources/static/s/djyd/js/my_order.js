@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	$.ajax({
 		type: "GET",
-		url: $main_URL_yd+"/play_order/my_orders",
+		url: $main_URL_yd+"/order/list",
 		dataType: "json",
 		async: true,
 		error: function(xhr, errorInfo, ex) {
@@ -9,8 +9,45 @@ $(document).ready(function() {
 		},
 		success: function(resp) { //请求完成
 			if(resp.code == "200"){
-				var list_xx = resp.data;
-				var list_order ="";//order列表
+				var list_xx = resp.data.page.content;
+				if(list_xx.length<=0){
+					$(".order_list").empty();
+					$(".order_list").append(`
+							<div class="no_list">暂无订单</div>
+					`);
+				}else{
+					
+					var list_order = "";//order列表
+					for(var i=0; i< list_xx.length;i++){
+						if(list_xx[i].status == "NotPay"){
+							list_xx[i].status = "未支付"
+						}else if(list_xx[i].status == "Operation"){
+							list_xx[i].status = "待服务"
+						}else if(list_xx[i].status == "Complete"){
+							list_xx[i].status = "已服务"
+						}else if(list_xx[i].status == "Cancel"){
+							list_xx[i].status = "已取消"
+						}
+						list_order+=`
+							<div class="orderbg_list" order_id=${list_xx[i].id}>
+								<p class="fw_order"></p>
+								<p class="type_order"></p>
+								<p class="price_order"><span class="r_col f_weight">￥${list_xx[i].totalFee}元</span></p>
+								<p class="y_col zt_order">${list_xx[i].status}</p>
+							</div>
+						`;
+					}
+					$(".order_list").empty();
+					$(".order_list").append(list_order);
+					//点击查询详情
+					$(".orderbg_list").click(function(){
+						debugger
+						var _id = $(this).attr("order_id");
+						window.location.href = "order_look.html?id="+_id;
+					})
+				}
+				
+				/*var list_order ="";//order列表
 				for (var i = 0; i < list_xx.length; i++) {
 					if(list_xx[i].status == "BEFORE"){
 						list_xx[i].status = "待服务"
@@ -38,7 +75,7 @@ $(document).ready(function() {
 				$(".orderbg_list").click(function(){
 					var _id = $(this).attr("order_id");
 					window.location.href = "order_look.html?id="+_id;
-				})
+				})*/
 			}else if(resp.code == "400"){
 				$.toast("查询订单信息失败！失败信息:" + resp.message, "forbidden");
 			}				

@@ -892,12 +892,12 @@ body {
 }
 .price_btn{
 	font-size: 0.24rem;
-    margin: 0 1.37rem;
     text-align: center;
-    padding: 0.29rem 1.08rem;
+    padding: 0.29rem 0;
     background-color: #ffb033;
-    border-radius: 21px;
-    margin-bottom: 1rem;
+    position:fixed;
+    width:100%;
+    bottom:0;
 }
 .price_btn a{
 	color: #fff;
@@ -959,29 +959,28 @@ body {
 	margin-top: 0.19rem;
 }
 #seach_order{
-	border-radius: 30px;
-	border: 2px solid  #ffb033;
+	border-radius: 5px;
+	border: 1px solid  #ddd;
 	padding: 0.18rem 0;
 	padding-left: 0.64rem;
 	color: #515151;
+	width: 83%;
 }
 .seacher{
 	position: absolute;
-	top: 10px;
-	left: 2rem;
+	top: 8px;
+	left:0.5rem;
 	width: 0.33rem;
 	height: 0.36rem;
 }
 .order_list{
 	margin: 0 0.28rem;
-	margin-left: -0.2rem;
 }
 .orderbg_list{
 	background: url(../images/order_bg.png) no-repeat;
 	background-size: 100%;
-	height: 2.21rem;
+	height: 1.5rem;
 	position: relative;
-	
 }
 .fw_order{
 	position: absolute;
@@ -994,19 +993,19 @@ body {
 .type_order{
 	font-size: 0.24rem;
 	position: absolute;
-	top: 0.95rem;
+	top: 0.5rem;
 	left: 2.5rem;
 }
 .price_order{
 	font-size: 0.24rem;
 	position: absolute;
-	top: 0.95rem;
+	top: 0.5rem;
 	left: 4rem;
 }
 .zt_order{
 	font-size: 0.24rem;
 	position: absolute;
-	top: 0.95rem;
+	top: 0.5rem;
 	left: 5.9rem;
 }
 /*閻犱降鍨瑰畷鐔哥┍閳╁啩绱�*/
@@ -1040,13 +1039,13 @@ body {
 }
 .user_name{
 	font-size: 0.30rem;
-	color: #fff;
+	color: #000;
 	display: flex;
     justify-content: center;
     margin: 0.2rem 0;
 }
 .zh_xx{
-	background-color: #333333;
+	
 	border-radius: 10px;
 	padding: 0.5rem 0.3rem;
 	margin: 0 0.22rem;
@@ -1069,14 +1068,14 @@ body {
 	font-size: 0.3rem;
 	margin-top: -4px;
 	margin-left: 10px;
-	color: #fff;
+	color: #000;
 	width: 15%;
 }
 .zh_xx p:nth-child(3){
 	font-size: 0.24rem;
 	width: 45%;
 	text-align: center;
-	color: #fff;
+	color: #000;
 }
 .phone_cz{
 	background-color: #ffb033;
@@ -1168,13 +1167,15 @@ body {
 }
 
 .order_list >.orderbg_list{
-	    margin-top: -0.8rem;
-}
-.order_list >.orderbg_list:first-child{
-		margin-top: 0;
+	    margin-top: 0.2rem;
 }
 .my_order{
 	margin-bottom: 1rem;
+}
+.no_list{
+	position:absolute;
+	top:40%;
+	left:40%;
 }
 
 .jx_listarr .prise_car{
@@ -1358,6 +1359,9 @@ body {
 }
 .title_pname{
 	width:100%;
+}
+.title_pname1{
+	width:80%;
 }
 .title_price{
 	text-align:right;

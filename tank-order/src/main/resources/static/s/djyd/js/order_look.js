@@ -15,7 +15,7 @@ $(document).ready(function() {
 		//查询订单 详情
 		$.ajax({
 			type: "GET",
-			url: $main_URL_yd+"/play_order/detail/"+order_id,
+			url: $main_URL_yd+"/order/detail/"+order_id,
 			dataType: "json",
 			async: true,
 			error: function(xhr, errorInfo, ex) {
@@ -23,7 +23,52 @@ $(document).ready(function() {
 			},
 			success: function(resp) { //请求完成
 				if(resp.code == "200"){
-					var _dx = resp.data;
+					var _Level1 = resp.data.typeLevel1;//第一级
+					var _Level2 = resp.data.typeLevel2;//第二级
+					var _Level3 = resp.data.typeLevel3;//第三级					
+					var order_xx = resp.data.playOrder;//订单 信息
+					if(_Level3 == "" || _Level3 == null || _Level3 == undefined){
+						$(".order_cp").html(_Level1+">"+_Level2)
+					}else{
+						$(".order_cp").html(_Level1+">"+_Level2+">"+ _Level3)
+					}
+					var time_dw = order_xx.product.durationType;//时间单位单位
+					if(time_dw == "Hour"){
+						time_dw = "小时"
+					}else if(time_dw == "Day"){
+						time_dw = "天"
+					}else if(time_dw == "Week"){
+						time_dw = "周"
+					}else if(time_dw == "Month"){
+						time_dw = "月"
+					} 
+					$(".zh_js").html(order_xx.duration+time_dw);//服务时长
+					if(time_dw == "NoLimitation"){
+						$(".zh_js").html("不限");
+					}
+					$(".gods_qw").html(order_xx.coach.name);//期望服务大神
+					$(".order_id").html(order_xx.no);//订单号
+					$(".order_time").html(order_xx.creation);//下单时间
+					var _cellphone = order_xx.cellphone;//电话号码
+					$(".order_phone").html(_cellphone);
+					var _wxAccount = order_xx.wxAccount;//微信号码
+					if(_wxAccount == "" || _wxAccount == null || _wxAccount == undefined){
+						$(".order_wx").html("暂无微信号码");
+					}else{
+						$(".order_wx").html(_wxAccount);
+					}
+					var _remark = order_xx.remark;//备注
+					if(_remark == null){
+						$(".order_remker").html(_remark);
+					}
+					$(".order_price").html(order_xx.totalFee+"元");//服务费用
+					
+					if(order_xx.status == "NotPay"){
+						$("#tj_btn").html("去支付")
+					}
+					
+				}
+					/*var _dx = resp.data;
 					if(_dx.status == "BEFORE"){
 						_dx.status = "待服务"
 					}else{
@@ -80,7 +125,7 @@ $(document).ready(function() {
 					})
 				}else if(resp.code == "400"){
 					$.toast("查询订单信息失败！失败信息:" + resp.message, "forbidden");
-				}				
+				}				*/
 			}
 		});
 	}
