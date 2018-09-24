@@ -133,11 +133,10 @@ public class PlayOrderController {
 
 	private void initPlayOrder(PlayOrder playOrder, Coach coach, Product product) {
 
-		WxUserInfo wxUser = wxUserService.findById(2L);//TODO
-		
-		
-//		Coach coach = qp.getCoach();
-//		Product product = qp.getProduct();
+		WxUserInfo wxUser = wxUserService.findById(2L);// TODO
+
+		// Coach coach = qp.getCoach();
+		// Product product = qp.getProduct();
 
 		// Coach coach = coachService.findById(coachId);
 		// Product product = productService.findById(productId);
@@ -160,8 +159,9 @@ public class PlayOrderController {
 		playOrder.setNo(no);
 		playOrder.setViceNo(no + 1);
 
-//		playOrder.setTotalFee(quotedProductService.getTotalFee(playOrder.getDuration(), qp.getPrice(),
-//				qp.getProduct().getDuration()));
+		// playOrder.setTotalFee(quotedProductService.getTotalFee(playOrder.getDuration(),
+		// qp.getPrice(),
+		// qp.getProduct().getDuration()));
 	}
 
 	private String getNo() {
@@ -176,7 +176,7 @@ public class PlayOrderController {
 	 * @param result
 	 * @param quotedProductId
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public JSONObject save(HttpServletRequest request, @Validated @ModelAttribute("entity") PlayOrder playOrder,
@@ -194,44 +194,44 @@ public class PlayOrderController {
 		ProductType typeLevel3 = productTypeService.findByCode(product.getProductType().getCode());
 		ProductType typeLevel2 = productTypeService.findByCode(typeLevel3.getParentCode());
 		BigDecimal totalFee = BigDecimal.ZERO;
-		if(typeLevel2.getParentCode() == 11) {
+		if (typeLevel2.getParentCode() == 11) {
 			totalFee = qp.getPrice();
-		}else {
-			totalFee = quotedProductService.getTotalFee(playOrder.getDuration(), qp.getPrice(), 
+		} else {
+			totalFee = quotedProductService.getTotalFee(playOrder.getDuration(), qp.getPrice(),
 					qp.getProduct().getDuration());
 		}
 		playOrder.setTotalFee(totalFee);
 		playOrder = playOrderService.save(playOrder);
 
-		
-		// 调用统一下单流程 
-//		QuotedProduct qp = quotedProductService.findById(quotedProductId);
-//		BigDecimal totalFee = quotedProductService.getTotalFee(playOrder.getDuration(), qp.getPrice(), 
-//				qp.getProduct().getDuration());
+		// 调用统一下单流程
+		// QuotedProduct qp = quotedProductService.findById(quotedProductId);
+		// BigDecimal totalFee =
+		// quotedProductService.getTotalFee(playOrder.getDuration(), qp.getPrice(),
+		// qp.getProduct().getDuration());
 		String totalFeeStr = this.getTotalFeeStr(playOrder.getTotalFee());
 		String openId = request.getHeader("openId");
 		JSONObject prepay = this.prepay(playOrder.getNo(), openId, request.getRemoteAddr(), totalFeeStr);
-		if(prepay.getString("result") != null) {
+		if (prepay.getString("result") != null) {
 			System.out.println("预支付时出现错误");
-			return JsonUtils.getFailJSONObject(prepay.getString("result"));//预支付时出现错误
+			return JsonUtils.getFailJSONObject(prepay.getString("result"));// 预支付时出现错误
 		}
 		JSONObject json = new JSONObject();
 		json.put("playOrder", playOrder);
 		json.put("prepay", prepay);
 		return JsonUtils.getSuccessJSONObject(json);
 	}
-	
+
 	@RequestMapping(value = "/pay", method = RequestMethod.POST)
 	public JSONObject pay(HttpServletRequest request, @RequestParam(value = "no") String no) throws Exception {
-		
+
 		PlayOrder playOrder = playOrderService.findMainByNo(no);
 		String openId = request.getHeader("openId");
-		
+
 		String totalFeeStr = this.getTotalFeeStr(playOrder.getTotalFee());
 		JSONObject prepay = this.prepay(playOrder.getNo(), openId, request.getRemoteAddr(), totalFeeStr);
-		if(prepay.getString("result") != null) {
+		if (prepay.getString("result") != null) {
 			System.out.println("预支付时出现错误");
-			return JsonUtils.getFailJSONObject(prepay.getString("result"));//预支付时出现错误
+			return JsonUtils.getFailJSONObject(prepay.getString("result"));// 预支付时出现错误
 		}
 		JSONObject json = new JSONObject();
 		json.put("playOrder", playOrder);
@@ -240,50 +240,52 @@ public class PlayOrderController {
 	}
 
 	private JSONObject prepay(String orderNo, String openId, String ip, String totalFee) throws Exception {
-		//组织统一下单的数据，完成统一下单
+		// 组织统一下单的数据，完成统一下单
 		Map<String, String> map = this.getUnifiedOrderData(orderNo, openId, ip, totalFee);
 		WXPayConfig conf = new WXPayConfigImpl();
-        WXPay wxPay = new WXPay(conf, "https://wxpay.dazonghetong.com/wxpay/notify");
-        Map<String,String> resultMap = wxPay.unifiedOrder(map);
-		//解析统一下单返回的信息，生成唤醒微信支付的数据
-        String returnCode = (String) resultMap.get("return_code");//通信标识
-        if ("SUCCESS".equals(returnCode.toUpperCase())){
-        	String resultCode = (String) resultMap.get("result_code");//交易标识
-        	if("SUCCESS".equals(resultCode.toUpperCase())) {
-        		String appId = (String) resultMap.get("appid");// 微信公众号AppId
-        		String prepayId = "prepay_id=" + resultMap.get("prepay_id");// 统一下单返回的预支付id
-        		String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);// 当前时间戳
-        		String nonceStr = RandomUtil.randomString(20);// 不长于32位的随机字符串
-        		String signType = "MD5";
-        		SortedMap<String, String> signMap = this.getSignMap(appId, prepayId, timeStamp, nonceStr, signType);
-        		JSONObject json = this.getPrepayJson(appId, prepayId, timeStamp, nonceStr, signType, signMap, conf.getKey());
-        		return json;
-        	}else {
-        		String errDes = (String) resultMap.get("err_code_des");//交易错误信息
-        		JSONObject json = new JSONObject();
-            	json.put("result", errDes);
-            	return json;	
-        	}
-        }else {
-        	String returnMsg = (String) resultMap.get("return_msg");//通信错误信息
-        	JSONObject json = new JSONObject();
-        	json.put("result", returnMsg);
-        	return json;
-        }
+		WXPay wxPay = new WXPay(conf, "https://wxpay.dazonghetong.com/wxpay/notify");
+		Map<String, String> resultMap = wxPay.unifiedOrder(map);
+		// 解析统一下单返回的信息，生成唤醒微信支付的数据
+		String returnCode = (String) resultMap.get("return_code");// 通信标识
+		if ("SUCCESS".equals(returnCode.toUpperCase())) {
+			String resultCode = (String) resultMap.get("result_code");// 交易标识
+			if ("SUCCESS".equals(resultCode.toUpperCase())) {
+				String appId = (String) resultMap.get("appid");// 微信公众号AppId
+				String prepayId = "prepay_id=" + resultMap.get("prepay_id");// 统一下单返回的预支付id
+				String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);// 当前时间戳
+				String nonceStr = RandomUtil.randomString(20);// 不长于32位的随机字符串
+				String signType = "MD5";
+				SortedMap<String, String> signMap = this.getSignMap(appId, prepayId, timeStamp, nonceStr, signType);
+				JSONObject json = this.getPrepayJson(appId, prepayId, timeStamp, nonceStr, signType, signMap,
+						conf.getKey());
+				return json;
+			} else {
+				String errDes = (String) resultMap.get("err_code_des");// 交易错误信息
+				JSONObject json = new JSONObject();
+				json.put("result", errDes);
+				return json;
+			}
+		} else {
+			String returnMsg = (String) resultMap.get("return_msg");// 通信错误信息
+			JSONObject json = new JSONObject();
+			json.put("result", returnMsg);
+			return json;
+		}
 	}
-	
-	private Map<String, String> getUnifiedOrderData(String orderNo, String openId, String ip, String totalFee){
-		Map<String,String> map = new HashMap<>();
-        map.put("openid", openId);//用户标识openId
-        map.put("spbill_create_ip", ip);//请求Ip地址
-        map.put("body", "私人订制电竞服务-游戏");//商品描述			body 商家名称-销售商品类目
-        map.put("out_trade_no", orderNo);//商户订单号			out_trade_no
-        map.put("total_fee", totalFee);//标价金额			total_fee
-        map.put("trade_type", "JSAPI");//交易类型			trade_type
-        return map;
+
+	private Map<String, String> getUnifiedOrderData(String orderNo, String openId, String ip, String totalFee) {
+		Map<String, String> map = new HashMap<>();
+		map.put("openid", openId);// 用户标识openId
+		map.put("spbill_create_ip", ip);// 请求Ip地址
+		map.put("body", "私人订制电竞服务-游戏");// 商品描述 body 商家名称-销售商品类目
+		map.put("out_trade_no", orderNo);// 商户订单号 out_trade_no
+		map.put("total_fee", totalFee);// 标价金额 total_fee
+		map.put("trade_type", "JSAPI");// 交易类型 trade_type
+		return map;
 	}
-	
-	private SortedMap<String, String> getSignMap(String appId, String prepayId, String timeStamp, String nonceStr, String signType){
+
+	private SortedMap<String, String> getSignMap(String appId, String prepayId, String timeStamp, String nonceStr,
+			String signType) {
 		SortedMap<String, String> signMap = new TreeMap<>();// 自然升序map
 		signMap.put("appId", appId);
 		signMap.put("package", prepayId);
@@ -292,7 +294,9 @@ public class PlayOrderController {
 		signMap.put("signType", signType);
 		return signMap;
 	}
-	private JSONObject getPrepayJson(String appId, String prepayId, String timeStamp, String nonceStr, String signType, SortedMap<String, String> signMap, String key) throws Exception {
+
+	private JSONObject getPrepayJson(String appId, String prepayId, String timeStamp, String nonceStr, String signType,
+			SortedMap<String, String> signMap, String key) throws Exception {
 		JSONObject json = new JSONObject();
 		json.put("appId", appId);
 		json.put("timeStamp", timeStamp);
@@ -302,23 +306,65 @@ public class PlayOrderController {
 		json.put("paySign", WXPayUtil.generateSignature(signMap, key));
 		return json;
 	}
-	
+
 	private String getTotalFeeStr(BigDecimal totalFee) {
-		totalFee = totalFee.multiply(new BigDecimal(100));//转 元 为 角
+		totalFee = totalFee.multiply(new BigDecimal(100));// 转 元 为 角
 		totalFee = totalFee.setScale(0, BigDecimal.ROUND_HALF_UP);
-		
+
 		return totalFee.intValue() + "";
 	}
 
 	// 获取订单列表，根据普通用户id
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public JSONObject list(HttpServletRequest request) {
-		Long wxUserId = 2L;//TODO
+		Long wxUserId = 2L;// TODO
 		Pageable pageable = this.getPageable();
 		Page<PlayOrder> page = playOrderService.findByWxUserId(wxUserId, pageable);
+
+		List<ProductType> types = productTypeService.findAll();
+		JSONObject typesJson = this.formatTypes(types);
+
 		JSONObject json = new JSONObject();
 		json.put("page", page);
+		json.put("types", typesJson);
 		return JsonUtils.getSuccessJSONObject(json);
+	}
+
+	private JSONObject formatTypes(List<ProductType> types) {
+		JSONObject json = new JSONObject();
+		JSONObject typesLevel1 = new JSONObject();
+		JSONObject typesLevel2 = new JSONObject();
+		JSONObject typesLevel3 = new JSONObject();
+		if (types != null && types.size() > 0) {
+			for (ProductType t : types) {
+				switch (t.getLevel()) {
+				case 1:
+					typesLevel1.put("t" + t.getId(), this.getTypeJson(t.getCode(), t.getName(), t.getParentCode()));
+					break;
+				case 2:
+					typesLevel2.put("t" + t.getId(), this.getTypeJson(t.getCode(), t.getName(), t.getParentCode()));
+					break;
+				case 3:
+					typesLevel3.put("t" + t.getId(), this.getTypeJson(t.getCode(), t.getName(), t.getParentCode()));
+					break;
+				default:
+					break;
+				}
+
+			}
+		}
+		json.put("typesLevel1", typesLevel1);
+		json.put("typesLevel2", typesLevel2);
+		json.put("typesLevel3", typesLevel3);
+		return json;
+	}
+
+	private JSONObject getTypeJson(int code, String name, int parentCode) {
+		JSONObject json = new JSONObject();
+		json.put("code", code);
+		json.put("name", name);
+		json.put("parentCode", parentCode);
+		return json;
 	}
 
 	private Pageable getPageable() {
@@ -332,8 +378,14 @@ public class PlayOrderController {
 	public JSONObject info(HttpServletRequest request, @PathVariable(value = "id") Long id) {
 		// TODO 校验 资源权限
 		PlayOrder order = playOrderService.findById(id);
+		ProductType typeLevel3 = order.getProduct().getProductType();
+		ProductType typeLevel2 = productTypeService.findByCode(typeLevel3.getParentCode());
+		ProductType typeLevel1 = productTypeService.findByCode(typeLevel2.getParentCode());
 		JSONObject json = new JSONObject();
 		json.put("playOrder", order);
+		json.put("typeLevel1", typeLevel1.getName());
+		json.put("typeLevel2", typeLevel2.getName());
+		json.put("typeLevel3", typeLevel3.getName());
 		return JsonUtils.getSuccessJSONObject(json);
 	}
 
