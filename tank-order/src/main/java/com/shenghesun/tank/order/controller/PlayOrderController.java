@@ -332,40 +332,55 @@ public class PlayOrderController {
 
 	private JSONObject formatTypes(List<ProductType> types) {
 		JSONObject json = new JSONObject();
-		JSONObject typesLevel1 = new JSONObject();
-		JSONObject typesLevel2 = new JSONObject();
-		JSONObject typesLevel3 = new JSONObject();
+		// JSONObject typesLevel1 = new JSONObject();
+		// JSONObject typesLevel2 = new JSONObject();
+		// JSONObject typesLevel3 = new JSONObject();
 		if (types != null && types.size() > 0) {
+			Map<Integer, String> level1Map = new HashMap<>();// level 1 的 code 和 name
+			Map<Integer, String> level2Map = new HashMap<>();// level 2 的 code 和 name
+			Map<Integer, Integer> level2CodeMap = new HashMap<>();// level 2 的 code 和 parentCode
+			// Map<Integer, String> level3Map = new HashMap<>();
 			for (ProductType t : types) {
 				switch (t.getLevel()) {
 				case 1:
-					typesLevel1.put("t" + t.getId(), this.getTypeJson(t.getCode(), t.getName(), t.getParentCode()));
+					level1Map.put(t.getCode(), t.getName());
 					break;
 				case 2:
-					typesLevel2.put("t" + t.getId(), this.getTypeJson(t.getCode(), t.getName(), t.getParentCode()));
-					break;
-				case 3:
-					typesLevel3.put("t" + t.getId(), this.getTypeJson(t.getCode(), t.getName(), t.getParentCode()));
+					level2Map.put(t.getCode(), t.getName());
+					level2CodeMap.put(t.getCode(), t.getParentCode());
 					break;
 				default:
 					break;
 				}
-
+			}
+			for (ProductType t : types) {
+				if(t.getLevel() == 3) {
+					JSONObject typeJson = new JSONObject();
+					typeJson.put("code", t.getCode());
+					typeJson.put("name", t.getName());
+					Integer level2Code = t.getParentCode();
+					typeJson.put("level2Code", level2Code);
+					typeJson.put("level2Name", level2Map.get(level2Code));
+					Integer level1Code = level2CodeMap.get(level2Code);
+					typeJson.put("level1Code", level1Code);
+					typeJson.put("level1Name", level1Map.get(level1Code));
+					json.put("t" + t.getId(), typeJson);
+				}
 			}
 		}
-		json.put("typesLevel1", typesLevel1);
-		json.put("typesLevel2", typesLevel2);
-		json.put("typesLevel3", typesLevel3);
+		// json.put("typesLevel1", typesLevel1);
+		// json.put("typesLevel2", typesLevel2);
+		// json.put("typesLevel3", typesLevel3);
 		return json;
 	}
 
-	private JSONObject getTypeJson(int code, String name, int parentCode) {
-		JSONObject json = new JSONObject();
-		json.put("code", code);
-		json.put("name", name);
-		json.put("parentCode", parentCode);
-		return json;
-	}
+//	private JSONObject getTypeJson(int code, String name, int parentCode) {
+//		JSONObject json = new JSONObject();
+//		json.put("code", code);
+//		json.put("name", name);
+//		json.put("parentCode", parentCode);
+//		return json;
+//	}
 
 	private Pageable getPageable() {
 		Sort sort = new Sort(Direction.DESC, "creation");
