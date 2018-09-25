@@ -47,6 +47,16 @@ $(document).ready(function() {
 						$(".zh_js").html("不限");
 					}
 					$(".gods_qw").html(order_xx.coach.name);//期望服务大神
+					if(order_xx.status == "NotPay"){
+						order_xx.status = "未支付"
+					}else if(order_xx.status == "Operation"){
+						order_xx.status = "待服务"
+					}else if(order_xx.status == "Complete"){
+						order_xx.status = "已服务"
+					}else if(order_xx.status == "Cancel"){
+						order_xx.status = "已取消"
+					}
+					$(".order_type").html(order_xx.status);//订单状态
 					$(".order_id").html(order_xx.no);//订单号
 					$(".order_time").html(order_xx.creation);//下单时间
 					var _cellphone = order_xx.cellphone;//电话号码
@@ -63,9 +73,33 @@ $(document).ready(function() {
 					}
 					$(".order_price").html(order_xx.totalFee+"元");//服务费用
 					
-					if(order_xx.status == "NotPay"){
+					if(order_xx.status == "未支付"){
 						$("#tj_btn").html("去支付")
+					}else if(order_xx.status == "已服务"){
+						$(".my_order_sure").css("display","none")
 					}
+					//点击 去。。。。
+					$("#tj_btn").click(function(){
+						if(!$("#tj_btn").html("去支付")){
+							
+						}else{
+							$.ajax({
+								type: "POST",
+								url: $main_URL_yd+"/order/exe/"+order_id,
+								dataType: "json",
+								async: true,
+								error: function(xhr, errorInfo, ex) {
+									$.toast("查询订单信息错误！错误信息:" + errorInfo, "forbidden");
+								},
+								success: function(resp) { //请求完成
+									if(resp.code == "200"){
+										$.toast("订单状态修改成功！");
+										init();
+									}
+								}
+							});
+						}
+					})
 					
 				}
 					/*var _dx = resp.data;

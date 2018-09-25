@@ -19,6 +19,8 @@ $(document).ready(function() {
 					
 					var list_order = "";//order列表
 					for(var i=0; i< list_xx.length;i++){
+						var _id ="t"+list_xx[i].id;
+						var _t = resp.data.types[_id];
 						if(list_xx[i].status == "NotPay"){
 							list_xx[i].status = "未支付"
 						}else if(list_xx[i].status == "Operation"){
@@ -30,18 +32,19 @@ $(document).ready(function() {
 						}
 						list_order+=`
 							<div class="orderbg_list" order_id=${list_xx[i].id}>
-								<p class="fw_order"></p>
-								<p class="type_order"></p>
+								<p class="fw_order">${_t.level1Name}</p>
+								<p class="type_order">${_t.level2Name}</p>
 								<p class="price_order"><span class="r_col f_weight">￥${list_xx[i].totalFee}元</span></p>
 								<p class="y_col zt_order">${list_xx[i].status}</p>
 							</div>
 						`;
 					}
+					
+					
 					$(".order_list").empty();
 					$(".order_list").append(list_order);
 					//点击查询详情
 					$(".orderbg_list").click(function(){
-						debugger
 						var _id = $(this).attr("order_id");
 						window.location.href = "order_look.html?id="+_id;
 					})

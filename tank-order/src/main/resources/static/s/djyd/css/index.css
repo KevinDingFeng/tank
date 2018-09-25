@@ -984,8 +984,8 @@ body {
 }
 .fw_order{
 	position: absolute;
-	top: 0.9rem;
-	left: 0.84rem;
+	top: 0.5rem;
+	left: 0.3rem;
 	font-size: 0.30rem;
 	color: #fff;
 	font-weight: 700;
@@ -994,7 +994,7 @@ body {
 	font-size: 0.24rem;
 	position: absolute;
 	top: 0.5rem;
-	left: 2.5rem;
+	left: 1.5rem;
 }
 .price_order{
 	font-size: 0.24rem;
