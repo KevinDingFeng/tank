@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
@@ -34,6 +35,7 @@ import com.shenghesun.tank.coach.entity.Coach;
 import com.shenghesun.tank.order.PlayOrderService;
 import com.shenghesun.tank.order.entity.PlayOrder;
 import com.shenghesun.tank.order.entity.PlayOrder.OperationType;
+import com.shenghesun.tank.order.entity.PlayOrder.PlayOrderStatus;
 import com.shenghesun.tank.service.ProductTypeService;
 import com.shenghesun.tank.service.QuotedProductService;
 import com.shenghesun.tank.service.entity.Product;
@@ -402,6 +404,25 @@ public class PlayOrderController {
 		json.put("typeLevel2", typeLevel2.getName());
 		json.put("typeLevel3", typeLevel3.getName());
 		return JsonUtils.getSuccessJSONObject(json);
+	}
+	
+	@RequestMapping(value = "/exe/{id}", method = RequestMethod.POST)
+	public JSONObject exeComplete(HttpServletRequest request, @PathVariable("id") Long id) {
+		// 校验当前登录用户是否有权限操作 该 订单
+//		Subject subject = SecurityUtils.getSubject();
+//		if(!subject.isPermitted("order:receive")) {
+//			throw new AuthorizationException("缺少接单权限");
+//		}
+		PlayOrder order = playOrderService.findById(id);
+//		LoginInfo info = (LoginInfo)subject.getPrincipal();
+//		Long loginUserId = info.getId();
+//		if(order.getExecutor().getSysUserId().longValue() != loginUserId.longValue()) {
+//			throw new AuthorizationException("操作的订单不属于当前登录用户");
+//		}
+		order.setStatus(PlayOrderStatus.Complete);
+		playOrderService.save(order);
+		
+		return JsonUtils.getSuccessJSONObject();
 	}
 
 }
