@@ -75,11 +75,7 @@ $(document).ready(function() {
 		//陪玩类型
 		else if(_code == "12"){
 			var _type = "陪玩";
-		}
-		//教学类型
-		else if(_code == "10"){
-			var _type = "教学";
-			$(".sure_title").html("教学");
+			$(".sure_title").html("陪玩");
 			$(".dl_xz").css("display","block");
 			get_user();
 			//点击二级
@@ -87,6 +83,7 @@ $(document).ready(function() {
 				$(this).addClass("dw_list_active");
 				$(this).siblings().removeClass("dw_list_active");
 				$("#timeStart").val(bc_num);
+				_num =bc_num;
 				var er_code = $(this).attr("er_code");//当前二级的code
 				get_level3(er_code);
 			})
@@ -94,7 +91,9 @@ $(document).ready(function() {
 			$(".zi_arr").on("click",".three_list",function(){
 				$(this).addClass("zi_arr_active");
 				$(this).siblings().removeClass("zi_arr_active");
-				$("#timeStart").val(bc_num);
+				$("#timeStart").val("");
+				bc_num="";
+				_num =bc_num;
 				var three_code = $(this).attr("code");//当前三级的code
 				var three_id = $(this).attr("id");//当前三级的id
 				var gods_id = $(".zi_arr_active1").attr("id");//大神id
@@ -121,10 +120,55 @@ $(document).ready(function() {
 				go_zf(_fw_id,_jl_id);
 			})
 		}
-		//时间选择
-		//		if ($('#timeStart').val() == '') {
-		//			alert("时间不能为空！")
-		//		}
+		//教学类型
+		else if(_code == "10"){
+			var _type = "教学";
+			$(".sure_title").html("教学");
+			$(".dl_xz").css("display","block");
+			get_user();
+			//点击二级
+			$(".er_dj").on("click",".get_san",function(){
+				$(this).addClass("dw_list_active");
+				$(this).siblings().removeClass("dw_list_active");
+				$("#timeStart").val("");
+				bc_num="";
+				_num =bc_num;
+				var er_code = $(this).attr("er_code");//当前二级的code
+				get_level3(er_code);
+			})
+			//点击三级
+			$(".zi_arr").on("click",".three_list",function(){
+				$(this).addClass("zi_arr_active");
+				$(this).siblings().removeClass("zi_arr_active");
+				$("#timeStart").val("");
+				bc_num="";
+				_num =bc_num;
+				var three_code = $(this).attr("code");//当前三级的code
+				var three_id = $(this).attr("id");//当前三级的id
+				var gods_id = $(".zi_arr_active1").attr("id");//大神id
+				_fw_id = three_code;//提交三级的code
+				_jl_id = gods_id; //提交教练的id
+				get_price(gods_id,three_code);//获取价格
+			})
+			//点击教练
+			$(".zi_arr_jl").on("click",".gods_a",function(){
+				$(this).addClass("zi_arr_active1");
+				$(this).siblings().removeClass("zi_arr_active1");
+				$("#timeStart").val(bc_num);
+				var gods_id = $(this).attr("id");//大神id
+				var three_code = $(".zi_arr_active").attr("code");//产品code
+				//做用于提交
+				_fw_id = three_code;//提交三级的code
+				_jl_id = gods_id; //提交教练的id
+				get_price(gods_id,three_code);//获取价格
+			})
+			//点击支付
+			$(".go_zf").click(function(){
+				var _fw_id = $(this).attr("fw_id");//三级的code
+				var _jl_id = $(this).attr("gods_id");//教练的id
+				go_zf(_fw_id,_jl_id);
+			})
+		}
 		var theme = "ios";
 		var mode = "scroller";
 		var display = "bottom";
@@ -139,21 +183,22 @@ $(document).ready(function() {
 			maxDate: new Date(2050, 0, 1, 00, 00, 00),
 			stepMinute: 1,
 		});
-		var MAX = 99,
-		MIN = 1;
+		var MAX = 90,
+		MIN = bc_num;
 		//减少
 		$('.weui-count__decrease').click(function(e) {
 			var _cc = bc_num;
 			var $input = $(e.currentTarget).parent().find('.weui-count__number');
 			var number = parseInt($input.val() || "0") - _cc
-			if(number < MIN){
+			if(number <= MIN){
 				number = MIN;
 				$.toast("时间不能少于初始时间", "forbidden");
 			} 
 			$input.val(number);
 			_num = number;
-			var _fw_id= _fw_id;//产品id
-			var _jl_id= _jl_id;//教练id
+			var _fw_id1= _fw_id;//产品id
+			var _jl_id1= _jl_id;//教练id
+			get_price(_jl_id1,_fw_id1,number)
 		})
 		//增加
 		$('.weui-count__increase').click(function(e) {
@@ -248,13 +293,10 @@ $(document).ready(function() {
 			success: function (resp) { //请求完成
 				if (resp.code == "200") {
 					var level3_list = resp.data.level3;
+					
 					var list_3 = "";//第三级的列表
 					for(var i=0;i<level3_list.length;i++){
-						if(level3_list.length == 1){
-							list_3+=`
-								<li class="three_list zi_arr_active" code=${level3_list[i].code} id=${level3_list[i].id}>${level3_list[i].name}</li>
-							`;
-						}else if(level3_list[i].code == _zx_code){
+						if(level3_list[i].code == _zx_code){
 							list_3+=`
 								<li class="three_list zi_arr_active" code=${level3_list[i].code} id=${level3_list[i].id}>${level3_list[i].name}</li>
 							`;
@@ -266,9 +308,16 @@ $(document).ready(function() {
 					}
 					$(".zi_arr").empty();
 					$(".zi_arr").append(list_3);
-					$(".zi_arr").find("li:first-child").addClass("zi_arr_active");
+					if($(".three_list").hasClass("zi_arr_active")){
+						
+					}else{
+						$(".zi_arr").find("li:first-child").addClass("zi_arr_active");
+					}
+
 					var _aa = $(".zi_arr_active1").attr("id");//大神id
 					var _cc = $(".zi_arr_active").attr("code");//产品code
+					_fw_id = _cc;//提交三级的code
+					_jl_id = _aa; //提交教练的id
 					get_price(_aa,_cc);//获取价格
 				}
 			}
@@ -313,16 +362,31 @@ $(document).ready(function() {
 						return;
 					}
 					var _duration = resp.data.quotes.product.duration;
-					$("#price_qd").html(resp.data.quotes.price);
+					var _dw = resp.data.quotes.product.durationType;//单位
+					if(_dw == "Hour"){
+						_dw ="小时"
+					}else if(_dw == "Day"){
+						_dw ="日"
+					}else if(_dw == "Month"){
+						_dw ="月"
+					}
+					var z_num = resp.data.quotes.price/resp.data.quotes.product.duration;
+					z_num = z_num.toFixed(2);//保留两位小数
+					if(_dw == "日"){
+						$("#price_qd").html("约"+z_num+"/"+_dw);
+					}else{
+						$("#price_qd").html(z_num+"/"+_dw);
+					}
 					quotedProductId = resp.data.quotes.product.productType.id;//大神id
 					if(_code == "11"){
 						var _duration = "0";
 					}
-					bc_num = _duration;
-					if(num){
-						_duration = num
+					bc_num = resp.data.quotes.product.duration;			
+					if(_num){
+						_duration = _num
 					}else{
 						$("#timeStart").val(_duration);
+						_num =_duration;
 					}
 					$.ajax({
 						type: "GET",

@@ -1361,10 +1361,11 @@ body {
 	width:100%;
 }
 .title_pname1{
-	width:80%;
+	
 }
 .title_price{
 	text-align:right;
+	width:80%;
 }
 .font_col{
 	color: #ff1400;
