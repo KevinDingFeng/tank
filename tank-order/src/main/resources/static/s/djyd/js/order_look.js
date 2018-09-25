@@ -10,6 +10,8 @@ $(document).ready(function() {
 	}
 	//订单id
 	var order_id = getQueryString("id");
+	//订单号
+	var order_no = "";
 	init();
 	function init(){
 		//查询订单 详情
@@ -57,6 +59,7 @@ $(document).ready(function() {
 						order_xx.status = "已取消"
 					}
 					$(".order_type").html(order_xx.status);//订单状态
+					order_no = order_xx.no;
 					$(".order_id").html(order_xx.no);//订单号
 					$(".order_time").html(order_xx.creation);//下单时间
 					var _cellphone = order_xx.cellphone;//电话号码
@@ -81,7 +84,23 @@ $(document).ready(function() {
 					//点击 去。。。。
 					$("#tj_btn").click(function(){
 						if(!$("#tj_btn").html("去支付")){
-							
+							$.ajax({
+								type: "POST",
+								url: $main_URL_yd+"/order/pay/",
+								dataType: "json",
+								data:{
+									no:order_no
+								},
+								async: true,
+								error: function(xhr, errorInfo, ex) {
+									$.toast("再次支付错误！错误信息:" + errorInfo, "forbidden");
+								},
+								success: function(resp) { //请求完成
+									if(resp.code == "200"){
+										debugger
+									}
+								}
+							});
 						}else{
 							$.ajax({
 								type: "POST",
