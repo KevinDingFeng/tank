@@ -466,7 +466,55 @@ $(document).ready(function() {
 						},
 						success: function (resp) { //请求完成
 							if (resp.code == "200") {
-								debugger
+								$.toast("Loading", 40000);
+								var appIdVal,timeStampVal,nonceStrVal,packageVal,signTypeVal,paySignVal;
+								$.ajax({
+									type : "GET",
+									url : "https://wxpay.dazonghetong.com/order/unified",
+									data : {},
+									success : function(data) {
+										if(data.code == "200"){
+											appIdVal = data.data.appId;
+											timeStampVal = data.data.timeStamp;
+											nonceStrVal = data.data.nonceStr;
+											packageVal = data.data.prepayId;
+											signTypeVal = data.data.signType;
+											paySignVal = data.data.paySign;
+											$("#mss").val($("#mss").val() + signTypeVal);
+											if (typeof WeixinJSBridge == "undefined") {
+												if (document.addEventListener) {
+													document.addEventListener('WeixinJSBridgeReady', onBridgeReady,
+															false);
+												} else if (document.attachEvent) {
+													document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+													document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+												}
+												$("#mss").val($("#mss").val() + "无定氮仪");
+											} else {
+												$("#mss").val($("#mss").val() + "有定氮仪");
+												onBridgeReady();
+											}
+											$("#mss").val($("#mss").val() + packageVal);
+											WeixinJSBridge.invoke('getBrandWCPayRequest', {
+												"appId" : appIdVal, //公众号名称，由商户传入     
+												"timeStamp" : timeStampVal, //时间戳，自1970年以来的秒数     
+												"nonceStr" : nonceStrVal, //随机串     
+												"package" : packageVal,
+												"signType" : signTypeVal, //微信签名方式：     
+												"paySign" : paySignVal //微信签名 
+											}, function(res) {
+												if (res.err_msg == "get_brand_wcpay_request:ok") {
+													$("#mss").val("ok");
+												}else if (res.err_msg == "get_brand_wcpay_request: cancel") {
+													$("#mss").val("cancel");
+												}else if (res.err_msg == "get_brand_wcpay_request: fail") {
+													$("#mss").val("fail");
+												}
+												$("#mss").val($("#mss").val() + res.err_msg);
+											});
+										}
+									}
+								})
 							}
 						}
 					})
