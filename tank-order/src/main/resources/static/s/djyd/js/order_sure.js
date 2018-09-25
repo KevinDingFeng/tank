@@ -505,10 +505,16 @@ $(document).ready(function() {
 											}, function(res) {
 												if (res.err_msg == "get_brand_wcpay_request:ok") {
 													$("#mss").val("ok");
+													$.toast(`充值成功！！`, 20000);
+													window.location.href = "my_order.html";
 												}else if (res.err_msg == "get_brand_wcpay_request: cancel") {
 													$("#mss").val("cancel");
+													$.toast(`充值取消！！`, 20000);
+													window.location.href = "my_order.html";
 												}else if (res.err_msg == "get_brand_wcpay_request: fail") {
 													$("#mss").val("fail");
+													$.toast(`充值失败！！`, 20000);
+													window.location.href = "my_order.html";
 												}
 												$("#mss").val($("#mss").val() + res.err_msg);
 											});
