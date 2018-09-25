@@ -133,7 +133,7 @@ public class PlayOrderController {
 
 	private void initPlayOrder(PlayOrder playOrder, Coach coach, Product product) {
 
-		WxUserInfo wxUser = wxUserService.findById(1L);//TODO
+		WxUserInfo wxUser = wxUserService.findById(2L);//TODO
 		
 		
 //		Coach coach = qp.getCoach();
@@ -313,7 +313,7 @@ public class PlayOrderController {
 	// 获取订单列表，根据普通用户id
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public JSONObject list(HttpServletRequest request) {
-		Long wxUserId = 1L;
+		Long wxUserId = 2L;//TODO
 		Pageable pageable = this.getPageable();
 		Page<PlayOrder> page = playOrderService.findByWxUserId(wxUserId, pageable);
 		JSONObject json = new JSONObject();

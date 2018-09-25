@@ -25,7 +25,7 @@ public class WxUserController {
 	 */
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public JSONObject info(HttpServletRequest request) {
-		WxUserInfo wxUser = wxUserService.findById(1L);
+		WxUserInfo wxUser = wxUserService.findById(2L);
 		//TODO 
 		JSONObject json = new JSONObject();
 		json.put("wxUser", wxUser);
