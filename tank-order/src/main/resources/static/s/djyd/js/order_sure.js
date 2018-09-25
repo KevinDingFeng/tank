@@ -229,8 +229,7 @@ $(document).ready(function() {
 					}
 					//获取教练信息
 					get_gods(gods_id);
-					//获取价格
-					get_price(gods_id,_zx_code);
+					
 				}
 			}
 		})
@@ -238,6 +237,7 @@ $(document).ready(function() {
 	//点击第三级获取第三级
 	function get_level3(er_code){
 		var _code = er_code;
+		
 		$.ajax({
 			type: "GET",
 			url: $main_URL_yd + "/product_type/level3?code="+_code,
@@ -347,45 +347,65 @@ $(document).ready(function() {
 	function go_zf(_fw_id,_jl_id){
 		var fw_id = _fw_id;//三级的code
 		var jl_id = _jl_id;//教练的id
-		var _w_chart = $.trim($("#w_chart").val());//微信号
-		var _m_iphone = $.trim($("#m_iphone").val());//手机号
-		if(!_iphone.test(_m_iphone)){
-			$.toast(`手机号码 格式错误！`, "forbidden");
-		    return false;
-		}
-		var _m_remark = $.trim($("#m_remark").val());//备注
-		if(_m_remark.length>30){
-			$.toast(`备注字数不能超过30字！`, "forbidden");
-			return false;
-		}
-		var _time = "";//选择的服务时长
-		if(_code == "11"){
-			_time =0;
-		}else{
-			_time = _num;
-		}
-		
-		var _arr = {
-			wxAccount: _w_chart,
-			cellphone: _m_iphone,
-			remark: _m_remark,
-			duration: _time,
-			quotedProductId:quotedProductId
-		}
-		debugger
 		$.ajax({
-			type: "POST",
-			url: $main_URL_yd + "/order/save",
-			data:{
-				_arr
-			},
+			type: "GET",
+			url: $main_URL_yd + "/quoted_product/coach_code?code="+fw_id+"&coachId="+jl_id,
 			async: true,		
 			error: function (xhr, errorInfo, ex) {
-				$.toast("产品下单错误！错误信息:" + errorInfo, "forbidden");
+				$.toast("查询下单id错误！错误信息:" + errorInfo, "forbidden");
 			},
 			success: function (resp) { //请求完成
 				if (resp.code == "200") {
+					var _quotedProductId = resp.data.quotes;//选中的报价id
+					var _w_chart = $.trim($("#w_chart").val());//微信号
+					var _m_iphone = $.trim($("#m_iphone").val());//手机号
+					if(_w_chart == ""){
+						$.toast(`微信账号不能为空！`, "forbidden");
+					    return false;
+					}
+					if(!_iphone.test(_m_iphone)){
+						$.toast(`手机号码 格式错误！`, "forbidden");
+					    return false;
+					}
+					var _m_remark = $.trim($("#m_remark").val());//备注
+					if(_m_remark.length>30){
+						$.toast(`备注字数不能超过30字！`, "forbidden");
+						return false;
+					}
+					var _time = "";//选择的服务时长
+					if(_code == "11"){
+						_time =0;
+					}else{
+						_time = _num;
+					}
+					var _arr = {
+						wxAccount: _w_chart,
+						cellphone: _m_iphone,
+						remark: _m_remark,
+						duration: _time,
+						quotedProductId:_quotedProductId.id
+					};
 					debugger
+					$.ajax({
+						type: "POST",
+						url: $main_URL_yd + "/order/save",
+						data:{
+							wxAccount: _w_chart,
+							cellphone: _m_iphone,
+							remark: _m_remark,
+							duration: _time,
+							quotedProductId:_quotedProductId.id
+						},
+						async: true,		
+						error: function (xhr, errorInfo, ex) {
+							$.toast("下单信息错误！错误信息:" + errorInfo, "forbidden");
+						},
+						success: function (resp) { //请求完成
+							if (resp.code == "200") {
+								debugger
+							}
+						}
+					})
 				}
 			}
 		})	
