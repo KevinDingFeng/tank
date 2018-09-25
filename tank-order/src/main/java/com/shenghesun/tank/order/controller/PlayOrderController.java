@@ -11,6 +11,7 @@ import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,7 +27,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
@@ -41,6 +41,7 @@ import com.shenghesun.tank.service.QuotedProductService;
 import com.shenghesun.tank.service.entity.Product;
 import com.shenghesun.tank.service.entity.ProductType;
 import com.shenghesun.tank.service.entity.QuotedProduct;
+import com.shenghesun.tank.sso.model.LoginInfo;
 import com.shenghesun.tank.utils.JsonUtils;
 import com.shenghesun.tank.utils.RandomUtil;
 import com.shenghesun.tank.wx.WxUserInfoService;
@@ -135,7 +136,9 @@ public class PlayOrderController {
 
 	private void initPlayOrder(PlayOrder playOrder, Coach coach, Product product) {
 
-		WxUserInfo wxUser = wxUserService.findById(2L);// TODO
+		LoginInfo info = (LoginInfo) SecurityUtils.getSubject().getPrincipal();
+		
+		WxUserInfo wxUser = wxUserService.findById(info.getWxUserId());// 当前登录用户
 
 		// Coach coach = qp.getCoach();
 		// Product product = qp.getProduct();
@@ -319,7 +322,9 @@ public class PlayOrderController {
 	// 获取订单列表，根据普通用户id
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public JSONObject list(HttpServletRequest request) {
-		Long wxUserId = 2L;// TODO
+//		Long wxUserId = 2L;// 
+		LoginInfo info = (LoginInfo) SecurityUtils.getSubject().getPrincipal();
+		Long wxUserId = info.getWxUserId();
 		Pageable pageable = this.getPageable();
 		Page<PlayOrder> page = playOrderService.findByWxUserId(wxUserId, pageable);
 
@@ -394,6 +399,7 @@ public class PlayOrderController {
 	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
 	public JSONObject info(HttpServletRequest request, @PathVariable(value = "id") Long id) {
 		// TODO 校验 资源权限
+		
 		PlayOrder order = playOrderService.findById(id);
 		ProductType typeLevel3 = order.getProduct().getProductType();
 		ProductType typeLevel2 = productTypeService.findByCode(typeLevel3.getParentCode());
@@ -408,7 +414,7 @@ public class PlayOrderController {
 	
 	@RequestMapping(value = "/exe/{id}", method = RequestMethod.POST)
 	public JSONObject exeComplete(HttpServletRequest request, @PathVariable("id") Long id) {
-		// 校验当前登录用户是否有权限操作 该 订单
+		// 校验当前登录用户是否有权限操作 该 订单 TODO
 //		Subject subject = SecurityUtils.getSubject();
 //		if(!subject.isPermitted("order:receive")) {
 //			throw new AuthorizationException("缺少接单权限");
