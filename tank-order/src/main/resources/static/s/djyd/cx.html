@@ -45,13 +45,14 @@
 		if(!_code){
 			window.location.href = $main_URL_yd+"/s/djyd/index.html";
 		}else{
+			var uu = $main_URL_yd+"/auth/callback_by_code?code="+_code+"&state="+_state;
 			$.ajax({
 				type: "GET",
-				url: $main_URL_yd+"/auth/callback_by_code?code="+_code+"&state="+_state,
+				url: uu,
 				dataType: "json",
 				async: true,
 				error: function(xhr, errorInfo, ex) {
-					$.toast("查询xx错误！错误信息:" + errorInfo, "forbidden");
+					$.toast("查询xx错误！错误信息:" + errorInfo + uu, "forbidden");
 				},
 				success: function(resp) { //请求完成
 					console.log(resp);

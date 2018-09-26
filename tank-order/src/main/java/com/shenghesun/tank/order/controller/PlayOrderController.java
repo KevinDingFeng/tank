@@ -214,7 +214,10 @@ public class PlayOrderController {
 		// quotedProductService.getTotalFee(playOrder.getDuration(), qp.getPrice(),
 		// qp.getProduct().getDuration());
 		String totalFeeStr = this.getTotalFeeStr(playOrder.getTotalFee());
-		String openId = request.getHeader("openId");
+//		String openId = request.getHeader("openId");
+		LoginInfo info = (LoginInfo) SecurityUtils.getSubject().getPrincipal();
+		WxUserInfo wxUser = wxUserService.findById(info.getWxUserId());
+		String openId = wxUser.getOpenId();
 		JSONObject prepay = new JSONObject();
 		try {
 			prepay = this.prepay(playOrder.getNo(), openId, request.getRemoteAddr(), totalFeeStr);
@@ -256,7 +259,7 @@ public class PlayOrderController {
 		Map<String, String> map = this.getUnifiedOrderData(orderNo, openId, ip, totalFee);
 		WXPayConfig conf = new WXPayConfigImpl();
 //		WXPay wxPay = new WXPay(conf, "https://wxpay.dazonghetong.com/wxpay/notify");
-		WXPay wxPay = new WXPay(conf, "https://tk.dazonghetong.com/wxpay/notify");
+		WXPay wxPay = new WXPay(conf, "http://tk.dazonghetong.com/wxpay/notify");
 		Map<String, String> resultMap = wxPay.unifiedOrder(map);
 		// 解析统一下单返回的信息，生成唤醒微信支付的数据
 		String returnCode = (String) resultMap.get("return_code");// 通信标识
@@ -335,18 +338,27 @@ public class PlayOrderController {
 	// 获取订单列表，根据普通用户id
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public JSONObject list(HttpServletRequest request) {
-//		Long wxUserId = 2L;// 
+		Long wxUserId = 15L;// 
 		LoginInfo info = (LoginInfo) SecurityUtils.getSubject().getPrincipal();
-		Long wxUserId = info.getWxUserId();
+//		Long wxUserId = info.getWxUserId();
+		System.out.println(info.getWxUserId());
 		Pageable pageable = this.getPageable();
 		Page<PlayOrder> page = playOrderService.findByWxUserId(wxUserId, pageable);
-
-		List<ProductType> types = productTypeService.findAll();
-		JSONObject typesJson = this.formatTypes(types);
-
+		if(page.getContent() != null) {
+			System.out.println(page.getContent().size());
+		}
 		JSONObject json = new JSONObject();
 		json.put("page", page);
-		json.put("types", typesJson);
+		try {
+			
+			List<ProductType> types = productTypeService.findAll();
+			JSONObject typesJson = this.formatTypes(types);
+			json.put("types", typesJson);
+		}catch (Exception e) {
+			e.printStackTrace();
+			json.put("types", new JSONObject());
+		}
+		
 		return JsonUtils.getSuccessJSONObject(json);
 	}
 

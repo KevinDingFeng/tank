@@ -409,6 +409,7 @@ $(document).ready(function() {
 		})	
 	}
 	//支付
+	var appIdVal,timeStampVal,nonceStrVal,packageVal,signTypeVal,paySignVal;
 	function go_zf(_fw_id,_jl_id){
 		var fw_id = _fw_id;//三级的code
 		var jl_id = _jl_id;//教练的id
@@ -424,8 +425,8 @@ $(document).ready(function() {
 					var _quotedProductId = resp.data.quotes;//选中的报价id
 					var _w_chart = $.trim($("#w_chart").val());//微信号
 					var _m_iphone = $.trim($("#m_iphone").val());//手机号
-					if(!wxreg.test(_w_chart)){
-						$.toast(`微信号格式错误！`, "forbidden");
+					if(_w_chart == ""){
+						$.toast(`微信账号不能为空！`, "forbidden");
 					    return false;
 					}
 					if(!_iphone.test(_m_iphone)){
@@ -433,8 +434,8 @@ $(document).ready(function() {
 					    return false;
 					}
 					var _m_remark = $.trim($("#m_remark").val());//备注
-					if(_m_remark.length>51){
-						$.toast(`备注字数不能超过50字！`, "forbidden");
+					if(_m_remark.length>30){
+						$.toast(`备注字数不能超过30字！`, "forbidden");
 						return false;
 					}
 					var _time = "";//选择的服务时长
@@ -466,14 +467,15 @@ $(document).ready(function() {
 							$.toast("下单信息错误！错误信息:" + errorInfo, "forbidden");
 						},
 						success: function (resp) { //请求完成
+							alert(resp);
 							if (resp.code == "200") {
-								$.toast("Loading", 40000);
-								var appIdVal = resp.data.prepay.appId,
-									timeStampVal = resp.data.prepay.timeStamp,
-									nonceStrVal = resp.data.prepay.nonceStr,
-									packageVal = resp.data.prepay.prepayId,
-									signTypeVal = resp.data.prepay.signType,
-									paySignVal = resp.data.prepay.paySign;
+								//$.toast("Loading", 40000);
+								appIdVal = resp.data.prepay.appId;
+								timeStampVal = resp.data.prepay.timeStamp;
+								nonceStrVal = resp.data.prepay.nonceStr;
+								packageVal = resp.data.prepay.prepayId;
+								signTypeVal = resp.data.prepay.signType;
+								paySignVal = resp.data.prepay.paySign;
 								if (typeof WeixinJSBridge == "undefined") {
 									if (document.addEventListener) {
 										document.addEventListener('WeixinJSBridgeReady', onBridgeReady,
@@ -485,29 +487,6 @@ $(document).ready(function() {
 								} else {
 									onBridgeReady();
 								}
-								WeixinJSBridge.invoke('getBrandWCPayRequest', {
-									"appId" : appIdVal, //公众号名称，由商户传入     
-									"timeStamp" : timeStampVal, //时间戳，自1970年以来的秒数     
-									"nonceStr" : nonceStrVal, //随机串     
-									"package" : packageVal,
-									"signType" : signTypeVal, //微信签名方式：     
-									"paySign" : paySignVal //微信签名 
-								}, function(res) {
-									if (res.err_msg == "get_brand_wcpay_request:ok") {
-										$("#mss").val("ok");
-										$.toast(`充值成功！！`, 20000);
-										window.location.href = "my_order.html";
-									}else if (res.err_msg == "get_brand_wcpay_request: cancel") {
-										$("#mss").val("cancel");
-										$.toast(`充值取消！！`, 20000);
-										window.location.href = "my_order.html";
-									}else if (res.err_msg == "get_brand_wcpay_request: fail") {
-										$("#mss").val("fail");
-										$.toast(`充值失败！！`, 20000);
-										window.location.href = "my_order.html";
-									}
-									$("#mss").val($("#mss").val() + res.err_msg);
-								});
 							}
 						}
 					})
@@ -515,6 +494,28 @@ $(document).ready(function() {
 			}
 		})	
 	
+	}
+	//唤醒微信支付
+	function onBridgeReady() {
+		WeixinJSBridge.invoke('getBrandWCPayRequest', {
+			"appId" : appIdVal, //公众号名称，由商户传入     
+			"timeStamp" : timeStampVal, //时间戳，自1970年以来的秒数     
+			"nonceStr" : nonceStrVal, //随机串     
+			"package" : packageVal,
+			"signType" : signTypeVal, //微信签名方式：     
+			"paySign" : paySignVal //微信签名 
+		}, function(res) {
+			if (res.err_msg == "get_brand_wcpay_request:ok") {
+				$.toast(`充值成功！！`, 20000);
+				window.location.href = "my_order.html";
+			}else if (res.err_msg == "get_brand_wcpay_request: cancel") {
+				$.toast(`充值取消！！`, 20000);
+				window.location.href = "my_order.html";
+			}else if (res.err_msg == "get_brand_wcpay_request: fail") {
+				$.toast(`充值失败！！`, 20000);
+				window.location.href = "my_order.html";
+			}
+		});
 	}
 })
 

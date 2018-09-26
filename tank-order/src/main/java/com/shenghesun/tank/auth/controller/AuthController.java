@@ -92,7 +92,7 @@ public class AuthController {
 //			WxUserInfo wxUserInfo = wxUserInfoService.findById(1L);
 			wxUserInfo = wxUserInfoService.save(wxUserInfo);
 			
-			SecurityUtils.getSubject().login(new UsernamePasswordToken(sysUser.getAccount(), sysUser.getPassword(), true));
+			SecurityUtils.getSubject().login(new UsernamePasswordToken(sysUser.getAccount(), sysUser.getPassword()));
 			JSONObject json = new JSONObject();
 			json.put("wxUser", wxUserInfo);
 			return JsonUtils.getSuccessJSONObject(json);
