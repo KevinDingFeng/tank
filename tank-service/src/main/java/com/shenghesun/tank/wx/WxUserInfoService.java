@@ -16,6 +16,11 @@ public class WxUserInfoService {
 	@Autowired
 	private SysUserService sysUserService;
 
+	/**
+	 * 根据传入的用户信息，先使用唯一键查询数据库，如果存在则做修改操作，不存在则做新建操作
+	 * @param userInfoJson
+	 * @return
+	 */
 	public WxUserInfo getOne(JSONObject userInfoJson) {
 		/*
 		 * { "country":"中国", "province":"河北", "city":"唐山",
@@ -78,7 +83,7 @@ public class WxUserInfoService {
 		return wxUserInfo;
 	}
 
-	private WxUserInfo findByOpenId(String openId) {
+	public WxUserInfo findByOpenId(String openId) {
 		return wxUserInfoDao.findByOpenId(openId);
 	}
 

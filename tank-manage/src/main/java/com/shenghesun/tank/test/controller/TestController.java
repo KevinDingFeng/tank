@@ -49,26 +49,29 @@ public class TestController {
 //		List<QuotedDefault> qds = defaultService.findAll();
 		
 		
-		
-		if(types != null) {
-			for(ProductType t : types) {
-				//创建产品
-				Product p = new Product();
-				p.setProductType(t);
-				p.setProductTypeId(t.getId());
-				p.setCapacity(0);
-				//时长 和时长单位 ： 根据类型的默认报价中的参数设置
-				Coach coach = coachService.findBySpecial(true);
-				QuotedDefault d = defaultService.findByCoachIdAndProductTypeId(coach.getId(), t.getId());
-				p.setDuration(d.getDuration());
-				p.setDurationType(d.getDurationType());
-				p.setContent(t.getName());
-				p = productService.save(p);
-			}
-		}
+//		
+//		if(types != null) {
+//			for(ProductType t : types) {
+//				if(t.getLevel() == 3) {
+//					//创建产品
+//					Product p = new Product();
+//					p.setProductType(t);
+//					p.setProductTypeId(t.getId());
+//					p.setCapacity(0);
+//					//时长 和时长单位 ： 根据类型的默认报价中的参数设置
+//					Coach coach = coachService.findBySpecial(true);
+//					QuotedDefault d = defaultService.findByCoachIdAndProductTypeId(coach.getId(), t.getId());
+//					p.setDuration(d.getDuration());
+//					p.setDurationType(d.getDurationType());
+//					p.setContent(t.getName());
+//					p = productService.save(p);
+//				}
+//			}
+//		}
 		
 		List<Product> products = productService.findAll();
 		if(coaches != null && products != null) {
+			Coach coach = coachService.findBySpecial(true);
 			for(Coach c : coaches) {
 				for(Product p : products) {
 					QuotedProduct qp = new QuotedProduct();
@@ -81,10 +84,15 @@ public class TestController {
 					qp.setSurcharge(BigDecimal.ZERO);
 					//大神针对单个服务的报价，价格根据大神针对服务类型的默认报价设置
 					QuotedDefault d = defaultService.findByCoachIdAndProductTypeId(c.getId(), p.getProductTypeId());
+					if(d == null) {
+						d = defaultService.findByCoachIdAndProductTypeId(coach.getId(), p.getProductTypeId());
+					}
 					if(p.getDurationType().name().equals(d.getDurationType().name())) {
 						System.out.println("设置价格");
 						if(p.getDuration() != 0 && d.getDuration() != 0) {
 							qp.setPrice(d.getPrice().multiply(new BigDecimal(p.getDuration() / d.getDuration())));
+						}else {
+							qp.setPrice(d.getPrice());
 						}
 					}
 					quotedProductService.save(qp);					
