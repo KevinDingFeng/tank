@@ -1,11 +1,4 @@
 $(document).ready(function() {
-	var _user_name = sessionStorage.getItem('username');
-	var _user_title = sessionStorage.getItem('usertitle');
-	//用户头像
-	$(".my_tou").attr("src",_user_title);
-	//用户姓名
-	$(".user_name").html(_user_name);
-	
 	$.ajax({
 		type: "GET",
 		url: $main_URL_yd+"/wx_user/info",
