@@ -188,7 +188,7 @@ public class PlayOrderController {
 			BindingResult result,
 			// @RequestParam(value = "coachId") Long coachId,
 			// @RequestParam(value = "productId") Long productId
-			@RequestParam(value = "quotedProductId") Long qpId) throws Exception {
+			@RequestParam(value = "quotedProductId") Long qpId)  {
 
 		if (result.hasErrors()) {
 			return JsonUtils.getFailJSONObject("提交信息有误");
@@ -215,7 +215,14 @@ public class PlayOrderController {
 		// qp.getProduct().getDuration());
 		String totalFeeStr = this.getTotalFeeStr(playOrder.getTotalFee());
 		String openId = request.getHeader("openId");
-		JSONObject prepay = this.prepay(playOrder.getNo(), openId, request.getRemoteAddr(), totalFeeStr);
+		JSONObject prepay = new JSONObject();
+		try {
+			prepay = this.prepay(playOrder.getNo(), openId, request.getRemoteAddr(), totalFeeStr);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("调用微信支付出现错误");
+			e.printStackTrace();
+		}
 		if (prepay.getString("result") != null) {
 			System.out.println("预支付时出现错误");
 			return JsonUtils.getFailJSONObject(prepay.getString("result"));// 预支付时出现错误
@@ -248,12 +255,17 @@ public class PlayOrderController {
 		// 组织统一下单的数据，完成统一下单
 		Map<String, String> map = this.getUnifiedOrderData(orderNo, openId, ip, totalFee);
 		WXPayConfig conf = new WXPayConfigImpl();
-		WXPay wxPay = new WXPay(conf, "https://wxpay.dazonghetong.com/wxpay/notify");
+//		WXPay wxPay = new WXPay(conf, "https://wxpay.dazonghetong.com/wxpay/notify");
+		WXPay wxPay = new WXPay(conf, "https://tk.dazonghetong.com/wxpay/notify");
 		Map<String, String> resultMap = wxPay.unifiedOrder(map);
 		// 解析统一下单返回的信息，生成唤醒微信支付的数据
 		String returnCode = (String) resultMap.get("return_code");// 通信标识
+		System.out.println(returnCode);
+    
 		if ("SUCCESS".equals(returnCode.toUpperCase())) {
 			String resultCode = (String) resultMap.get("result_code");// 交易标识
+		   
+	        System.out.println(resultCode);
 			if ("SUCCESS".equals(resultCode.toUpperCase())) {
 				String appId = (String) resultMap.get("appid");// 微信公众号AppId
 				String prepayId = "prepay_id=" + resultMap.get("prepay_id");// 统一下单返回的预支付id
@@ -272,6 +284,7 @@ public class PlayOrderController {
 			}
 		} else {
 			String returnMsg = (String) resultMap.get("return_msg");// 通信错误信息
+			 System.out.println(returnMsg);
 			JSONObject json = new JSONObject();
 			json.put("result", returnMsg);
 			return json;

@@ -203,13 +203,13 @@ public class WXPayUtil {
         Set<String> keySet = data.keySet();
         String[] keyArray = keySet.toArray(new String[keySet.size()]);
         Arrays.sort(keyArray);
-//        print(keyArray, data);
+        print(keyArray, data);
         StringBuilder sb = new StringBuilder();
         for (String k : keyArray) {
             if (k.equals(WXPayConstants.FIELD_SIGN)) {
                 continue;
             }
-            if (data.get(k).trim().length() > 0) // 参数值为空，则不参与签名
+            if (data.get(k) != null && data.get(k).trim().length() > 0) // 参数值为空，则不参与签名
                 sb.append(k).append("=").append(data.get(k).trim()).append("&");
         }
         sb.append("key=").append(key);
@@ -224,14 +224,14 @@ public class WXPayUtil {
             throw new Exception(String.format("Invalid sign_type: %s", signType));
         }
     }
-//    private static void print(String[] keyArray, Map<String, String> data) {
-//    	System.out.println("===========================");
-//    	for(String s : keyArray) {
-//    		System.out.println(s);
-//    		System.out.println(data.get(s));
-//    	}
-//    	System.out.println("===========================");
-//    }
+    private static void print(String[] keyArray, Map<String, String> data) {
+    	System.out.println("===========================");
+    	for(String s : keyArray) {
+    		System.out.println(s);
+    		System.out.println(data.get(s));
+    	}
+    	System.out.println("===========================");
+    }
 
 
     /**
