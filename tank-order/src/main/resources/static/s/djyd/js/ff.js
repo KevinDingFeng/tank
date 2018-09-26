@@ -85,7 +85,7 @@ $(document).ready(function () {
 								$(".Ringer_content").append(`
 										<div class="gods_list" list_id=${_arrs[i].coach.id} type="">
 											<div class="gods_toux">
-												<img src="images/toux.png"/>
+												<img src=${gods_tou}/>
 											</div>
 											<div class="gods_content">
 												<p class="gods_content_name">${_arrs[i].coach.name}</p>
