@@ -19,7 +19,7 @@ $(document).ready(function() {
 					
 					var list_order = "";//order列表
 					for(var i=0; i< list_xx.length;i++){
-						var _id ="t"+list_xx[i].id;
+						var _id ="t"+list_xx[i].product.productTypeId;
 						var _t = resp.data.types[_id];
 						if(list_xx[i].status == "NotPay"){
 							list_xx[i].status = "未支付"
