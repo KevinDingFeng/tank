@@ -644,14 +644,14 @@ body {
 	padding-top:0.4rem;
 }
 .sure_title_red{
-	width: 75%;
+	width: 70%;
     text-align: right;
     color: #ff1400;
     font-size: 0.4rem;
     margin-top: -0.06rem;
 }
 .title_span{
-	
+	padding-top: 0.1rem;
 }
 .xx_mar{
 	margin-top:0.21rem;
