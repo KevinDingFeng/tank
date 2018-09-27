@@ -27,7 +27,7 @@ $(document).ready(function() {
 	var bc_num = null;//记录步长
 	var quotedProductId =null;//选中报价id
 	var _iphone = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;//手机号码正则
-	var wxreg=/ ^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}$/;//微信号正则
+	var wxreg=/^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}$/;//微信号正则
 	init();
 	function init(){
 		//代练类型
@@ -235,7 +235,7 @@ $(document).ready(function() {
 		//验证备注
 		$("#m_remark").blur(function(){			
 			var _m_iphone = $.trim($("#m_remark").val());//备注
-			if(_m_remark.length>50){
+			if(_m_remark.length>51){
 				$.toast(`备注字数不能超过50字！`, "forbidden");
 			    return false;
 			}
@@ -424,8 +424,8 @@ $(document).ready(function() {
 					var _quotedProductId = resp.data.quotes;//选中的报价id
 					var _w_chart = $.trim($("#w_chart").val());//微信号
 					var _m_iphone = $.trim($("#m_iphone").val());//手机号
-					if(_w_chart == ""){
-						$.toast(`微信账号不能为空！`, "forbidden");
+					if(!wxreg.test(_w_chart)){
+						$.toast(`微信号格式错误！`, "forbidden");
 					    return false;
 					}
 					if(!_iphone.test(_m_iphone)){
@@ -433,8 +433,8 @@ $(document).ready(function() {
 					    return false;
 					}
 					var _m_remark = $.trim($("#m_remark").val());//备注
-					if(_m_remark.length>30){
-						$.toast(`备注字数不能超过30字！`, "forbidden");
+					if(_m_remark.length>51){
+						$.toast(`备注字数不能超过50字！`, "forbidden");
 						return false;
 					}
 					var _time = "";//选择的服务时长
