@@ -19,5 +19,5 @@ $(document).ready(function() {
 				$(".my_name>p").html(_user_xx.nickName);
 			}
 		}
-	}
+	})
 })
