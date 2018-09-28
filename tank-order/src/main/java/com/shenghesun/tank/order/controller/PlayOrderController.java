@@ -338,9 +338,9 @@ public class PlayOrderController {
 	// 获取订单列表，根据普通用户id
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public JSONObject list(HttpServletRequest request) {
-		Long wxUserId = 15L;// 
+//		Long wxUserId = 15L;// 
 		LoginInfo info = (LoginInfo) SecurityUtils.getSubject().getPrincipal();
-//		Long wxUserId = info.getWxUserId();
+		Long wxUserId = info.getWxUserId();
 		System.out.println(info.getWxUserId());
 		Pageable pageable = this.getPageable();
 		Page<PlayOrder> page = playOrderService.findByWxUserId(wxUserId, pageable);
