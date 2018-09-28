@@ -25,7 +25,7 @@ $(document).ready(function () {
 			$("#ladder>.bottom_bor").css("display","block");
 			$("#Ringer>.bottom_bor").css("display","none");
 		}else if(_type == "jx"){
-			window.location.href = "Ringer_xq.html?id="+"&code=10";
+			window.location.href = "Ringer_xq.html?id=9&code=10";
 		}else{
 			gods_search("11");
 		}
