@@ -500,13 +500,13 @@ $(document).ready(function() {
 			"paySign" : paySignVal //微信签名 
 		}, function(res) {
 			if (res.err_msg == "get_brand_wcpay_request:ok") {
-				$.toast(`充值成功！！`, 20000);
+				$.toast(`支付成功！！`, 20000);
 				window.location.href = "my_order.html";
 			}else if (res.err_msg == "get_brand_wcpay_request: cancel") {
-				$.toast(`充值取消！！`, 20000);
+				$.toast(`支付取消！！`, 20000);
 				window.location.href = "my_order.html";
 			}else if (res.err_msg == "get_brand_wcpay_request: fail") {
-				$.toast(`充值失败！！`, 20000);
+				$.toast(`支付失败！！`, 20000);
 				window.location.href = "my_order.html";
 			}
 		});

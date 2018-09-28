@@ -240,8 +240,10 @@ public class PlayOrderController {
 	public JSONObject pay(HttpServletRequest request, @RequestParam(value = "no") String no) throws Exception {
 
 		PlayOrder playOrder = playOrderService.findMainByNo(no);
-		String openId = request.getHeader("openId");
-
+//		String openId = request.getHeader("openId");
+		LoginInfo info = (LoginInfo) SecurityUtils.getSubject().getPrincipal();
+		WxUserInfo wxUser = wxUserService.findById(info.getWxUserId());
+		String openId = wxUser.getOpenId();
 		String totalFeeStr = this.getTotalFeeStr(playOrder.getTotalFee());
 		JSONObject prepay = this.prepay(playOrder.getNo(), openId, request.getRemoteAddr(), totalFeeStr);
 		if (prepay.getString("result") != null) {

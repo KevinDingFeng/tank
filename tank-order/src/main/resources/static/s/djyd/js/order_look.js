@@ -13,6 +13,7 @@ $(document).ready(function() {
 	//订单号
 	var order_no = "";
 	init();
+	var appIdVal,timeStampVal,nonceStrVal,packageVal,signTypeVal,paySignVal;
 	function init(){
 		//查询订单 详情
 		$.ajax({
@@ -103,7 +104,7 @@ $(document).ready(function() {
 								},
 								success: function(resp) { //请求完成
 									if(resp.code == "200"){
-										var appIdVal,timeStampVal,nonceStrVal,packageVal,signTypeVal,paySignVal;
+										
 										appIdVal = resp.data.prepay.appId;
 										timeStampVal = resp.data.prepay.timeStamp;
 										nonceStrVal = resp.data.prepay.nonceStr;
