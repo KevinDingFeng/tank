@@ -461,7 +461,7 @@ $(document).ready(function() {
 							$.toast("下单信息错误！错误信息:" + errorInfo, "forbidden");
 						},
 						success: function (resp) { //请求完成
-							alert(resp);
+							
 							if (resp.code == "200") {
 								//$.toast("Loading", 40000);
 								appIdVal = resp.data.prepay.appId;
