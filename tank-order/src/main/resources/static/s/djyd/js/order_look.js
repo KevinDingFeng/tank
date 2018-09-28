@@ -97,7 +97,24 @@ $(document).ready(function() {
 								},
 								success: function(resp) { //请求完成
 									if(resp.code == "200"){
-										debugger
+										var appIdVal,timeStampVal,nonceStrVal,packageVal,signTypeVal,paySignVal;
+										appIdVal = resp.data.prepay.appId;
+										timeStampVal = resp.data.prepay.timeStamp;
+										nonceStrVal = resp.data.prepay.nonceStr;
+										packageVal = resp.data.prepay.prepayId;
+										signTypeVal = resp.data.prepay.signType;
+										paySignVal = resp.data.prepay.paySign;
+										if (typeof WeixinJSBridge == "undefined") {
+											if (document.addEventListener) {
+												document.addEventListener('WeixinJSBridgeReady', onBridgeReady,
+														false);
+											} else if (document.attachEvent) {
+												document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+												document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+											}
+										} else {
+											onBridgeReady();
+										}
 									}
 								}
 							});
@@ -119,66 +136,29 @@ $(document).ready(function() {
 							});
 						}
 					})
-					
 				}
-					/*var _dx = resp.data;
-					if(_dx.status == "BEFORE"){
-						_dx.status = "待服务"
-					}else{
-						_dx.status = "已服务";
-						$(".my_order_sure").css("display","none");
-					}
-					var _time = _dx.creation;
-					_time = _time.split("T");
-					var c_time = _time[1].split(".");
-					$(".order_time").html(_time[0]+" "+c_time[0]);
-					$(".order_id").html(_dx.orderNo);
-					$(".order_phone").html(_dx.cellphoneNo);
-					$(".order_type").html(_dx.status);
-					$(".order_cp").html(_dx.sysService.productName + ">" + _dx.sysService.supClassName + ">" + _dx.sysService.subClassName);
-					
-					if(_dx.sysService.productCode == "1"){
-						$(".order_zh_xx").html("账号信息：")
-						$(".zh_js").html(_dx.roleName);
-					}else{
-						$(".zh_js").html(_dx.account);
-					}
-					
-					$(".order_remker").html(_dx.remark);
-					if(_dx.totalFee == null || _dx.totalFee == "" || _dx.totalFee ==undefined){
-						$(".order_price").html("详情咨询客服");
-					}else if(_dx.totalFee == "0"){
-						$(".order_price").html("详情咨询客服");
-					}else{
-						$(".order_price").html(_dx.totalFee+"元");
-					}
-					//确认完成
-					$(".my_order_sure").click(function(){
-						$.ajax({
-							type: "GET",
-							url: $main_URL_yd+"/play_order/player_complete/"+_dx.id,
-							dataType: "json",
-							async: true,
-							error: function(xhr, errorInfo, ex) {
-								$.toast("确认订单错误！错误信息:" + errorInfo, "forbidden");
-							},
-							success: function(resp) { //请求完成
-								if(resp.code == "200"){
-									var _sure = resp.data;
-									if(_sure == true){
-										$.toast("确认成功！");
-										$(".my_order_sure").css("display","none");
-										window.location.href="/s/djyd/my_order.html";
-									}
-								}else if(resp.code == "400"){
-									$.toast("确认订单失败！失败信息:" + resp.message, "forbidden");
-								}				
-							}
-						});
-					})
-				}else if(resp.code == "400"){
-					$.toast("查询订单信息失败！失败信息:" + resp.message, "forbidden");
-				}				*/
+			}
+		});
+	}
+	//唤醒微信支付
+	function onBridgeReady() {
+		WeixinJSBridge.invoke('getBrandWCPayRequest', {
+			"appId" : appIdVal, //公众号名称，由商户传入     
+			"timeStamp" : timeStampVal, //时间戳，自1970年以来的秒数     
+			"nonceStr" : nonceStrVal, //随机串     
+			"package" : packageVal,
+			"signType" : signTypeVal, //微信签名方式：     
+			"paySign" : paySignVal //微信签名 
+		}, function(res) {
+			if (res.err_msg == "get_brand_wcpay_request:ok") {
+				$.toast(`支付成功！！`, 20000);
+				window.location.href = "my_order.html";
+			}else if (res.err_msg == "get_brand_wcpay_request: cancel") {
+				$.toast(`支付取消！！`, 20000);
+				window.location.href = "my_order.html";
+			}else if (res.err_msg == "get_brand_wcpay_request: fail") {
+				$.toast(`支付失败！！`, 20000);
+				window.location.href = "my_order.html";
 			}
 		});
 	}
