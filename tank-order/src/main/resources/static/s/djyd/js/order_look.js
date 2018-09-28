@@ -50,12 +50,16 @@ $(document).ready(function() {
 					}
 					$(".gods_qw").html(order_xx.coach.name);//期望服务大神
 					if(order_xx.status == "NotPay"){
+						$("#tj_btn").attr("order_id","1")
 						order_xx.status = "未支付"
 					}else if(order_xx.status == "Operation"){
+						$("#tj_btn").attr("order_id","2")
 						order_xx.status = "待服务"
 					}else if(order_xx.status == "Complete"){
+						$("#tj_btn").attr("order_id","2")
 						order_xx.status = "已服务"
 					}else if(order_xx.status == "Cancel"){
+						$("#tj_btn").attr("order_id","2")
 						order_xx.status = "已取消"
 					}
 					$(".order_type").html(order_xx.status);//订单状态
@@ -78,12 +82,14 @@ $(document).ready(function() {
 					
 					if(order_xx.status == "未支付"){
 						$("#tj_btn").html("去支付")
+						$("#tj_btn").attr("order_id","1")
 					}else if(order_xx.status == "已服务"){
 						$(".my_order_sure").css("display","none")
 					}
 					//点击 去。。。。
 					$("#tj_btn").click(function(){
-						if(!$("#tj_btn").html("去支付")){
+						var _attr = $(this).attr("order_id");
+						if(_attr == "1"){
 							$.ajax({
 								type: "POST",
 								url: $main_URL_yd+"/order/pay/",
