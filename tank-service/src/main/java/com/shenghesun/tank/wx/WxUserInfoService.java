@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.shenghesun.tank.system.SysUserService;
-import com.shenghesun.tank.system.entity.SysUser;
 import com.shenghesun.tank.wx.entity.WxUserInfo;
 
 @Service
@@ -13,8 +11,8 @@ public class WxUserInfoService {
 
 	@Autowired
 	private WxUserInfoDao wxUserInfoDao;
-	@Autowired
-	private SysUserService sysUserService;
+//	@Autowired
+//	private SysUserService sysUserService;
 
 	/**
 	 * 根据传入的用户信息，先使用唯一键查询数据库，如果存在则做修改操作，不存在则做新建操作
@@ -41,9 +39,9 @@ public class WxUserInfoService {
 		// if(user == null) {
 		//
 		// }
-		SysUser sysUser = sysUserService.findById(1L);
-		wxUserInfo.setSysUser(sysUser);
-		wxUserInfo.setSysUserId(1L);
+//		SysUser sysUser = sysUserService.findById(1L);
+//		wxUserInfo.setSysUser(sysUser);
+//		wxUserInfo.setSysUserId(1L);
 		if (userInfoJson.containsKey("openid")) {
 			wxUserInfo.setOpenId(userInfoJson.getString("openid"));
 		}

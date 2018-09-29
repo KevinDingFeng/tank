@@ -89,6 +89,8 @@ public class AuthController {
 			}
 			sysUser = sysUserService.save(sysUser);
 			WxUserInfo wxUserInfo = wxUserInfoService.getOne(userInfoJson);
+			wxUserInfo.setSysUser(sysUser);
+			wxUserInfo.setSysUserId(sysUser.getId());
 //			WxUserInfo wxUserInfo = wxUserInfoService.findById(1L);
 			wxUserInfo = wxUserInfoService.save(wxUserInfo);
 			
