@@ -15,7 +15,7 @@ import com.shenghesun.tank.sso.model.LoginInfo;
  * @author kevin
  *
  */
-@ControllerAdvice("com.shenghesun.ai")
+@ControllerAdvice("com.shenghesun.tank")
 public class CommonControllerSetup {
 
 	@ModelAttribute("loginUser")

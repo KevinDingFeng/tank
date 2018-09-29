@@ -52,7 +52,8 @@ public class WxpayNotifyController {
 						String no = root.element("out_trade_no").getText();
 						PlayOrder order = playOrderService.findMainByNo(no);
 						if (order != null && order.getId() != null) {
-							order.setStatus(PlayOrderStatus.Complete);
+//							order.setStatus(PlayOrderStatus.Complete);
+							order.setStatus(PlayOrderStatus.Operation);
 							order = playOrderService.save(order);
 							// TODO 支付记录 多条订单对应一条支付记录
 //							PlayOrderPayRecord record = recordService.findByPlayOrderId(order.getId());

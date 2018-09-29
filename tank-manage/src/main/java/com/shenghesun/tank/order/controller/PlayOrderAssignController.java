@@ -80,9 +80,9 @@ public class PlayOrderAssignController {
 			public Predicate toPredicate(Root<PlayOrder> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				List<Predicate> list = new ArrayList<Predicate>();
 				
-				root.fetch("wxUser", JoinType.LEFT);
-				root.fetch("coach", JoinType.LEFT);
-				root.fetch("product", JoinType.LEFT);
+//				root.fetch("wxUser", JoinType.LEFT);
+//				root.fetch("coach", JoinType.LEFT);
+//				root.fetch("product", JoinType.LEFT);
 				
 				list.add(cb.equal(root.get("removed"), false));
 				list.add(cb.equal(root.get("main"), true));//因为订单实体设计时，加入了操作记录，所以每个订单编号是由多条组成，这里只找出其中最新的一条
