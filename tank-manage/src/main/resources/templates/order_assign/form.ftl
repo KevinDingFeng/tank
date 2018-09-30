@@ -131,6 +131,16 @@
               <div class="am-u-sm-8 am-u-md-4">${entity.wxAccount!}</div>
               <div class="am-hide-sm-only am-u-md-6"></div>
             </div>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">QQ账号</div>
+              <div class="am-u-sm-8 am-u-md-4">${entity.qqAccount!}</div>
+              <div class="am-hide-sm-only am-u-md-6"></div>
+            </div>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">YY账号</div>
+              <div class="am-u-sm-8 am-u-md-4">${entity.yyAccount!}</div>
+              <div class="am-hide-sm-only am-u-md-6"></div>
+            </div>
         	<div class="am-g am-margin-top">
             <div class="am-u-sm-4 am-u-md-2 am-text-right">显示状态</div>
             <div class="am-u-sm-8 am-u-md-10">
