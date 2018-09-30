@@ -38,7 +38,7 @@ $(document).ready(function() {
 		$("#cumtor_img").show();
 		$("#cumtor_img").empty();
 		$("#cumtor_img").append(`
-			<img src="images/qqcode.jpeg"/>
+			<img src="images/qqcode.jpg"/>
 		`);
 	})
 	//点击微信客服
@@ -47,7 +47,7 @@ $(document).ready(function() {
 		$("#cumtor_img").show();
 		$("#cumtor_img").empty();
 		$("#cumtor_img").append(`
-			<img src="images/wxcode.jpeg"/>
+			<img src="images/wxcode.jpg"/>
 		`);
 	})
 	//点击yy客服

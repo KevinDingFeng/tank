@@ -74,7 +74,7 @@ public class PlayOrderController {
 	 */
 	@InitBinder("entity")
 	private void initBinder(ServletRequestDataBinder binder, HttpServletRequest req) {
-		List<String> fields = new ArrayList<String>(Arrays.asList("wxAccount", "cellphone", "remark", "duration"));
+		List<String> fields = new ArrayList<String>(Arrays.asList("wxAccount", "qqAccount", "yyAccount", "cellphone", "remark", "duration"));
 		switch (req.getMethod().toLowerCase()) {
 		case "post": // 新增 和 修改
 			binder.setAllowedFields(fields.toArray(new String[fields.size()]));

@@ -204,17 +204,17 @@ $(document).ready(function() {
 			get_price(_jl_id1,_fw_id1,number)
 		})
 		//验证微信
-		$("#w_chart").blur(function(){			
+		/*$("#w_chart").blur(function(){			
 			var _w_chart = $.trim($("#w_chart").val());//微信号
 			if(!wxreg.test(_w_chart)){
 				$.toast(`微信号格式错误！`, "forbidden");
 			    return false;
-			}
-		})
+			} TODO kevin 暂时去掉 微信账号格式校验
+		})*/
 		//验证手机号
 		$("#m_iphone").blur(function(){			
 			var _m_iphone = $.trim($("#m_iphone").val());//手机号
-			if(!_iphone.test(_m_iphone)){
+			if(_m_iphone && !_iphone.test(_m_iphone)){//只有存在有效值时才校验是否合法，即空白不给提示
 				$.toast(`手机号码 格式错误！`, "forbidden");
 			    return false;
 			}
@@ -420,12 +420,19 @@ $(document).ready(function() {
 					var _quotedProductId = resp.data.quotes;//选中的报价id
 					var _w_chart = $.trim($("#w_chart").val());//微信号
 					var _m_iphone = $.trim($("#m_iphone").val());//手机号
-					if(!wxreg.test(_w_chart)){
+					var _t_qq = $.trim($("#t_qq").val());//QQ号
+					var _y_yy = $.trim($("#y_yy").val());//YY号
+					/*if(!wxreg.test(_w_chart)){
 						$.toast(`微信号格式错误！`, "forbidden");
 					    return false;
-					}
-					if(!_iphone.test(_m_iphone)){
+					    TODO kevin 暂时去掉 微信账号格式校验
+					}*/
+					if(_m_iphone && !_iphone.test(_m_iphone)){
 						$.toast(`手机号码 格式错误！`, "forbidden");
+					    return false;
+					}
+					if(!(_w_chart || _m_iphone || _t_qq || _y_yy)){
+						$.toast(`4种联系方式必须选择一种！`, "forbidden");
 					    return false;
 					}
 					var _m_remark = $.trim($("#m_remark").val());//备注
@@ -439,18 +446,20 @@ $(document).ready(function() {
 					}else{
 						_time = _num;
 					}
-					var _arr = {
+					/*var _arr = {
 						wxAccount: _w_chart,
 						cellphone: _m_iphone,
 						remark: _m_remark,
 						duration: _time,
 						quotedProductId:_quotedProductId.id
-					};
+					};*/
 					$.ajax({
 						type: "POST",
 						url: $main_URL_yd + "/order/save",
 						data:{
 							wxAccount: _w_chart,
+							qqAccount: _t_qq,
+							yyAccount: _y_yy,
 							cellphone: _m_iphone,
 							remark: _m_remark,
 							duration: _time,

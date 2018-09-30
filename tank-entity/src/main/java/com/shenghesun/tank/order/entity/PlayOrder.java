@@ -169,13 +169,21 @@ public class PlayOrder extends BaseEntity {
 	private String remark;
 
 	/**
-	 * 预留联系方式
+	 * 预留联系方式 可为空
 	 */
 	private String cellphone;
 	/**
-	 * 微信账号
+	 * 微信账号 可为空
 	 */
 	private String wxAccount;
+	/**
+	 * qq账号 可为空
+	 */
+	private String qqAccount;
+	/**
+	 * yy账号 可为空
+	 */
+	private String yyAccount;
 
 	/**
 	 * 状态
