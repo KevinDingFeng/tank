@@ -59,7 +59,7 @@ public class QuotedProductController {
 		// List<QuotedProduct> quotes = quotedProductService.findByCoachId(coachId);
 		// 指定大神的所有服务报价，需要根据服务的二级类型，把服务分集合存储
 		// 当前 code 是 level 1 的类型，需要获取 level 3 的类型，然后使用 type code in 查询结果集
-		List<QuotedProduct> quotes = quotedProductService.findByCoachIdAndProductProductTypeCodeIn(coachId,
+		List<QuotedProduct> quotes = quotedProductService.findByRemovedAndCoachIdAndProductProductTypeCodeIn(false, coachId,
 				this.getLevel3CodeList(code));
 
 		JSONObject json = new JSONObject();

@@ -30,8 +30,8 @@ public class QuotedProductService {
 		return quotedProductDao.findOne(id);
 	}
 
-	public List<QuotedProduct> findByCoachIdAndProductProductTypeCodeIn(Long coachId, List<Integer> codes) {
-		return quotedProductDao.findByCoachIdAndProductProductTypeCodeIn(coachId, codes);
+	public List<QuotedProduct> findByRemovedAndCoachIdAndProductProductTypeCodeIn(boolean bool, Long coachId, List<Integer> codes) {
+		return quotedProductDao.findByRemovedAndCoachIdAndProductProductTypeCodeIn(bool, coachId, codes);
 	}
 	/**
 	 * 计算总金额
