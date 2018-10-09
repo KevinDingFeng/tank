@@ -142,7 +142,7 @@
                 <th class="table-author am-hide-sm-only">下单用户</th>
                 <th class="table-date am-hide-sm-only">下单日期</th>
                 <th class="table-author am-hide-sm-only">期望大神</th>
-                <th class="table-author am-hide-sm-only">执行大神</th>
+                <th class="table-author am-hide-sm-only">接单人</th>
                 <th class="table-type">服务类别</th>
                 <th class="table-author am-hide-sm-only">金额</th>
                 <th class="table-author am-hide-sm-only">下单时长</th>
