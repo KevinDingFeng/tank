@@ -19,6 +19,7 @@ import com.shenghesun.tank.service.QuotedProductService;
 import com.shenghesun.tank.service.entity.Product;
 import com.shenghesun.tank.service.entity.ProductType;
 import com.shenghesun.tank.service.entity.QuotedProduct;
+import com.shenghesun.tank.service.entity.model.DurationType;
 import com.shenghesun.tank.utils.JsonUtils;
 
 @RestController
@@ -128,14 +129,17 @@ public class QuotedProductController {
 			@RequestParam(value = "coachId") Long coachId,
 			@RequestParam(value = "duration") int duration) {
 		QuotedProduct quotes = quotedProductService.findByCoachIdAndProductProductTypeCode(coachId, code);
-		ProductType typeLevel3 = productTypeService.findByCode(code);
-		ProductType typeLevel2 = productTypeService.findByCode(typeLevel3.getParentCode());
+//		ProductType typeLevel3 = productTypeService.findByCode(code);
+//		ProductType typeLevel2 = productTypeService.findByCode(typeLevel3.getParentCode());
 		BigDecimal totalFee = BigDecimal.ZERO;
-		if(typeLevel2.getParentCode() == 11) {
+		Product product = quotes.getProduct();
+		
+//		if(typeLevel2.getParentCode() == 11) {
+		if(product.getDuration() < 1 || DurationType.NoLimitation.name().equals(product.getDurationType().name())){
 			totalFee = quotes.getPrice();
 		}else {
 			totalFee = quotedProductService.getTotalFee(duration, quotes.getPrice(), 
-					quotes.getProduct().getDuration());
+					product.getDuration());
 		}
 
 //		BigDecimal totalFee = BigDecimal.ZERO;
