@@ -34,7 +34,6 @@ $(document).ready(function() {
 		if(_code == "11"){
 			var _type = "代练";
 			$(".sure_title").html("代练");
-			$(".dl_xz").css("display","none");
 			get_user();
 			//点击二级
 			$(".er_dj").on("click",".get_san",function(){
@@ -80,7 +79,8 @@ $(document).ready(function() {
 			$(".dl_xz").css("display","block");
 			get_user();
 			//点击二级
-			$(".er_dj").on("click",".get_san",function(){
+			$(".er_dj").on("click",".get_san",function(event){
+				event.stopPropagation();
 				$(this).addClass("dw_list_active");
 				$(this).siblings().removeClass("dw_list_active");
 				$("#timeStart").val(bc_num);
@@ -89,7 +89,8 @@ $(document).ready(function() {
 				get_level3(er_code);
 			})
 			//点击三级
-			$(".zi_arr").on("click",".three_list",function(){
+			$(".zi_arr").on("click",".three_list",function(event){
+				event.stopPropagation();
 				$(this).addClass("zi_arr_active");
 				$(this).siblings().removeClass("zi_arr_active");
 				$("#timeStart").val("");
@@ -103,7 +104,8 @@ $(document).ready(function() {
 				get_price(gods_id,three_code);//获取价格
 			})
 			//点击教练
-			$(".zi_arr_jl").on("click",".gods_a",function(){
+			$(".zi_arr_jl").on("click",".gods_a",function(event){
+				event.stopPropagation();
 				$(this).addClass("zi_arr_active1");
 				$(this).siblings().removeClass("zi_arr_active1");
 				$("#timeStart").val(bc_num);
@@ -351,24 +353,35 @@ $(document).ready(function() {
 					}
 					var _duration = resp.data.quotes.product.duration;
 					var _dw = resp.data.quotes.product.durationType;//单位
+					$(".dl_xz").css("display","block");
 					if(_dw == "Hour"){
 						_dw ="小时"
 					}else if(_dw == "Day"){
 						_dw ="日"
 					}else if(_dw == "Month"){
 						_dw ="月"
+					}else if(_dw == "TenThousandExp"){
+						_dw = "1万经验"
+					}else if(_dw == "Time"){
+						_dw = "次"
+					}else if(_dw == "Site"){
+						_dw = "场"
+					}else if(_dw == "SevenHour"){
+						_dw = "7小时"
+					}else if(_dw == "NoLimitation"){
+						_dw = "不限"
+						$(".dl_xz").css("display","none");
 					}
+					
 					var z_num = resp.data.quotes.price/resp.data.quotes.product.duration;
+					
 					z_num = z_num.toFixed(2);//保留两位小数
 					if(_dw == "日"){
 						$("#price_qd").html("约"+z_num+"/"+_dw);
 					}else{
 						$("#price_qd").html(z_num+"/"+_dw);
 					}
-					quotedProductId = resp.data.quotes.product.productType.id;//大神id
-					if(_code == "11"){
-						var _duration = "0";
-					}
+					quotedProductId = resp.data.quotes.product.productType.id;//大神id				
 					bc_num = resp.data.quotes.product.duration;			
 					if(_num){
 						_duration = _num
@@ -441,11 +454,7 @@ $(document).ready(function() {
 						return false;
 					}
 					var _time = "";//选择的服务时长
-					if(_code == "11"){
-						_time =0;
-					}else{
-						_time = _num;
-					}
+					_time = _num;
 					/*var _arr = {
 						wxAccount: _w_chart,
 						cellphone: _m_iphone,
