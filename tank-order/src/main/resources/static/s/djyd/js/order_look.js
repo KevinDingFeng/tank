@@ -36,6 +36,7 @@ $(document).ready(function() {
 						$(".order_cp").html(_Level1+">"+_Level2+">"+ _Level3)
 					}
 					var time_dw = order_xx.product.durationType;//时间单位单位
+					$(".order_zh_xx").html("服务时长：");
 					if(time_dw == "Hour"){
 						time_dw = "小时"
 					}else if(time_dw == "Day"){
@@ -44,6 +45,17 @@ $(document).ready(function() {
 						time_dw = "周"
 					}else if(time_dw == "Month"){
 						time_dw = "月"
+					}else if(time_dw == "TenThousandExp"){
+						$(".order_zh_xx").html("服务数量：");
+						time_dw = "万经验"
+					}else if(time_dw == "Time"){
+						time_dw = "次"
+					}else if(time_dw == "Site"){
+						time_dw = "场"
+					}else if(time_dw == "SevenHour"){
+						time_dw = "7小时"
+					}else if(time_dw == "NoLimitation"){
+						time_dw = "不限"					
 					} 
 					$(".zh_js").html(order_xx.duration+time_dw);//服务时长
 					if(time_dw == "NoLimitation"){
@@ -70,10 +82,33 @@ $(document).ready(function() {
 					var _cellphone = order_xx.cellphone;//电话号码
 					$(".order_phone").html(_cellphone);
 					var _wxAccount = order_xx.wxAccount;//微信号码
+					var _qq = order_xx.qqAccount;//QQ号码
+					var _yy = order_xx.yyAccount;//YY号码
 					if(_wxAccount == "" || _wxAccount == null || _wxAccount == undefined){
+						$(".tel_name").html("微信号：")
 						$(".order_wx").html("暂无微信号码");
+						return false
 					}else{
 						$(".order_wx").html(_wxAccount);
+						return false
+					}
+					//qq号
+					if(_qq == "" || _qq == null || _qq == undefined){
+						$(".tel_name").html("QQ号：")
+						$(".order_wx").html("暂无QQ号码");
+						return false
+					}else{
+						$(".order_wx").html(_qq);
+						return false
+					}
+					//YY
+					if(_yy == "" || _yy == null || _yy == undefined){
+						$(".tel_name").html("YY号：")
+						$(".order_wx").html("暂无YY号码");
+						return false
+					}else{
+						$(".order_wx").html(_yy);
+						return false
 					}
 					var _remark = order_xx.remark;//备注
 					if(_remark == null){

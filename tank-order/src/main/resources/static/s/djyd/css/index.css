@@ -47,6 +47,9 @@ body {
 .r_col{
 	color: #ff1400
 }
+.col_red{
+	color: #ff2918
+}
 .b_col{
 	color: #3988ff;
 }
@@ -651,6 +654,7 @@ body {
     margin-top: -0.06rem;
 }
 .title_span{
+	font-size: 0.24rem;
 	padding-top: 0.1rem;
 }
 .xx_mar{

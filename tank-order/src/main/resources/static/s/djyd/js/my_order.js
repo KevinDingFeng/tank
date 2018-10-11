@@ -35,14 +35,19 @@ $(document).ready(function() {
 								<p class="fw_order">${_t.level1Name}</p>
 								<p class="type_order">${_t.level2Name}</p>
 								<p class="price_order"><span class="r_col f_weight">￥${list_xx[i].totalFee}元</span></p>
-								<p class="y_col zt_order">${list_xx[i].status}</p>
+								<p class="zt_order">${list_xx[i].status}</p>
 							</div>
 						`;
 					}
-					
-					
 					$(".order_list").empty();
 					$(".order_list").append(list_order);
+					if($(".zt_order").html("未支付")){
+						$(".zt_order").addClass("col_red")
+					}else if($(".zt_order").html("待服务")){
+						$(".zt_order").addClass("y_col")
+					}else if($(".zt_order").html("已服务")){
+						$(".zt_order").addClass("b_col")
+					}
 					//点击查询详情
 					$(".orderbg_list").click(function(){
 						var _id = $(this).attr("order_id");

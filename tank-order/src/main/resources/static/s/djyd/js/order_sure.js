@@ -27,7 +27,9 @@ $(document).ready(function() {
 	var bc_num = null;//记录步长
 	var quotedProductId =null;//选中报价id
 	var _iphone = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;//手机号码正则
-	var wxreg=/^[a-zA-Z]([-_a-zA-Z0-9]{5,19})+$/;//微信号正则
+	var wxreg=/^[a-zA-Z]([-_a-zA-Z0-9]{5,40})+$/;//微信号正则
+	var qqreg=/^\d{4,20}$/;//QQ正则
+	var yyreg=/^[a-zA-Z]([-_a-zA-Z0-9]{5,40})+$/;//yy正则
 	init();
 	function init(){
 		//代练类型
@@ -207,13 +209,29 @@ $(document).ready(function() {
 			get_price(_jl_id1,_fw_id1,number)
 		})
 		//验证微信
-		/*$("#w_chart").blur(function(){			
+		$("#w_chart").blur(function(){			
 			var _w_chart = $.trim($("#w_chart").val());//微信号
 			if(!wxreg.test(_w_chart)){
 				$.toast(`微信号格式错误！`, "forbidden");
 			    return false;
-			} TODO kevin 暂时去掉 微信账号格式校验
-		})*/
+			} //TODO kevin 暂时去掉 微信账号格式校验
+		})
+		//验证QQ
+		$("#t_qq").blur(function(){
+			var _qq = $.trim($("#t_qq").val());//QQ号
+			if(!qqreg.test(_qq)){
+				$.toast(`QQ号格式错误！`, "forbidden");
+			    return false;
+			} 
+		})
+		//验证YY
+		$("#y_yy").blur(function(){
+			var _yy = $.trim($("#y_yy").val());//QQ号
+			if(!yyreg.test(_yy)){
+				$.toast(`YY号格式错误！`, "forbidden");
+			    return false;
+			} 
+		})
 		//验证手机号
 		$("#m_iphone").blur(function(){			
 			var _m_iphone = $.trim($("#m_iphone").val());//手机号
@@ -408,7 +426,7 @@ $(document).ready(function() {
 									$(".mon_q").css("display","inline-block");
 									$(".go_zf").css("display","inline-block");
 								}
-								$(".money_num").html(_price);
+								$(".money_num").html(_price+`<span class="title_span">元</span>`);
 								$(".sure_title_red").html(_price);
 							}
 						}
@@ -436,22 +454,34 @@ $(document).ready(function() {
 					var _m_iphone = $.trim($("#m_iphone").val());//手机号
 					var _t_qq = $.trim($("#t_qq").val());//QQ号
 					var _y_yy = $.trim($("#y_yy").val());//YY号
-					/*if(!wxreg.test(_w_chart)){
+					
+					if(_w_chart && !wxreg.test(_w_chart)){
 						$.toast(`微信号格式错误！`, "forbidden");
 					    return false;
-					    TODO kevin 暂时去掉 微信账号格式校验
-					}*/
+					    //TODO kevin 暂时去掉 微信账号格式校验
+					}
 					if(_m_iphone && !_iphone.test(_m_iphone)){
 						$.toast(`手机号码 格式错误！`, "forbidden");
 					    return false;
 					}
+					//验证QQ
+					if(_t_qq && !qqreg.test(_t_qq)){
+						$.toast(`QQ号格式错误！`, "forbidden");
+					    return false;
+					} 
+					//验证YY
+					if(_y_yy && !yyreg.test(_y_yy)){
+						$.toast(`YY号格式错误！`, "forbidden");
+					    return false;
+					} 
+					
 					if(!(_w_chart || _m_iphone || _t_qq || _y_yy)){
 						$.toast(`4种联系方式必须选择一种！`, "forbidden");
 					    return false;
 					}
 					var _m_remark = $.trim($("#m_remark").val());//备注
-					if(_m_remark.length>30){
-						$.toast(`备注字数不能超过30字！`, "forbidden");
+					if(_m_remark.length>51){
+						$.toast(`备注字数不能超过50字！`, "forbidden");
 						return false;
 					}
 					var _time = "";//选择的服务时长
