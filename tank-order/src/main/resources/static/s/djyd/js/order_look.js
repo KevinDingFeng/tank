@@ -80,8 +80,8 @@ $(document).ready(function() {
 					$(".order_id").html(order_xx.no);//订单号
 					$(".order_time").html(order_xx.creation);//下单时间
 					
-					var _remark = order_xx.remark;//备注
-					if(_remark == null){
+					var _remark =order_xx.remark;//备注
+					if(_remark != null){
 						$(".order_remker").html(_remark);
 					}
 					$(".order_price").html(order_xx.totalFee+"元");//服务费用
