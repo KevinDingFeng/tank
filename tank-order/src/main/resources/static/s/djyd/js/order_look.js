@@ -79,37 +79,7 @@ $(document).ready(function() {
 					order_no = order_xx.no;
 					$(".order_id").html(order_xx.no);//订单号
 					$(".order_time").html(order_xx.creation);//下单时间
-					var _cellphone = order_xx.cellphone;//电话号码
-					$(".order_phone").html(_cellphone);
-					var _wxAccount = order_xx.wxAccount;//微信号码
-					var _qq = order_xx.qqAccount;//QQ号码
-					var _yy = order_xx.yyAccount;//YY号码
-					if(_wxAccount == "" || _wxAccount == null || _wxAccount == undefined){
-						$(".tel_name").html("微信号：")
-						$(".order_wx").html("暂无微信号码");
-						return false
-					}else{
-						$(".order_wx").html(_wxAccount);
-						return false
-					}
-					//qq号
-					if(_qq == "" || _qq == null || _qq == undefined){
-						$(".tel_name").html("QQ号：")
-						$(".order_wx").html("暂无QQ号码");
-						return false
-					}else{
-						$(".order_wx").html(_qq);
-						return false
-					}
-					//YY
-					if(_yy == "" || _yy == null || _yy == undefined){
-						$(".tel_name").html("YY号：")
-						$(".order_wx").html("暂无YY号码");
-						return false
-					}else{
-						$(".order_wx").html(_yy);
-						return false
-					}
+					
 					var _remark = order_xx.remark;//备注
 					if(_remark == null){
 						$(".order_remker").html(_remark);
@@ -122,6 +92,41 @@ $(document).ready(function() {
 					}else if(order_xx.status == "已服务"){
 						$(".my_order_sure").css("display","none")
 					}
+					
+					var _cellphone = order_xx.cellphone;//电话号码
+					$(".order_phone").html(_cellphone);
+					var _wxAccount = order_xx.wxAccount;//微信号码
+					var _qq = order_xx.qqAccount;//QQ号码
+					var _yy = order_xx.yyAccount;//YY号码
+					if(_cellphone == "" || _cellphone == null || _wxAccount == undefined){
+						$(".telPhone").hide();
+					}else{
+						$(".telPhone").show();
+						$(".order_phone").html(_wxAccount);
+					}
+					
+					
+					if(_wxAccount == "" || _wxAccount == null || _wxAccount == undefined){
+						$(".Wx").hide();
+					}else{
+						$(".Wx").show();
+						$(".order_wx").html(_wxAccount);
+					}
+					//qq号
+					if(_qq == "" || _qq == null || _qq == undefined){
+						$(".QQ").hide();
+					}else{
+						$(".QQ").show();
+						$(".order_qq").html(_qq);
+					}
+					//YY
+					if(_yy == "" || _yy == null || _yy == undefined){
+						$(".YY").hide();
+					}else{
+						$(".YY").show();
+						$(".order_yy").html(_yy);
+					}
+					
 					//点击 去。。。。
 					$("#tj_btn").click(function(){
 						var _attr = $(this).attr("order_id");

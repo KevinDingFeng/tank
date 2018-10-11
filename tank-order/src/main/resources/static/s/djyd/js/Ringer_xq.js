@@ -85,6 +85,7 @@ $(document).ready(function() {
 				if (resp.code == "200") {
 					var gods_xx = resp.data.coach;//大神信息
 					var _tou = gods_xx.iconUrl;//头像
+					$(".gods_toux>img").attr("src",_tou)
 					$(".gods_content_m").html(gods_xx.name);//大神名称
 					if(gods_xx.introduction == ""){
 						gods_xx.introduction = "暂无介绍！"
