@@ -34,6 +34,7 @@ $(document).ready(function() {
 		if(_code == "11"){
 			var _type = "代练";
 			$(".sure_title").html("代练");
+			$(".fw_name").html("服务数量")
 			get_user();
 			//点击二级
 			$(".er_dj").on("click",".get_san",function(){
