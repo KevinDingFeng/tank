@@ -41,6 +41,7 @@ import com.shenghesun.tank.service.QuotedProductService;
 import com.shenghesun.tank.service.entity.Product;
 import com.shenghesun.tank.service.entity.ProductType;
 import com.shenghesun.tank.service.entity.QuotedProduct;
+import com.shenghesun.tank.service.entity.model.DurationType;
 import com.shenghesun.tank.sso.model.LoginInfo;
 import com.shenghesun.tank.utils.JsonUtils;
 import com.shenghesun.tank.utils.RandomUtil;
@@ -196,10 +197,11 @@ public class PlayOrderController {
 		QuotedProduct qp = quotedProductService.findById(qpId);
 		Product product = qp.getProduct();
 		this.initPlayOrder(playOrder, qp.getCoach(), product);
-		ProductType typeLevel3 = productTypeService.findByCode(product.getProductType().getCode());
-		ProductType typeLevel2 = productTypeService.findByCode(typeLevel3.getParentCode());
+//		ProductType typeLevel3 = productTypeService.findByCode(product.getProductType().getCode());
+//		ProductType typeLevel2 = productTypeService.findByCode(typeLevel3.getParentCode());
 		BigDecimal totalFee = BigDecimal.ZERO;
-		if (typeLevel2.getParentCode() == 11) {
+//		if (typeLevel2.getParentCode() == 11) {
+		if(product.getDuration() < 1 || DurationType.NoLimitation.name().equals(product.getDurationType().name())){
 			totalFee = qp.getPrice();
 		} else {
 			totalFee = quotedProductService.getTotalFee(playOrder.getDuration(), qp.getPrice(),
