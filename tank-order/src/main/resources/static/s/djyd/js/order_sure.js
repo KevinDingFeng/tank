@@ -26,7 +26,7 @@ $(document).ready(function() {
 	var _num = null;//服务时长
 	var bc_num = null;//记录步长
 	var quotedProductId =null;//选中报价id
-	var _iphone = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;//手机号码正则
+	var _iphone = /^[1][0-9][0-9]{9}$/;//手机号码正则
 	var wxreg=/^[a-zA-Z]([-_a-zA-Z0-9]{5,40})+$/;//微信号正则
 	var qqreg=/^\d{4,20}$/;//QQ正则
 	var yyreg=/^[a-zA-Z]([-_a-zA-Z0-9]{5,40})+$/;//yy正则
@@ -246,7 +246,7 @@ $(document).ready(function() {
 		//验证备注
 		$("#m_remark").blur(function(){			
 			var m_remark = $.trim($("#m_remark").val());//备注
-			if(m_remark.length>51){
+			if(m_remark.length>50){
 				$.toast(`备注字数不能超过50字！`, "forbidden");
 			    return false;
 			}
@@ -483,7 +483,7 @@ $(document).ready(function() {
 					    return false;
 					}
 					var _m_remark = $.trim($("#m_remark").val());//备注
-					if(_m_remark.length>51){
+					if(_m_remark.length>50){
 						$.toast(`备注字数不能超过50字！`, "forbidden");
 						return false;
 					}
