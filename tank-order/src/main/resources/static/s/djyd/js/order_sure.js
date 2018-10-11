@@ -39,14 +39,16 @@ $(document).ready(function() {
 			$(".fw_name").html("服务数量")
 			get_user();
 			//点击二级
-			$(".er_dj").on("click",".get_san",function(){
+			$(".er_dj").on("touchstart",".get_san",function(e){
+				e.stopPropagation()  
 				$(this).addClass("dw_list_active");
 				$(this).siblings().removeClass("dw_list_active");
 				var er_code = $(this).attr("er_code");//当前二级的code
 				get_level3(er_code);
 			})
 			//点击三级
-			$(".zi_arr").on("click",".three_list",function(){
+			$(".zi_arr").on("touchstart",".three_list",function(e){
+				e.stopPropagation()  
 				$(this).addClass("zi_arr_active");
 				$(this).siblings().removeClass("zi_arr_active");
 				var three_code = $(this).attr("code");//当前三级的code
@@ -58,7 +60,8 @@ $(document).ready(function() {
 				get_price(gods_id,three_code);//获取价格
 			})
 			//点击教练
-			$(".zi_arr_jl").on("click",".gods_a",function(){
+			$(".zi_arr_jl").on("touchstart",".gods_a",function(e){
+				e.stopPropagation()  
 				$(this).addClass("zi_arr_active1");
 				$(this).siblings().removeClass("zi_arr_active1");
 				var gods_id = $(this).attr("id");//大神id
