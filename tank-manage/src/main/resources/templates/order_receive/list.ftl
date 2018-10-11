@@ -177,7 +177,7 @@
                   <#if em.status.name() == "Operation">
                   <div class="am-btn-toolbar">
                     <div class="am-btn-group am-btn-group-xs">
-                      <button onclick="exeComplete(${em.id}, ${em.no})" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 执行完成</button>
+                      <button onclick="exeComplete(${em.id}, '${em.no}')" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 执行完成</button>
                     </div>
                   </div>
                   </#if>
