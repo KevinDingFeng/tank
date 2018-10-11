@@ -430,7 +430,7 @@ $(document).ready(function() {
 									$(".go_zf").css("display","inline-block");
 								}
 								$(".money_num").html(_price+`<span class="title_span">元</span>`);
-								$(".sure_title_red").html(_price);
+								$(".sure_title_red").html(_price+`<span class="title_span">元</span>`);
 							}
 						}
 					})	
