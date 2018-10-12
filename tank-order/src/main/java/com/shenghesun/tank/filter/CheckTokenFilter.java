@@ -20,7 +20,7 @@ import com.shenghesun.tank.utils.RedisUtils;
 
 public class CheckTokenFilter implements Filter{
 	
-	private static final Long EXPIRE_TIME = 2592000L;//默认用户授权有效时长，30天
+	private static final Long EXPIRE_TIME = 10800L;// 3 小时  2592000L;//默认用户授权有效时长，30天
 	private static final String CUSTOM_TOKEN_NAME = "tankToken";
 	public static final String URL_PATTERNS = "/api/*"; 
 	
