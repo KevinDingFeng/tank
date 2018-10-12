@@ -399,7 +399,7 @@ $(document).ready(function() {
 					
 					var z_num = resp.data.quotes.price/resp.data.quotes.product.duration;
 					
-					z_num = z_num.toFixed(2);//保留两位小数
+					z_num = z_num.toFixed(0);//保留两位小数
 					if(_dw == "日"){
 						$("#price_qd").html("约"+z_num+"/"+_dw);
 					}else{
