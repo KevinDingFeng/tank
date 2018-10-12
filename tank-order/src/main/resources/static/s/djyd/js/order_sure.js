@@ -30,6 +30,7 @@ $(document).ready(function() {
 	var wxreg=/^[a-zA-Z]([-_a-zA-Z0-9]{5,40})+$/;//微信号正则
 	var qqreg=/^\d{4,20}$/;//QQ正则
 	var yyreg=/^[a-zA-Z]([-_a-zA-Z0-9]{5,40})+$/;//yy正则
+	var ex = /^\d+$/;//正整数正则
 	init();
 	function init(){
 		//代练类型
@@ -43,6 +44,7 @@ $(document).ready(function() {
 				e.stopPropagation()  
 				$(this).addClass("dw_list_active");
 				$(this).siblings().removeClass("dw_list_active");
+				$("#timeStart").val(bc_num)
 				var er_code = $(this).attr("er_code");//当前二级的code
 				get_level3(er_code);
 			})
@@ -438,6 +440,17 @@ $(document).ready(function() {
 			}
 		})	
 	}
+	//服务训练
+	$("#timeStart").change(function(){
+		var _num  = bc_num;//步长
+		var _val = $("#timeStart").val();
+		var _cc = _val/_num;
+		if(!ex.test(_cc)){
+			$.toast(`请输入</br>${bc_num}的整数倍`, "forbidden");
+			$("#timeStart").val(bc_num);
+			return
+		}
+	})
 	//支付
 	var appIdVal,timeStampVal,nonceStrVal,packageVal,signTypeVal,paySignVal;
 	function go_zf(_fw_id,_jl_id){
