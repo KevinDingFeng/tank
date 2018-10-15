@@ -448,6 +448,9 @@ $(document).ready(function() {
 		var _num  = bc_num;//步长
 		var _val = parseInt($("#timeStart").val());
 		var _cc = _val/_num;
+		if(isNaN(_val)){
+			return
+		}
 		if(_val == 0){
 			$.toast(`请输入大于0的正整数`, "forbidden");
 			$("#timeStart").val(bc_num);
