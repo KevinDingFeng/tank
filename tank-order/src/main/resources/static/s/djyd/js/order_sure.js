@@ -283,23 +283,23 @@ $(document).ready(function() {
 					$(".er_dj").append(list1);
 					product_list_three = null;
 					product_list_three = resp.data.typeLevel3List;
-					if(product_list_three){
-						get_level3(er_codes)
-					}
 					//获取教练信息
 					get_gods(gods_id);
 					
+					if(product_list_three){
+						get_level3(er_codes);
+					}				
 				}
 			}
 		})
 	}
-	//点击第三级获取第三级
+	//点击第二级获取第三级
 	function get_level3(er_code){
 		var _code = er_code;
-		
+		var _gods_id = $(".zi_arr_active1").attr("id");
 		$.ajax({
 			type: "GET",
-			url: $main_URL_yd + "/product_type/level3?code="+_code,
+			url: $main_URL_yd + "/product_type/level3?code="+_code+"&coachId="+_gods_id,
 			async: true,		
 			error: function (xhr, errorInfo, ex) {
 				$.toast("查询第三级错误！错误信息:" + errorInfo, "forbidden");
@@ -413,6 +413,9 @@ $(document).ready(function() {
 						$("#timeStart").val(_duration);
 						_num =_duration;
 					}
+					if(num){
+						_duration = num;
+					}
 					$.ajax({
 						type: "GET",
 						url: $main_URL_yd + "/quoted_product/total_fee?code="+fw_id+"&coachId="+gods_id+"&duration="+_duration,
@@ -441,15 +444,30 @@ $(document).ready(function() {
 		})	
 	}
 	//服务训练
-	$("#timeStart").change(function(){
+	$("#timeStart").on('input',function(){
 		var _num  = bc_num;//步长
-		var _val = $("#timeStart").val();
+		var _val = parseInt($("#timeStart").val());
 		var _cc = _val/_num;
+		if(_val == 0){
+			$.toast(`请输入大于0的正整数`, "forbidden");
+			$("#timeStart").val(bc_num);
+			return
+		}else if(_val >=100){
+			$.toast(`输入最大数字不能大于99`, "forbidden");
+			$("#timeStart").val(bc_num);
+			return
+		}
 		if(!ex.test(_cc)){
 			$.toast(`请输入</br>${bc_num}的整数倍`, "forbidden");
 			$("#timeStart").val(bc_num);
 			return
+		}else{
+			var three_code = $(".zi_arr_active").attr("code");//产品id
+			var gods_id = $(".zi_arr_active1").attr("id");//大神id
+			var num = _val;
+			get_price(gods_id,three_code,num);//获取价格
 		}
+		
 	})
 	//支付
 	var appIdVal,timeStampVal,nonceStrVal,packageVal,signTypeVal,paySignVal;
