@@ -33,6 +33,15 @@ public class QuotedProductService {
 	public List<QuotedProduct> findByRemovedAndCoachIdAndProductProductTypeCodeIn(boolean bool, Long coachId, List<Integer> codes) {
 		return quotedProductDao.findByRemovedAndCoachIdAndProductProductTypeCodeIn(bool, coachId, codes);
 	}
+
+	public List<QuotedProduct> findByRemovedAndCoachIdAndProductProductTypeParentCode(boolean b, Long coachId,
+			int parentCode) {
+		return quotedProductDao.findByRemovedAndCoachIdAndProductProductTypeParentCode(b, coachId, parentCode);
+	}
+
+	public List<QuotedProduct> findByRemovedAndCoachIdAndProductProductTypeIdIn(boolean b, Long coachId, List<Long> ids) {
+		return quotedProductDao.findByRemovedAndCoachIdAndProductProductTypeIdIn(b, coachId, ids);
+	}
 	/**
 	 * 计算总金额
 	 * 	需要根据 具体报价 和 服务设定的时长计算出真实的金额
@@ -56,4 +65,5 @@ public class QuotedProductService {
 	public QuotedProduct save(QuotedProduct entity) {
 		return quotedProductDao.save(entity);
 	}
+
 }

@@ -42,8 +42,8 @@ public class AuthController {
 		String timestamp = request.getParameter("timestamp");
 		String nonce = request.getParameter("nonce");
 		String echostr = request.getParameter("echostr");
-		System.out.println("signature = " + signature + "; timestamp = " + timestamp + "; nonce = " + nonce
-				+ "; echostr = " + echostr + ";");
+//		System.out.println("signature = " + signature + "; timestamp = " + timestamp + "; nonce = " + nonce
+//				+ "; echostr = " + echostr + ";");
 		return MyWechatSignatureUtil.checkSignature(signature, timestamp, nonce, MyWechatParam.TOKEN) ? echostr
 				: "false";
 	}
@@ -81,7 +81,7 @@ public class AuthController {
 			if (userInfoJson == null) {
 				return JsonUtils.getFailJSONObject("获取用户基础信息出错");
 			}
-			System.out.println(userInfoJson.toString());
+//			System.out.println(userInfoJson.toString());
 			SysUser sysUser = sysUserService.findByOpenId(openId);
 //			SysUser sysUser = sysUserService.findById(1L);
 			if (sysUser == null) {

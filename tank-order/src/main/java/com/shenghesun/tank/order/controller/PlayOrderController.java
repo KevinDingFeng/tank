@@ -4,8 +4,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -115,26 +117,91 @@ public class PlayOrderController {
 		QuotedProduct qp = quotedProductService.findById(quotedProductId);
 		Coach coach = qp.getCoach();// 大神
 		Product product = qp.getProduct();// 服务
-
-		JSONObject json = new JSONObject();
-		json.put("coach", coach);
-		json.put("coaches", coachService.findAll(new Sort(Direction.DESC, "seqNum")));// 获取所有大神-默认所有大神都可以支持所有类型的服务
 		ProductType typeLevel3 = product.getProductType();// level 3 的类型，parentCode 属性是 level 2的类型的 code
-		ProductType typeLevel2 = productTypeService.findByCode(typeLevel3.getParentCode());
+		Integer level1Code = productTypeService.getLevel1CodeByLevel3Code(typeLevel3.getCode());
+		List<Long> typeLevel3Ids = productTypeService.getLevel3IdList(level1Code);//根据 level 1 的 code 获取 level 3 级的 id 集合
+		List<QuotedProduct> qps = quotedProductService.findByRemovedAndCoachIdAndProductProductTypeIdIn(false, coach.getId(),
+				typeLevel3Ids);//当前大神可以执行的所有产品，根据该产品集合，整理得出页面提供给用户选择的 level 2 和 level 3 的产品类型
+		
+		Map<Integer, List<ProductType>> typesMap = this.getTypesInQps(qps);
+		
+//		ProductType typeLevel2 = productTypeService.findByCode(typeLevel3.getParentCode());
 		// 获取 level 2 的类型集合
 		// level 2 的 parentCode 属性是 level 1 的类型的 code
-		List<ProductType> typeLevel2List = productTypeService.findByParentCode(typeLevel2.getParentCode());
-
+//		List<ProductType> typeLevel2List = productTypeService.findByParentCode(typeLevel2.getParentCode());
 		// 获取 level 3 的类型集合，获取当前 level 2 对应的集合就可以
-		List<ProductType> typeLevel3List = productTypeService.findByParentCode(typeLevel3.getParentCode());
+//		List<ProductType> typeLevel3List = productTypeService.findByParentCode(typeLevel3.getParentCode());
+		List<ProductType> typeLevel2List = new ArrayList<>();
+		List<ProductType> typeLevel3List = new ArrayList<>();
+		JSONObject json = new JSONObject();
+		if(typesMap != null) {
+			typeLevel2List = typesMap.get(2);
+			typeLevel3List = typesMap.get(3);
+		}
 		json.put("typeLevel2List", typeLevel2List);
 		json.put("typeLevel3List", typeLevel3List);
-
+		json.put("coach", coach);
+		json.put("coaches", coachService.findAll(new Sort(Direction.DESC, "seqNum")));// 获取所有大神-默认所有大神都可以支持所有类型的服务
 		json.put("product", product);// 服务
+		qp.setProduct(null);
+		qp.setCoach(null);
 		json.put("quotedProduct", qp);// 具体报价
 		return JsonUtils.getSuccessJSONObject(json);
 	}
-
+	/**
+	 * 根据 真实报价 整理得出需要的 产品类型，分 level 2 和 level 3
+	 * @param qps
+	 * @return
+	 */
+	private Map<Integer, List<ProductType>> getTypesInQps(List<QuotedProduct> qps) {
+		if(qps == null) {
+			return null;
+		}
+		Map<Integer, ProductType> level2Map = new HashMap<>();// key = level 3 的 parentCode ; value = type
+		Map<Long, ProductType> level3Map = new HashMap<>();// key = id ; value = type
+		
+		for(QuotedProduct qp : qps) {
+			Product pro = qp.getProduct();
+			Long tid = pro.getProductTypeId();//level 3 的 id
+			
+			if(level3Map.get(tid) == null) {//第一次添加
+				ProductType t = pro.getProductType();
+				level3Map.put(tid, t);
+				int pc = t.getParentCode();
+				if(level2Map.get(pc) == null) {//第一次添加
+					level2Map.put(pc, productTypeService.findByCode(pc));
+				}
+				//已添加 的情况，不做任何操作
+			}
+			//已存在 的时候不做任何操作
+		}
+		
+		List<ProductType> level2 = new ArrayList<>();
+		List<ProductType> level3 = new ArrayList<>();
+		
+		Set<Integer> set2 = level2Map.keySet();
+		if(set2 != null) {
+			Iterator<Integer> its = set2.iterator();
+			while(its.hasNext()) {
+				int key = its.next();
+				level2.add(level2Map.get(key));
+			}
+		}
+		
+		Set<Long> set3 = level3Map.keySet();
+		if(set3 != null) {
+			Iterator<Long> its = set3.iterator();
+			while(its.hasNext()) {
+				Long key = its.next();
+				level3.add(level3Map.get(key));
+			}
+		}
+		
+		Map<Integer, List<ProductType>> map = new HashMap<>();
+		map.put(2, level2);
+		map.put(3, level3);
+		return map;
+	}
 	private void initPlayOrder(PlayOrder playOrder, Coach coach, Product product) {
 
 		LoginInfo info = (LoginInfo) SecurityUtils.getSubject().getPrincipal();
@@ -263,16 +330,17 @@ public class PlayOrderController {
 		Map<String, String> map = this.getUnifiedOrderData(orderNo, openId, ip, totalFee);
 		WXPayConfig conf = new WXPayConfigImpl();
 //		WXPay wxPay = new WXPay(conf, "https://wxpay.dazonghetong.com/wxpay/notify");
+//		WXPay wxPay = new WXPay(conf, "http://tank.dazonghetong.com/wxpay/notify");
 		WXPay wxPay = new WXPay(conf, "http://tk.dazonghetong.com/wxpay/notify");
 		Map<String, String> resultMap = wxPay.unifiedOrder(map);
 		// 解析统一下单返回的信息，生成唤醒微信支付的数据
 		String returnCode = (String) resultMap.get("return_code");// 通信标识
-		System.out.println(returnCode);
+//		System.out.println(returnCode);
     
 		if ("SUCCESS".equals(returnCode.toUpperCase())) {
 			String resultCode = (String) resultMap.get("result_code");// 交易标识
 		   
-	        System.out.println(resultCode);
+//	        System.out.println(resultCode);
 			if ("SUCCESS".equals(resultCode.toUpperCase())) {
 				String appId = (String) resultMap.get("appid");// 微信公众号AppId
 				String prepayId = "prepay_id=" + resultMap.get("prepay_id");// 统一下单返回的预支付id
@@ -345,12 +413,12 @@ public class PlayOrderController {
 //		Long wxUserId = 15L;// 
 		LoginInfo info = (LoginInfo) SecurityUtils.getSubject().getPrincipal();
 		Long wxUserId = info.getWxUserId();
-		System.out.println(info.getWxUserId());
+//		System.out.println(info.getWxUserId());
 		Pageable pageable = this.getPageable();
 		Page<PlayOrder> page = playOrderService.findByWxUserId(wxUserId, pageable);
-		if(page.getContent() != null) {
-			System.out.println(page.getContent().size());
-		}
+//		if(page.getContent() != null) {
+//			System.out.println(page.getContent().size());
+//		}
 		JSONObject json = new JSONObject();
 		json.put("page", page);
 		try {

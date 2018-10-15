@@ -13,6 +13,17 @@ import lombok.ToString;
 /**
  * 服务类型
  * 	分多个等级的服务类型
+ * 	严格规定 code 和 parentCode 两个属性的规则：
+ * 		level 等于 1 的类型：
+ * 			code 等于 两位的正整数
+ * 			parentCode 等于 1
+ * 		level 等于 2 的类型：
+ * 			code 等于 parentCode + 两位正整数，即四位正整数
+ * 			parentCode 等于 其父级（ level 等于 1 ）的 code，即两位正整数
+ * 		level 等于 3 的类型：
+ * 			code 等于 parentCode + 两位正整数，即六位正整数
+ * 			parentCode 等于 其父级（ level 等于 2 ）的 code，即四位正整数 
+ * 		
  * @author kevin
  *
  */
@@ -25,6 +36,7 @@ public class ProductType extends BaseEntity {
 	
 	/**
 	 * 编号
+	 * 	该属性在数据库中的规则是 int(11)
 	 */
 	private int code;
 	
@@ -36,6 +48,7 @@ public class ProductType extends BaseEntity {
 	
 	/**
 	 * 父级编号
+	 * 	该属性在数据库中的规则是 int(11)
 	 */
 	private int parentCode;
 	

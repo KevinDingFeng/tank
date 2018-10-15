@@ -42,6 +42,8 @@ public class WxpayNotifyController {
 	public String wxnotify(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, DocumentException {
 		String xmlStr = this.getXMLStr(request);
+		System.out.println("接收到支付通知");
+		System.out.println(xmlStr);
 		// 支付通知校验
 		try {
 			if (this.checkSign(xmlStr)) {
