@@ -458,6 +458,10 @@ $(document).ready(function() {
 		}else if(_val >=100){
 			$.toast(`输入最大数字不能大于99`, "forbidden");
 			$("#timeStart").val(bc_num);
+			var three_code = $(".zi_arr_active").attr("code");//产品id
+			var gods_id = $(".zi_arr_active1").attr("id");//大神id
+			var num = 1;
+			get_price(gods_id,three_code,num);//获取价格
 			return
 		}
 		if(!ex.test(_cc)){
@@ -471,6 +475,27 @@ $(document).ready(function() {
 			get_price(gods_id,three_code,num);//获取价格
 		}
 		
+	})
+	//服务训练
+	$("#timeStart").change(function(){
+		var _num  = bc_num;//步长
+		var _val = $("#timeStart").val();
+		var _cc = _val/_num;
+		if(_val == ""){
+			$.toast(`服务数量不能为空！`, "forbidden");
+			$("#timeStart").val(bc_num);
+			return;
+		}
+		else if(!ex.test(_cc)){
+			$.toast(`请输入</br>${bc_num}的整数倍11`, "forbidden");
+			$("#timeStart").val(bc_num);
+			return
+		}else{
+			var three_code = $(".zi_arr_active").attr("code");//产品id
+			var gods_id = $(".zi_arr_active1").attr("id");//大神id
+			var num = _val;
+			get_price(gods_id,three_code,num);//获取价格
+		}
 	})
 	//支付
 	var appIdVal,timeStampVal,nonceStrVal,packageVal,signTypeVal,paySignVal;

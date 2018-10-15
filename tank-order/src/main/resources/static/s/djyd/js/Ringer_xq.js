@@ -106,6 +106,7 @@ $(document).ready(function() {
 					var product_list = resp.data.level2;//产品信息
 					_product_list="";
 					_product_list = product_list;
+					var er_code = product_list[0].code;//默认第一个code
 					var list1 = `
 						<div class="left_text" code=${product_list[0].code} id=${product_list[0].id}>
 							<text>${product_list[0].name}</text>
@@ -134,16 +135,7 @@ $(document).ready(function() {
 						$(".prise_right").empty()
 						$(".prise_right").append(list_2);
 					}else{
-						if(_type == "11"){
-							var _cc = "1101"
-							get_product(_cc);
-						}else if(_type == "12"){
-							var _cc = "1201"
-							get_product(_cc);
-						}else if(_type == "10"){
-							var _cc = "1001"
-							get_product(_cc);
-						}
+						get_product(er_code);
 					}
 				}
 			}
