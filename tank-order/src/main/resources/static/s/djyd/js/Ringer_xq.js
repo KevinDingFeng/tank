@@ -108,7 +108,7 @@ $(document).ready(function() {
 					_product_list = product_list;
 					var er_code = product_list[0].code;//默认第一个code
 					var list1 = `
-						<div class="left_text" code=${product_list[0].code} id=${product_list[0].id}>
+						<div class="left_text active" code=${product_list[0].code} id=${product_list[0].id}>
 							<text>${product_list[0].name}</text>
 							<text class="text_tiao"></text>
 						</div>

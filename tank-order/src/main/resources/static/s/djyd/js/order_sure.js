@@ -181,7 +181,7 @@ $(document).ready(function() {
 			})
 		}
 		
-		var MAX = 90,
+		var MAX = 99,
 		MIN = bc_num;
 		//减少
 		$('.weui-count__decrease').click(function(e) {
@@ -452,28 +452,22 @@ $(document).ready(function() {
 			return
 		}
 		if(_val == 0){
-			$.toast(`请输入大于0的正整数`, "forbidden");
+			$.toast(`请输入大于等于${_num}的正整数`, "forbidden");
 			$("#timeStart").val(bc_num);
 			return
-		}else if(_val >=100){
-			$.toast(`输入最大数字不能大于99`, "forbidden");
+		}else if(_val >90){
+			$.toast(`输入最大数字不能大于90`, "forbidden");
 			$("#timeStart").val(bc_num);
 			var three_code = $(".zi_arr_active").attr("code");//产品id
 			var gods_id = $(".zi_arr_active1").attr("id");//大神id
-			var num = 1;
+			var num = bc_num;
 			get_price(gods_id,three_code,num);//获取价格
 			return
 		}
-		if(!ex.test(_cc)){
-			$.toast(`请输入</br>${bc_num}的整数倍`, "forbidden");
-			$("#timeStart").val(bc_num);
-			return
-		}else{
-			var three_code = $(".zi_arr_active").attr("code");//产品id
-			var gods_id = $(".zi_arr_active1").attr("id");//大神id
-			var num = _val;
-			get_price(gods_id,three_code,num);//获取价格
-		}
+		var three_code = $(".zi_arr_active").attr("code");//产品id
+		var gods_id = $(".zi_arr_active1").attr("id");//大神id
+		var num = _val;
+		get_price(gods_id,three_code,num);//获取价格
 		
 	})
 	//服务训练
@@ -487,8 +481,12 @@ $(document).ready(function() {
 			return;
 		}
 		else if(!ex.test(_cc)){
-			$.toast(`请输入</br>${bc_num}的整数倍11`, "forbidden");
+			$.toast(`请输入</br>${_num}的整数倍`, "forbidden");
 			$("#timeStart").val(bc_num);
+			var three_code = $(".zi_arr_active").attr("code");//产品id
+			var gods_id = $(".zi_arr_active1").attr("id");//大神id
+			var num = bc_num;
+			get_price(gods_id,three_code,num);//获取价格
 			return
 		}else{
 			var three_code = $(".zi_arr_active").attr("code");//产品id
