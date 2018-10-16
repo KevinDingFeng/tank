@@ -104,7 +104,7 @@ $(document).ready(function() {
 						$(".telPhone").hide();
 					}else{
 						$(".telPhone").show();
-						$(".order_phone").html(_wxAccount);
+						$(".order_phone").html(_cellphone);
 					}
 					
 					
