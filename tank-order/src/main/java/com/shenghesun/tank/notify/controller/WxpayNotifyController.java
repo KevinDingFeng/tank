@@ -29,8 +29,11 @@ import com.shenghesun.tank.wxpay.sdk.WXPayConfig;
 import com.shenghesun.tank.wxpay.sdk.WXPayUtil;
 import com.shenghesun.tank.wxpay.sdk.impl.WXPayConfigImpl;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping(value = "/wxpay")
+@Slf4j
 public class WxpayNotifyController {
 
 	@Autowired
@@ -44,6 +47,7 @@ public class WxpayNotifyController {
 		String xmlStr = this.getXMLStr(request);
 		System.out.println("接收到支付通知");
 		System.out.println(xmlStr);
+		log.info(xmlStr);
 		// 支付通知校验
 		try {
 			if (this.checkSign(xmlStr)) {

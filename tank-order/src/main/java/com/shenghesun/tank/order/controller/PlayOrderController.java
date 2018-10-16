@@ -54,8 +54,11 @@ import com.shenghesun.tank.wxpay.sdk.WXPayConfig;
 import com.shenghesun.tank.wxpay.sdk.WXPayUtil;
 import com.shenghesun.tank.wxpay.sdk.impl.WXPayConfigImpl;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping(value = "/order")
+@Slf4j
 public class PlayOrderController {
 
 	@Autowired
@@ -359,7 +362,8 @@ public class PlayOrderController {
 			}
 		} else {
 			String returnMsg = (String) resultMap.get("return_msg");// 通信错误信息
-			 System.out.println(returnMsg);
+			System.out.println(returnMsg);
+			log.info(returnMsg); 
 			JSONObject json = new JSONObject();
 			json.put("result", returnMsg);
 			return json;
