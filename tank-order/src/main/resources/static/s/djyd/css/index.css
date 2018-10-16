@@ -12,7 +12,12 @@ body {
   padding-bottom: constant(safe-area-inset-bottom);
 
 }
- 
+.ds_hidden{
+	display:none!important;
+}
+.ds_show{
+	display:block!important;
+}
 /* 遮盖层 */
 #cumtor{
 	z-index:999;
@@ -666,7 +671,7 @@ body {
 	color: #ffb033;
 }
 .sure_title1{
-	width:82%;
+	width:80%;
 	text-align:right;
 	color: #ffb033;
 }
@@ -1027,9 +1032,13 @@ body {
 	flex-direction: row;
 	margin-bottom: 0.29rem;
 }
-.order_content span{
+.order_content .order_remker{
 	width: 65%;
 	text-align: left;
+	overflow: hidden !important; 
+	display: inline-block;
+    word-wrap: break-word;
+    white-space: normal;
 }
 .order_content label{
 	width: 40%;
