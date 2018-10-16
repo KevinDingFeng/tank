@@ -77,6 +77,7 @@ $(document).ready(function() {
 			$(".go_zf").click(function(){
 				var _fw_id = $(this).attr("fw_id");//三级的code
 				var _jl_id = $(this).attr("gods_id");//教练的id
+				
 				go_zf(_fw_id,_jl_id);
 			})
 		}
@@ -181,7 +182,7 @@ $(document).ready(function() {
 			})
 		}
 		
-		var MAX = 99,
+		var MAX = 90,
 		MIN = bc_num;
 		//减少
 		$('.weui-count__decrease').click(function(e) {
@@ -461,13 +462,17 @@ $(document).ready(function() {
 			var three_code = $(".zi_arr_active").attr("code");//产品id
 			var gods_id = $(".zi_arr_active1").attr("id");//大神id
 			var num = bc_num;
+			_num  = _val
 			get_price(gods_id,three_code,num);//获取价格
 			return
+		}else{
+			var three_code = $(".zi_arr_active").attr("code");//产品id
+			var gods_id = $(".zi_arr_active1").attr("id");//大神id
+			var num = _val;
+			_num  = _val;
+			get_price(gods_id,three_code,num);//获取价格
 		}
-		var three_code = $(".zi_arr_active").attr("code");//产品id
-		var gods_id = $(".zi_arr_active1").attr("id");//大神id
-		var num = _val;
-		get_price(gods_id,three_code,num);//获取价格
+		
 		
 	})
 	//服务训练
@@ -486,12 +491,14 @@ $(document).ready(function() {
 			var three_code = $(".zi_arr_active").attr("code");//产品id
 			var gods_id = $(".zi_arr_active1").attr("id");//大神id
 			var num = bc_num;
+			_num  = _val
 			get_price(gods_id,three_code,num);//获取价格
 			return
 		}else{
 			var three_code = $(".zi_arr_active").attr("code");//产品id
 			var gods_id = $(".zi_arr_active1").attr("id");//大神id
 			var num = _val;
+			_num = _val
 			get_price(gods_id,three_code,num);//获取价格
 		}
 	})
@@ -544,8 +551,7 @@ $(document).ready(function() {
 						$.toast(`备注字数不能超过50字！`, "forbidden");
 						return false;
 					}
-					var _time = "";//选择的服务时长
-					_time = _num;
+					var _time = $("#timeStart").val();//选择的服务时长
 					/*var _arr = {
 						wxAccount: _w_chart,
 						cellphone: _m_iphone,
