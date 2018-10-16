@@ -49,8 +49,10 @@ $(document).ready(function() {
 						$(".order_zh_xx").html("服务数量：");
 						time_dw = "万经验"
 					}else if(time_dw == "Time"){
+						$(".order_zh_xx").html("服务数量：");
 						time_dw = "次"
 					}else if(time_dw == "Site"){
+						$(".order_zh_xx").html("服务数量：");
 						time_dw = "场"
 					}else if(time_dw == "SevenHour"){
 						time_dw = "7小时"
