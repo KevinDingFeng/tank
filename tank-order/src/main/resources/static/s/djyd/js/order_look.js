@@ -100,7 +100,7 @@ $(document).ready(function() {
 					var _wxAccount = order_xx.wxAccount;//微信号码
 					var _qq = order_xx.qqAccount;//QQ号码
 					var _yy = order_xx.yyAccount;//YY号码
-					if(_cellphone == "" || _cellphone == null || _wxAccount == undefined){
+					if(_cellphone == "" || _cellphone == null || _cellphone == undefined){
 						$(".telPhone").hide();
 					}else{
 						$(".telPhone").show();
