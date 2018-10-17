@@ -35,7 +35,8 @@ public class CustomRedisCache<K, V> implements Cache<K, V> {
     public V put(K key, V value) throws CacheException {
         V old = get(key);
         //System.out.println("put key = " + getCacheKey(key) + " ; value = " + value);
-        redisTemplate.boundValueOps(getCacheKey(key)).set(value);
+//        redisTemplate.boundValueOps(getCacheKey(key)).set(value);
+        redisTemplate.boundValueOps(getCacheKey(key)).set(value, globExpire, TimeUnit.MINUTES);
         return old;
     }
 
