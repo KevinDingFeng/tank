@@ -45,6 +45,7 @@ $(document).ready(function() {
 				$(this).addClass("dw_list_active");
 				$(this).siblings().removeClass("dw_list_active");
 				$("#timeStart").val(bc_num)
+				_num =bc_num;
 				var er_code = $(this).attr("er_code");//当前二级的code
 				get_level3(er_code);
 			})
