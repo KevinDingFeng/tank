@@ -1,5 +1,5 @@
 //var $main_URL_yd = "http://localhost:7002"; //移动连接服务的主地址
-/*var $main_URL_yd = "http://tank.dazonghetong.com"; //移动连接服务的主地址*/
+//var $main_URL_yd = "http://tank.dazonghetong.com"; //移动连接服务的主地址
 var $main_URL_yd = "http://tk.dazonghetong.com"; //移动连接服务的主地址
 (function(win, doc) {
 	if(!win.addEventListener) return;

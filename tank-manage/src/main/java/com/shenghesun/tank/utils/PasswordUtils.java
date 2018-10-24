@@ -20,7 +20,7 @@ public class PasswordUtils {
 	}
 	
 	public static void main(String[] args) {
-		String p = "123";
+		String p = "vp7ygc";
 		String salt = RandomUtil.randomString(16);
 		System.out.println(salt);
 		System.out.println(encrypt(p, salt));
