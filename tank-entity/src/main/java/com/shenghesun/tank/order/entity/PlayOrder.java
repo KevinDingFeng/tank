@@ -204,6 +204,28 @@ public class PlayOrder extends BaseEntity {
 			this.text = text;
 		}
 	}
+	
+	/**
+	 * 订单类型
+	 * 	common 为正常下单流程
+	 * 	quick 使用快捷下单流程
+	 */
+	@Column(nullable = false, length = 64)
+	@Enumerated(EnumType.STRING)
+	private OrderType orderType;
+	
+	public enum OrderType{
+		Common("普通"), Quick("快捷");
+		
+		private String text;
+		
+		public String getText() {
+			return this.text;
+		}
+		private OrderType(String text) {
+			this.text = text;
+		}
+	}
 
 }
 //private int hour;
