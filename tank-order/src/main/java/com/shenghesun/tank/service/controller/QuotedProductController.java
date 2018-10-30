@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.shenghesun.tank.coach.CoachService;
 import com.shenghesun.tank.coach.entity.Coach;
+import com.shenghesun.tank.data.OrderStatisService;
 import com.shenghesun.tank.service.ProductTypeService;
 import com.shenghesun.tank.service.QuotedProductService;
 import com.shenghesun.tank.service.entity.Product;
@@ -36,6 +37,8 @@ public class QuotedProductController {
 	private ProductTypeService productTypeService;
 	@Autowired
 	private CoachService coachService;
+	@Autowired
+	private OrderStatisService orderStatisService;
 
 	/**
 	 * 根据大神的id 获取大神针对每个服务的具体报价
@@ -73,6 +76,11 @@ public class QuotedProductController {
 		json.put("coach", coach);
 		json.put("code", code);
 		json.put("level2", this.getTypesInQps(quotes));
+		//20181030 kevin 添加获取大神的统计数据
+		ProductType pt = productTypeService.findByCode(code);//获取当前类型
+		json.put("orderStatis", orderStatisService.findByProductTypeIdAndCoachId(pt.getId(), coachId));
+		
+		
 		return JsonUtils.getSuccessJSONObject(json);
 	}
 
