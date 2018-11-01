@@ -84,6 +84,11 @@ $(document).ready(function() {
 			success: function (resp) { //请求完成
 				if (resp.code == "200") {
 					var gods_xx = resp.data.coach;//大神信息
+					var gods_jd = resp.data.orderStatis;//获取大神 接单时间 和接单数量
+					if(gods_jd!=null){
+						$(".listnumber_left_num").html(gods_jd.counts);
+						$(".listnumber_left_time").html(gods_jd.hours+"h")
+					}
 					var _tou = gods_xx.iconUrl;//头像
 					$(".gods_toux>img").attr("src",_tou)
 					$(".gods_content_m").html(gods_xx.name);//大神名称
@@ -187,10 +192,9 @@ $(document).ready(function() {
 			`;
 			$(".prise_right").empty()
 			$(".prise_right").append(list_2);
-			
 		}
-		
 	}
+	
 })
 
 
