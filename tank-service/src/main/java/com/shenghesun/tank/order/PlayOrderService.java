@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.shenghesun.tank.order.entity.PlayOrder;
+import com.shenghesun.tank.order.entity.PlayOrder.OrderType;
 
 @Service
 public class PlayOrderService {
@@ -28,8 +29,12 @@ public class PlayOrderService {
 		return playOrderDao.save(entity);
 	}
 
-	public Page<PlayOrder> findByWxUserId(Long wxUserId, Pageable pageable) {
-		return playOrderDao.findByWxUserId(wxUserId, pageable);
+//	public Page<PlayOrder> findByWxUserId(Long wxUserId, Pageable pageable) {
+//		return playOrderDao.findByWxUserId(wxUserId, pageable);
+//	}
+	
+	public Page<PlayOrder> findPlayOrder(Long wxUserId , OrderType orderType , Pageable pageable){
+		return playOrderDao.findByWxUserIdAndOrderType(wxUserId, orderType, pageable);
 	}
 
 	public PlayOrder findMainByNo(String no) {

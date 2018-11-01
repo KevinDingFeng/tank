@@ -87,6 +87,7 @@ public class ProductTypeController {
 	}
 	
 	/**
+	 * 2018年11月01日14:17:21
 	 * 获取服务类型
 	 * @param level1
 	 * @param level2

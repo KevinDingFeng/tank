@@ -84,7 +84,7 @@ public class PlayOrderController {
 	 */
 	@InitBinder("entity")
 	private void initBinder(ServletRequestDataBinder binder, HttpServletRequest req) {
-		List<String> fields = new ArrayList<String>(Arrays.asList("wxAccount", "qqAccount", "yyAccount", "cellphone", "remark", "duration"));
+		List<String> fields = new ArrayList<String>(Arrays.asList("totalFee","wxAccount", "qqAccount", "yyAccount", "cellphone", "remark", "duration"));
 		switch (req.getMethod().toLowerCase()) {
 		case "post": // 新增 和 修改
 			binder.setAllowedFields(fields.toArray(new String[fields.size()]));
@@ -158,7 +158,8 @@ public class PlayOrderController {
 	
 	
 	/**
-	 * 快捷支付 
+	 * 2018年11月01日14:16:22
+	 * 快捷下单页面 
 	 * @return
 	 */
 	@RequestMapping(value = "/rapid_form",method = RequestMethod.GET)
@@ -266,6 +267,7 @@ public class PlayOrderController {
 	}
 
 	/**
+	 * 2018年11月01日14:15:35
 	 * 生成快捷单 调用微信支付接口，生成预支付 Id 返回到前端
 	 * @param playOrder
 	 * @param result
@@ -307,6 +309,7 @@ public class PlayOrderController {
 	}
 	
 	/**
+	 * 2018年11月01日14:15:20
 	 * 初始化快捷单 订单
 	 * @param playOrder
 	 * @param product
@@ -504,6 +507,32 @@ public class PlayOrderController {
 		return totalFee.intValue() + "";
 	}
 
+	/**
+	 * 2018年11月01日14:14:49
+	 * 获取 快捷单 列表
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/rapid_list" , method = RequestMethod.GET)
+	public JSONObject rapidList(HttpServletRequest request) {
+		LoginInfo info = (LoginInfo) SecurityUtils.getSubject().getPrincipal();
+		Long wxUserId = info.getWxUserId();
+		Pageable pageable = this.getPageable();
+		Page<PlayOrder> page = playOrderService.findPlayOrder(wxUserId, OrderType.Quick, pageable);
+		JSONObject json = new JSONObject();
+		json.put("page", page);
+		
+		try {
+			List<ProductType> types = productTypeService.findAll();
+			JSONObject typesJson = this.formatTypes(types);
+			json.put("types", typesJson);
+		}catch (Exception e) {
+			e.printStackTrace();
+			json.put("types", new JSONObject());
+		}
+		return JsonUtils.getSuccessJSONObject(json);
+	}
+	
 	// 获取订单列表，根据普通用户id
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public JSONObject list(HttpServletRequest request) {
@@ -512,7 +541,8 @@ public class PlayOrderController {
 		Long wxUserId = info.getWxUserId();
 //		System.out.println(info.getWxUserId());
 		Pageable pageable = this.getPageable();
-		Page<PlayOrder> page = playOrderService.findByWxUserId(wxUserId, pageable);
+//		Page<PlayOrder> page = playOrderService.findByWxUserId(wxUserId, pageable);
+		Page<PlayOrder> page = playOrderService.findPlayOrder(wxUserId,OrderType.Common, pageable);
 //		if(page.getContent() != null) {
 //			System.out.println(page.getContent().size());
 //		}
@@ -539,7 +569,11 @@ public class PlayOrderController {
 		if (types != null && types.size() > 0) {
 			Map<Integer, String> level1Map = new HashMap<>();// level 1 的 code 和 name
 			Map<Integer, String> level2Map = new HashMap<>();// level 2 的 code 和 name
+			Map<Integer, String> level3Map = new HashMap<>();// level 3 的 code 和 name
+			Map<Integer, String> level4Map = new HashMap<>();// level 4 的 code 和 name
 			Map<Integer, Integer> level2CodeMap = new HashMap<>();// level 2 的 code 和 parentCode
+			Map<Integer, Integer> level3CodeMap = new HashMap<>();// level 3 的 code 和 parentCode
+			Map<Integer, Integer> level4CodeMap = new HashMap<>();// level 4 的 code 和 parentCode
 			// Map<Integer, String> level3Map = new HashMap<>();
 			for (ProductType t : types) {
 				switch (t.getLevel()) {
@@ -550,22 +584,51 @@ public class PlayOrderController {
 					level2Map.put(t.getCode(), t.getName());
 					level2CodeMap.put(t.getCode(), t.getParentCode());
 					break;
+				case 3:
+					level3Map.put(t.getCode(), t.getName());
+					level3CodeMap.put(t.getCode(), t.getParentCode());
+					break;
+				case 4:
+					level4Map.put(t.getCode(), t.getName());
+					level4CodeMap.put(t.getCode(), t.getParentCode());
 				default:
 					break;
 				}
 			}
 			for (ProductType t : types) {
 				if(t.getLevel() == 3) {
-					JSONObject typeJson = new JSONObject();
-					typeJson.put("code", t.getCode());
-					typeJson.put("name", t.getName());
-					Integer level2Code = t.getParentCode();
-					typeJson.put("level2Code", level2Code);
-					typeJson.put("level2Name", level2Map.get(level2Code));
-					Integer level1Code = level2CodeMap.get(level2Code);
-					typeJson.put("level1Code", level1Code);
-					typeJson.put("level1Name", level1Map.get(level1Code));
-					json.put("t" + t.getId(), typeJson);
+					if (level4CodeMap.values().contains(t.getCode())) {
+						for (Integer level4Code : level4CodeMap.keySet()) {
+							ProductType productType = productTypeService.findByCode(level4Code);
+							JSONObject typeJson = new JSONObject();
+							typeJson.put("code", level4Code);
+							typeJson.put("name", level4Map.get(level4Code));
+							
+							Integer level3code = level4CodeMap.get(level4Code);
+							typeJson.put("level3Code", level3code);
+							typeJson.put("level3Name", level3Map.get(level3code));
+							
+							Integer level2Code = level3CodeMap.get(level3code);
+							typeJson.put("level2Code", level2Code);
+							typeJson.put("level2Name", level2Map.get(level2Code));
+							
+							Integer level1Code = level2CodeMap.get(level2Code);
+							typeJson.put("level1Code", level1Code);
+							typeJson.put("level1Name", level1Map.get(level1Code));
+							json.put("t" + productType.getId(), typeJson);
+						}
+					}else {
+						JSONObject typeJson = new JSONObject();
+						typeJson.put("code", t.getCode());
+						typeJson.put("name", t.getName());
+						Integer level2Code = t.getParentCode();
+						typeJson.put("level2Code", level2Code);
+						typeJson.put("level2Name", level2Map.get(level2Code));
+						Integer level1Code = level2CodeMap.get(level2Code);
+						typeJson.put("level1Code", level1Code);
+						typeJson.put("level1Name", level1Map.get(level1Code));
+						json.put("t" + t.getId(), typeJson);
+					}
 				}
 			}
 		}
@@ -595,14 +658,26 @@ public class PlayOrderController {
 		// TODO 校验 资源权限
 		
 		PlayOrder order = playOrderService.findById(id);
-		ProductType typeLevel3 = order.getProduct().getProductType();
-		ProductType typeLevel2 = productTypeService.findByCode(typeLevel3.getParentCode());
-		ProductType typeLevel1 = productTypeService.findByCode(typeLevel2.getParentCode());
 		JSONObject json = new JSONObject();
+		ProductType productType= order.getProduct().getProductType();
+		if (productType.getLevel() == 4) {
+			ProductType typeLevel3 = productTypeService.findByCode(productType.getParentCode());
+			ProductType typeLevel2 = productTypeService.findByCode(typeLevel3.getParentCode());
+			ProductType typeLevel1 = productTypeService.findByCode(typeLevel2.getParentCode());
+			json.put("typeLevel1", typeLevel1.getName());
+			json.put("typeLevel2", typeLevel2.getName());
+			json.put("typeLevel3", typeLevel3.getName());
+			json.put("typeLevel4", productType.getName());
+			
+		}else if(productType.getLevel() == 3){
+//			ProductType typeLevel3 = order.getProduct().getProductType();
+			ProductType typeLevel2 = productTypeService.findByCode(productType.getParentCode());
+			ProductType typeLevel1 = productTypeService.findByCode(typeLevel2.getParentCode());
+			json.put("typeLevel1", typeLevel1.getName());
+			json.put("typeLevel2", typeLevel2.getName());
+			json.put("typeLevel3", productType.getName());
+		}
 		json.put("playOrder", order);
-		json.put("typeLevel1", typeLevel1.getName());
-		json.put("typeLevel2", typeLevel2.getName());
-		json.put("typeLevel3", typeLevel3.getName());
 		return JsonUtils.getSuccessJSONObject(json);
 	}
 	

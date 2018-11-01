@@ -9,12 +9,15 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import com.shenghesun.tank.order.entity.PlayOrder;
+import com.shenghesun.tank.order.entity.PlayOrder.OrderType;
 
 @Repository
 public interface PlayOrderDao extends JpaRepository<PlayOrder, Long>, JpaSpecificationExecutor<PlayOrder> {
 
-	Page<PlayOrder> findByWxUserId(Long wxUserId, Pageable pageable);
+//	Page<PlayOrder> findByWxUserId(Long wxUserId, Pageable pageable);
 
 	List<PlayOrder> findByNoAndMain(String no, boolean b);
+	
+	Page<PlayOrder> findByWxUserIdAndOrderType(Long wxUserId,OrderType orderType,Pageable pageable);
 
 }
