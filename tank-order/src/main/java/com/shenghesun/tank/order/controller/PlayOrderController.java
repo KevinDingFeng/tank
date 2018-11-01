@@ -37,7 +37,9 @@ import com.shenghesun.tank.coach.entity.Coach;
 import com.shenghesun.tank.order.PlayOrderService;
 import com.shenghesun.tank.order.entity.PlayOrder;
 import com.shenghesun.tank.order.entity.PlayOrder.OperationType;
+import com.shenghesun.tank.order.entity.PlayOrder.OrderType;
 import com.shenghesun.tank.order.entity.PlayOrder.PlayOrderStatus;
+import com.shenghesun.tank.service.ProductService;
 import com.shenghesun.tank.service.ProductTypeService;
 import com.shenghesun.tank.service.QuotedProductService;
 import com.shenghesun.tank.service.entity.Product;
@@ -71,6 +73,8 @@ public class PlayOrderController {
 	private ProductTypeService productTypeService;
 	@Autowired
 	private WxUserInfoService wxUserService;
+	@Autowired
+	private ProductService productService;
 
 	/**
 	 * 设置允许自动绑定的属性名称
@@ -151,6 +155,22 @@ public class PlayOrderController {
 		json.put("quotedProduct", qp);// 具体报价
 		return JsonUtils.getSuccessJSONObject(json);
 	}
+	
+	
+	/**
+	 * 快捷支付 
+	 * @return
+	 */
+	@RequestMapping(value = "/rapid_form",method = RequestMethod.GET)
+	public JSONObject rapidform() {
+		JSONObject json = new JSONObject();
+		// 所有类型
+		List<ProductType> level1 = productTypeService.findByParentCode(1);
+		json.put("level1", level1);
+		return JsonUtils.getSuccessJSONObject(json);
+	}
+	
+	
 	/**
 	 * 根据 真实报价 整理得出需要的 产品类型，分 level 2 和 level 3
 	 * @param qps
@@ -245,6 +265,79 @@ public class PlayOrderController {
 		return no;
 	}
 
+	/**
+	 * 生成快捷单 调用微信支付接口，生成预支付 Id 返回到前端
+	 * @param playOrder
+	 * @param result
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/save_rapid", method  = RequestMethod.POST)
+	public JSONObject saveRapid(@Validated @ModelAttribute("entity")PlayOrder playOrder, BindingResult result,
+			@RequestParam(value = "code" , required = true)String code,HttpServletRequest request) {
+		if(result.hasErrors()) {
+			return JsonUtils.getFailJSONObject("信息有误!");
+		}
+		ProductType productType = productTypeService.findByCode(Integer.valueOf(code));
+		//生成服务记录
+		Product product =  productService.initProduct(productType);
+		this.initRapidPlayOrder(playOrder, product);
+		playOrder = playOrderService.save(playOrder);
+		
+		String totalFeeStr = this.getTotalFeeStr(playOrder.getTotalFee());
+		LoginInfo info = (LoginInfo) SecurityUtils.getSubject().getPrincipal();
+		WxUserInfo wxUser = wxUserService.findById(info.getWxUserId());
+		String openId = wxUser.getOpenId();
+		JSONObject prepay = new JSONObject();
+		try {
+			prepay = this.prepay(playOrder.getNo(), openId, request.getRemoteAddr(), totalFeeStr);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("调用微信支付出现错误");
+			e.printStackTrace();
+		}
+		if (prepay.getString("result") != null) {
+			System.out.println("预支付时出现错误");
+			return JsonUtils.getFailJSONObject(prepay.getString("result"));// 预支付时出现错误
+		}
+		JSONObject json = new JSONObject();
+		json.put("playOrder", playOrder);
+		json.put("prepay", prepay);
+		return JsonUtils.getSuccessJSONObject(json);
+	}
+	
+	/**
+	 * 初始化快捷单 订单
+	 * @param playOrder
+	 * @param product
+	 */
+	private void initRapidPlayOrder(PlayOrder playOrder,Product product) {
+		LoginInfo info = (LoginInfo)SecurityUtils.getSubject().getPrincipal();
+		WxUserInfo wxUser = wxUserService.findById(info.getWxUserId());
+		playOrder.setWxUserId(wxUser.getId());
+		playOrder.setWxUser(wxUser);
+		//设置预期大神
+		Coach coach = coachService.findBySpecial(true);
+		playOrder.setCoachId(coach.getId());
+		playOrder.setCoach(coach);
+		//设置执行大神
+		playOrder.setExecutorId(coach.getId());
+		playOrder.setExecutor(coach);
+		//设置服务
+		playOrder.setProductId(product.getId());
+		playOrder.setProduct(product);
+		
+		playOrder.setOperationType(OperationType.Create);
+		
+		String no = this.getNo();
+		playOrder.setNo(no);
+		playOrder.setViceNo(no + 1);
+		
+		playOrder.setOrderType(OrderType.Quick);
+		
+		playOrder.setDuration(0);
+	}
+	
 	/**
 	 * 生成订单，调用微信统一下单接口，生成预支付 id 返回到前端
 	 * 
