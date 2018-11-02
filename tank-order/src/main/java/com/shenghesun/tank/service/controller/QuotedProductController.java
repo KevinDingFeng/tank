@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -76,16 +78,15 @@ public class QuotedProductController {
 		json.put("coach", coach);
 		json.put("code", code);
 		json.put("level2", this.getTypesInQps(quotes));
-		//20181030 kevin 添加获取大神的统计数据
-		ProductType pt = productTypeService.findByCode(code);//获取当前类型
+		// 20181030 kevin 添加获取大神的统计数据
+		ProductType pt = productTypeService.findByCode(code);// 获取当前类型
 		json.put("orderStatis", orderStatisService.findByProductTypeIdAndCoachId(pt.getId(), coachId));
-		
-		
+
 		return JsonUtils.getSuccessJSONObject(json);
 	}
 
 	/**
-	 * 根据 真实报价 整理得出需要的 产品类型， level 2 
+	 * 根据 真实报价 整理得出需要的 产品类型， level 2
 	 * 
 	 * @param qps
 	 * @return
@@ -186,5 +187,196 @@ public class QuotedProductController {
 		json.put("totalFee", totalFee);
 		return JsonUtils.getSuccessJSONObject(json);
 	}
+
+	/**
+	 * 
+	 * 价目表
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/rapid_price", method = RequestMethod.GET)
+	public JSONObject rapidPrice(HttpServletRequest request) {
+		Coach coach = coachService.findBySpecial(true);
+		JSONObject json = new JSONObject();
+		List<JSONObject> type1 = new ArrayList<>();
+		List<JSONObject> type2 = new ArrayList<>();
+		List<JSONObject> type3 = new ArrayList<>();
+		List<JSONObject> type4 = new ArrayList<>();
+		
+		List<ProductType> types = productTypeService.findAll();
+		Map<Integer, String> level1Map = new HashMap<>();// level 1 的 code 和 name
+		Map<Integer, String> level2Map = new HashMap<>();// level 2 的 code 和 name
+		Map<Integer, String> level3Map = new HashMap<>();// level 3 的 code 和 name
+		Map<Integer, String> level4Map = new HashMap<>();// level 4 的 code 和 name
+		Map<Integer, Integer> level2CodeMap = new HashMap<>();// level 2 的 code 和 parentCode
+		Map<Integer, Integer> level3CodeMap = new HashMap<>();// level 3 的 code 和 parentCode
+		Map<Integer, Integer> level4CodeMap = new HashMap<>();// level 4 的 code 和 parentCode
+		this.initLevelMap(types, level1Map, level2Map, level3Map, level4Map, level2CodeMap, level3CodeMap,
+				level4CodeMap);
+
+		List<QuotedProduct> list = quotedProductService.findByRemovedAndCoachId(false, coach.getId());
+		for (QuotedProduct quotedProduct : list) {
+			Product product = quotedProduct.getProduct();
+			int duration =  product.getDuration();
+			String durationType = product.getDurationType().getText();
+			ProductType productType = product.getProductType();
+			
+//			JSONObject jsonObject = new JSONObject();
+			if(productType.getLevel() == 3) {
+				JSONObject typeJson = new JSONObject();
+				typeJson.put("level3Code", productType.getCode());
+				typeJson.put("level3Name", productType.getName());
+				Integer level2Code = productType.getParentCode();
+				typeJson.put("level2Code", level2Code);
+				typeJson.put("level2Name", level2Map.get(level2Code));
+				
+				typeJson.put("price", quotedProduct.getPrice());
+				typeJson.put("duration", duration);
+				typeJson.put("durationType", durationType);
+				
+//				jsonObject.put("price", typeJson);
+				Integer level1Code = level2CodeMap.get(level2Code);
+				
+				switch (level1Code) {
+				case 10:
+					type1.add(typeJson);
+					break;
+				case 11:
+					type2.add(typeJson);
+					break;
+				case 12:
+					type3.add(typeJson);
+					break;
+				case 13:
+					type4.add(typeJson);
+					break;
+				default:
+					break;
+				}
+			}
+			if(productType.getLevel() == 4) {
+				JSONObject typeJson = new JSONObject();
+				typeJson.put("level4Code", productType.getCode());
+				typeJson.put("level4Name", productType.getName());
+				Integer level3Code = productType.getParentCode();
+				typeJson.put("level3Code", level3Code);
+				typeJson.put("level3Name", level3Map.get(level3Code));
+				Integer level2Code = level3CodeMap.get(level3Code);
+				typeJson.put("level2Code", level2Code);
+				typeJson.put("level2Name", level2Map.get(level2Code));
+				
+				typeJson.put("price", quotedProduct.getPrice());
+				typeJson.put("duration", duration);
+				typeJson.put("durationType", durationType);
+//				jsonObject.put("price", typeJson);
+				Integer level1Code = level2CodeMap.get(level2Code);
+				switch (level1Code) {
+				case 10:
+					type1.add(typeJson);
+					break;
+				case 11:
+					type2.add(typeJson);
+					break;
+				case 12:
+					type3.add(typeJson);
+					break;
+				case 13:
+					type4.add(typeJson);
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		JSONObject teaching = new JSONObject();
+		teaching.put("code", 10);
+		teaching.put("name", level1Map.get(10));
+		teaching.put("price", type1);
+		JSONObject replacing = new JSONObject();
+		replacing.put("code", 11);
+		replacing.put("name", level1Map.get(11));
+		replacing.put("price", type2);
+		JSONObject accompany = new JSONObject();
+		accompany.put("code", 12);
+		accompany.put("name", level1Map.get(12));
+		accompany.put("price", type3);
+		JSONObject craftreplacing = new JSONObject();
+		craftreplacing.put("code", 13);
+		craftreplacing.put("name", level1Map.get(13));
+		craftreplacing.put("price", type4);
+		json.put("teaching", teaching);
+		json.put("replacing", replacing);
+		json.put("accompany", accompany);
+		json.put("craftreplacing", craftreplacing);
+
+		return JsonUtils.getSuccessJSONObject(json);
+	}
+
+	private void initLevelMap(List<ProductType> types, Map<Integer, String> level1Map, Map<Integer, String> level2Map,
+			Map<Integer, String> level3Map, Map<Integer, String> level4Map, Map<Integer, Integer> level2CodeMap,
+			Map<Integer, Integer> level3CodeMap, Map<Integer, Integer> level4CodeMap) {
+		for (ProductType t : types) {
+			switch (t.getLevel()) {
+			case 1:
+				level1Map.put(t.getCode(), t.getName());
+				break;
+			case 2:
+				level2Map.put(t.getCode(), t.getName());
+				level2CodeMap.put(t.getCode(), t.getParentCode());
+				break;
+			case 3:
+				level3Map.put(t.getCode(), t.getName());
+				level3CodeMap.put(t.getCode(), t.getParentCode());
+				break;
+			case 4:
+				level4Map.put(t.getCode(), t.getName());
+				level4CodeMap.put(t.getCode(), t.getParentCode());
+			default:
+				break;
+			}
+		}
+	}
+
+//	private JSONObject formatTypes(ProductType p, Map<Integer, String> level1Map, Map<Integer, String> level2Map,
+//			Map<Integer, String> level3Map, Map<Integer, String> level4Map, Map<Integer, Integer> level2CodeMap,
+//			Map<Integer, Integer> level3CodeMap, Map<Integer, Integer> level4CodeMap) {
+//		JSONObject json = new JSONObject();
+//		if (p.getLevel() == 3) {
+//			if (level4CodeMap.values().contains(p.getCode())) {
+//				for (Integer level4Code : level4CodeMap.keySet()) {
+//					ProductType productType = productTypeService.findByCode(level4Code);
+//					JSONObject typeJson = new JSONObject();
+//					typeJson.put("level4Code", level4Code);
+//					typeJson.put("level4Name", level4Map.get(level4Code));
+//
+//					Integer level3code = level4CodeMap.get(level4Code);
+//					typeJson.put("level3Code", level3code);
+//					typeJson.put("level3Name", level3Map.get(level3code));
+//
+//					Integer level2Code = level3CodeMap.get(level3code);
+//					typeJson.put("level2Code", level2Code);
+//					typeJson.put("level2Name", level2Map.get(level2Code));
+//
+//					Integer level1Code = level2CodeMap.get(level2Code);
+//					typeJson.put("level1Code", level1Code);
+//					typeJson.put("level1Name", level1Map.get(level1Code));
+//					json.put(productType.getId().toString(), typeJson);
+//				}
+//			} else {
+//				JSONObject typeJson = new JSONObject();
+//				typeJson.put("level3Code", p.getCode());
+//				typeJson.put("level3Name", p.getName());
+//				Integer level2Code = p.getParentCode();
+//				typeJson.put("level2Code", level2Code);
+//				typeJson.put("level2Name", level2Map.get(level2Code));
+//				Integer level1Code = level2CodeMap.get(level2Code);
+//				typeJson.put("level1Code", level1Code);
+//				typeJson.put("level1Name", level1Map.get(level1Code));
+//				json.put(p.getId().toString(), typeJson);
+//			}
+//		}
+//		return json;
+//	}
 
 }

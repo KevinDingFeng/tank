@@ -26,4 +26,7 @@ public interface QuotedProductDao extends JpaRepository<QuotedProduct, Long>, Jp
 
 	List<QuotedProduct> findByRemovedAndCoachIdAndProductProductTypeParentCode(boolean b, Long coachId, int parentCode);
 
+	
+	List<QuotedProduct> findByRemovedAndCoachId(boolean removed,Long coachId);
+	
 }

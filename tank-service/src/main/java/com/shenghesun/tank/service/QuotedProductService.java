@@ -65,5 +65,9 @@ public class QuotedProductService {
 	public QuotedProduct save(QuotedProduct entity) {
 		return quotedProductDao.save(entity);
 	}
+	
+	public List<QuotedProduct> findByRemovedAndCoachId(boolean removed,Long coachId){
+		return quotedProductDao.findByRemovedAndCoachId(removed, coachId);
+	}
 
 }

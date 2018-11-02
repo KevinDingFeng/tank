@@ -88,36 +88,36 @@ public class ProductTypeController {
 	
 	/**
 	 * 2018年11月01日14:17:21
-	 * 获取服务类型
+	 * 获取服务类型价目
 	 * @param level1
 	 * @param level2
 	 * @param level3
 	 * @return
 	 */
-	@RequestMapping(value = "/entire_level")
-	public JSONObject getProductTypeByLev(
-			@RequestParam(value = "level1",required = false)String level1,
-			@RequestParam(value = "level2",required = false)String level2,
-			@RequestParam(value = "level3",required = false)String level3) {
-		JSONObject json = new JSONObject();
-		if(StringUtils.isBlank(level1) && StringUtils.isBlank(level2) 
-				&& StringUtils.isBlank(level3)) {
-			List<ProductType> list = productTypeService.findByParentCode(1);
-			json.put("level1", list);
-		}
-		if(StringUtils.isNotBlank(level1)) {
-			List<ProductType> list = productTypeService.findByParentCode(Integer.valueOf(level1));
-			json.put("level2", list);
-		}
-		if(StringUtils.isNotBlank(level2)) {
-			List<ProductType> list = productTypeService.findByParentCode(Integer.valueOf(level2));
-			json.put("level3", list);
-		}
-		if(StringUtils.isNotBlank(level3)) {
-			List<ProductType> list = productTypeService.findByParentCode(Integer.valueOf(level3));
-			json.put("level4", list);
-		}
-		return JsonUtils.getSuccessJSONObject(json);
-	}
+//	@RequestMapping(value = "/entire_level")
+//	public JSONObject getProductTypeByLev(
+//			@RequestParam(value = "level1",required = false)String level1,
+//			@RequestParam(value = "level2",required = false)String level2,
+//			@RequestParam(value = "level3",required = false)String level3) {
+//		JSONObject json = new JSONObject();
+//		if(StringUtils.isBlank(level1) && StringUtils.isBlank(level2) 
+//				&& StringUtils.isBlank(level3)) {
+//			List<ProductType> list = productTypeService.findByParentCode(1);
+//			json.put("level1", list);
+//		}
+//		if(StringUtils.isNotBlank(level1)) {
+//			List<ProductType> list = productTypeService.findByParentCode(Integer.valueOf(level1));
+//			json.put("level2", list);
+//		}
+//		if(StringUtils.isNotBlank(level2)) {
+//			List<ProductType> list = productTypeService.findByParentCode(Integer.valueOf(level2));
+//			json.put("level3", list);
+//		}
+//		if(StringUtils.isNotBlank(level3)) {
+//			List<ProductType> list = productTypeService.findByParentCode(Integer.valueOf(level3));
+//			json.put("level4", list);
+//		}
+//		return JsonUtils.getSuccessJSONObject(json);
+//	}
 	
 }
