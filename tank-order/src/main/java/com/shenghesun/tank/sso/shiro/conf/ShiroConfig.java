@@ -48,6 +48,13 @@ public class ShiroConfig {
 
 		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 		
+		/**
+		 * 本地调试须知  接口链接 shiro 配置  //提交代码时 删除下面的三行配置
+		 */
+		filterChainDefinitionMap.put("/order/save_rapid", "anon");
+		filterChainDefinitionMap.put("/quoted_product/rapid_price", "anon");
+		filterChainDefinitionMap.put("/order/rapid_list", "anon");
+		
 		filterChainDefinitionMap.put("/logout", "logout");
 		// 配置不会被拦截的链接 顺序判断
 		filterChainDefinitionMap.put("/MP_verify_iho5HuxlKwkOQ0vp.txt", "anon");		

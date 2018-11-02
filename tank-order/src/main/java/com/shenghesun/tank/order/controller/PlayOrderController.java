@@ -288,7 +288,12 @@ public class PlayOrderController {
 		
 		String totalFeeStr = this.getTotalFeeStr(playOrder.getTotalFee());
 		LoginInfo info = (LoginInfo) SecurityUtils.getSubject().getPrincipal();
-		WxUserInfo wxUser = wxUserService.findById(info.getWxUserId());
+		/**
+		 * 本地调试须知 
+		 */
+//		WxUserInfo wxUser = wxUserService.findById(info.getWxUserId());  //提交代码时 使用该行
+		WxUserInfo wxUser = wxUserService.findById(info == null ?15l : info.getWxUserId());  //提交代码时 注释该行
+		
 		String openId = wxUser.getOpenId();
 		JSONObject prepay = new JSONObject();
 		try {
@@ -316,8 +321,13 @@ public class PlayOrderController {
 	 */
 	private void initRapidPlayOrder(PlayOrder playOrder,Product product) {
 		LoginInfo info = (LoginInfo)SecurityUtils.getSubject().getPrincipal();
-		WxUserInfo wxUser = wxUserService.findById(info.getWxUserId());
-		playOrder.setWxUserId(wxUser.getId());
+		/**
+		 * 本地调试须知
+		 */
+//		WxUserInfo wxUser = wxUserService.findById(info.getWxUserId());  //提交代码时 使用该行
+		WxUserInfo wxUser = wxUserService.findById(info == null ? 15l :info.getWxUserId());  //提交代码时 注释该行
+		
+		playOrder.setWxUserId(wxUser.getSysUserId());
 		playOrder.setWxUser(wxUser);
 		//设置预期大神
 		Coach coach = coachService.findBySpecial(true);
@@ -516,7 +526,11 @@ public class PlayOrderController {
 	@RequestMapping(value = "/rapid_list" , method = RequestMethod.GET)
 	public JSONObject rapidList(HttpServletRequest request) {
 		LoginInfo info = (LoginInfo) SecurityUtils.getSubject().getPrincipal();
-		Long wxUserId = info.getWxUserId();
+		/**
+		 * 本地测试须知 
+		 */
+//		Long wxUserId = info.getWxUserId();    //提交代码时 使用该行
+		Long wxUserId = info == null ? 15l : info.getWxUserId();   //提交代码时 删除该行
 		Pageable pageable = this.getPageable();
 		Page<PlayOrder> page = playOrderService.findPlayOrder(wxUserId, OrderType.Quick, pageable);
 		JSONObject json = new JSONObject();
