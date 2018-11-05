@@ -17,7 +17,6 @@ public enum DurationType {
 	Unit("台"),
 	Time("次"),
 	Site("场"),
-	Human("人"),
 	SevenHour("7小时"),
 	NoLimitation("不限");
 	
