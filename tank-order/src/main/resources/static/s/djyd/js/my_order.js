@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	init()
 	function init(){
+		get_pt();
 		$(".my_order_list>li").click(function(){
 			$(this).addClass("my_order_list_active");
 			$(this).siblings().removeClass("my_order_list_active");
