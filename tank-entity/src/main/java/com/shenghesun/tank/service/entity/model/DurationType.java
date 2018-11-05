@@ -7,15 +7,16 @@ package com.shenghesun.tank.service.entity.model;
  */
 
 public enum DurationType {
-	Hour("时"),
-	Day("天"),
+	Hour("小时"),
+	Day("天/7小时"),
+	Month("月/30天"),
+	Time("次"),
+
 	Week("周"),
-	Month("月"),
 	TenThousandExp("1万经验"),
 	HundredThousandExp("10万经验"),
 	HundredFiftyThousandExp("15万经验"),
 	Unit("台"),
-	Time("次"),
 	Site("场"),
 	SevenHour("7小时"),
 	NoLimitation("不限");

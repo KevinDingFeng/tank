@@ -104,7 +104,7 @@ public class SysUser extends BaseEntity {
 	 * 盐值
 	 */
 	@JsonIgnore
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false, length = 64)
 	private String salt;
 
 	/**

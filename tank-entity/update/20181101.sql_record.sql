@@ -1,8 +1,8 @@
-逻辑删除 服务分类
+update play_order set order_type='Common';
+
 update product_type set last_modified=now(),removed=true where id in (13,22,23,24,25);
 
 
-插入 服务类型
 insert into product_type(creation,last_modified,version,code,name,parent_code,level,remark,removed) values(now(),now(),0,110208,'酋长5000',1102,3,'',false);
 insert into product_type(creation,last_modified,version,code,name,parent_code,level,remark,removed) values(now(),now(),0,11020801,'0~1环',110208,4,'',false);
 insert into product_type(creation,last_modified,version,code,name,parent_code,level,remark,removed) values(now(),now(),0,11020802,'0~2环',110208,4,'',false);
