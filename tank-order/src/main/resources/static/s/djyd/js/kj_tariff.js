@@ -82,53 +82,105 @@ $(document).ready(function() {
 					}
 					var list = "";
 					for(var i=0;i<_arr.price.length;i++){
-						if(_arr.price[i].level2Name.length == 4){
-							list +=`
-								<li>
-									<div>${_arr.price[i].level3Name}</div>
-									<div class="price_div">
-										<div class="pirce_left">
-											￥<span>${_arr.price[i].price}</span>/${_arr.price[i].durationType}
-										</div>
-										<div class="pirce_right">
-											<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}小时</span>
-										</div>
-									</div>
-									<span class="kj_pq">${_arr.price[i].level2Name}</span>
-								</li>
-							`;
-						}else if(_arr.price[i].level2Name.length == 5){
-							list +=`
-								<li>
-									<div>${_arr.price[i].level3Name}</div>
-									<div class="price_div">
-										<div class="pirce_left">
-											￥<span>${_arr.price[i].price}</span>/${_arr.price[i].durationType}
-										</div>
-										<div class="pirce_right">
-											<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}小时</span>
-										</div>
-									</div>
-									<span class="kj_pq" style="right:0.6rem">${_arr.price[i].level2Name}</span>
-								</li>
-							`;
-						}else if(_arr.price[i].level2Name.length == 2){
-							list +=`
-								<li>
-									<div>${_arr.price[i].level3Name}</div>
-									<div class="price_div">
-										<div class="pirce_left">
-											￥<span>${_arr.price[i].price}</span>/${_arr.price[i].durationType}
-										</div>
-										<div class="pirce_right">
-											<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}小时</span>
-										</div>
-									</div>
-									<span class="kj_pq" style="right:1rem">${_arr.price[i].level2Name}</span>
-								</li>
-							`;
-						}
+						if(_arr.price[i].hasOwnProperty("level4Name")){//判断有没有第四级
+							var _level4Name= _arr.price[i].level4Name;//
 						
+							if(_arr.price[i].level2Name.length == 4){
+								list +=`
+									<li>
+										<div>${_arr.price[i].level3Name}<span>${_level4Name}</span></div>
+										<div class="price_div">
+											<div class="pirce_left">
+												￥<span>${_arr.price[i].price}</span class="span_nor">${_arr.price[i].durationType}
+											</div>
+											<div class="pirce_right">
+												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}小时</span>
+											</div>
+										</div>
+										<span class="kj_pq">${_arr.price[i].level2Name}</span>
+									</li>
+								`;
+							}else if(_arr.price[i].level2Name.length == 5){
+								list +=`
+									<li>
+										<div>${_arr.price[i].level3Name}<span class="span_nor"}>${_level4Name}</span></div>
+										<div class="price_div">
+											<div class="pirce_left">
+												￥<span>${_arr.price[i].price}</span class="span_nor">/${_arr.price[i].durationType}
+											</div>
+											<div class="pirce_right">
+												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}小时</span>
+											</div>
+										</div>
+										<span class="kj_pq" style="right:0.6rem">${_arr.price[i].level2Name}</span>
+									</li>
+								`;
+							}else if(_arr.price[i].level2Name.length == 2){
+								list +=`
+									<li>
+										<div>${_arr.price[i].level3Name}<span class="span_nor">${_level4Name}</span></div>
+										<div class="price_div">
+											<div class="pirce_left">
+												￥<span>${_arr.price[i].price}</span>/${_arr.price[i].durationType}
+											</div>
+											<div class="pirce_right">
+												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}小时</span>
+											</div>
+										</div>
+										<span class="kj_pq" style="right:1rem">${_arr.price[i].level2Name}</span>
+									</li>
+								`;
+							}
+							
+						}
+						else{
+							if(_arr.price[i].level2Name.length == 4){
+								list +=`
+									<li>
+										<div>${_arr.price[i].level3Name}</div>
+										<div class="price_div">
+											<div class="pirce_left">
+												￥<span>${_arr.price[i].price}</span class="span_nor">${_arr.price[i].durationType}
+											</div>
+											<div class="pirce_right">
+												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}小时</span>
+											</div>
+										</div>
+										<span class="kj_pq">${_arr.price[i].level2Name}</span>
+									</li>
+								`;
+							}else if(_arr.price[i].level2Name.length == 5){
+								list +=`
+									<li>
+										<div>${_arr.price[i].level3Name}</div>
+										<div class="price_div">
+											<div class="pirce_left">
+												￥<span>${_arr.price[i].price}</span class="span_nor">/${_arr.price[i].durationType}
+											</div>
+											<div class="pirce_right">
+												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}小时</span>
+											</div>
+										</div>
+										<span class="kj_pq" style="right:0.6rem">${_arr.price[i].level2Name}</span>
+									</li>
+								`;
+							}else if(_arr.price[i].level2Name.length == 2){
+								list +=`
+									<li>
+										<div>${_arr.price[i].level3Name}</div>
+										<div class="price_div">
+											<div class="pirce_left">
+												￥<span>${_arr.price[i].price}</span>/${_arr.price[i].durationType}
+											</div>
+											<div class="pirce_right">
+												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}小时</span>
+											</div>
+										</div>
+										<span class="kj_pq" style="right:1rem">${_arr.price[i].level2Name}</span>
+									</li>
+								`;
+							}
+						}
 					}
 					$(".tariff_list").empty();
 					$(".tariff_list").append(list);
