@@ -116,6 +116,16 @@
               <div class="am-u-sm-8 am-u-md-4">${entity.product.productType.name}</div>
               <div class="am-hide-sm-only am-u-md-6"></div>
             </div>
+            <#if entity.orderType == 'Quick'>
+            <div>
+            	<select name ="product_type_code">
+            		<option> --- 请选择 --- </option>
+            		<#list productTypes as p>
+            			<option value="${p.level1Code}">${p.level1Name}</option>
+            		</#list>
+            	</select>
+            </div>
+            </#if>
         	<div class="am-g am-margin-top">
               <div class="am-u-sm-4 am-u-md-2 am-text-right">金额</div>
               <div class="am-u-sm-8 am-u-md-4">${entity.totalFee}</div>

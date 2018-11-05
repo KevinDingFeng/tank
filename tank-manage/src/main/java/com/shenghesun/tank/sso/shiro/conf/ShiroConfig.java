@@ -47,6 +47,11 @@ public class ShiroConfig {
 		shiroFilterFactoryBean.setSecurityManager(securityManager);
 
 		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
+		
+		
+		filterChainDefinitionMap.put("/play_order/assign/entire_level", "anon");
+		filterChainDefinitionMap.put("/play_order/assign/rapid_list", "anon");
+		
 		filterChainDefinitionMap.put("/logout", "logout");
 		// 配置不会被拦截的链接 顺序判断
 		filterChainDefinitionMap.put("/static/**", "anon");
