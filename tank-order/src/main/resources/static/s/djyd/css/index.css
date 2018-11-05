@@ -1699,3 +1699,7 @@ body {
     padding: 0.05rem 0.15rem;
     font-size: 0.24rem;
 }
+._dw{
+	font-size: 0.22rem!important;
+	color: #767676!important;
+}

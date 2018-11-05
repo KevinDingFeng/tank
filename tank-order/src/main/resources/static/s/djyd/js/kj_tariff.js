@@ -13,10 +13,9 @@ $(document).ready(function() {
 				_arr[0].src = "images/kj/kj_dl_w.png";
 				_arr[1].src = "images/kj/kj_sg_w.png";
 				_arr[2].src = "images/kj/kj_pw_w.png";
-				
 				$(this).find("div").addClass("kj_active");
 				$(this).siblings().children("div").removeClass("kj_active");
-				get_list("10")
+				get_list("10");
 			}else if(_type == "11"){
 				$(this).find("img").attr("src","images/kj/kj_dl_x.png");
 				var _arr = $(this).siblings().find("img");
@@ -82,7 +81,6 @@ $(document).ready(function() {
 					}
 					var list = "";
 					for(var i=0;i<_arr.price.length;i++){
-						
 						if(_arr.price[i].durationType =="时"){
 							var _dd = "小时"
 						}else if(_arr.price[i].durationType =="1万经验"){
@@ -108,7 +106,7 @@ $(document).ready(function() {
 										<div>${_arr.price[i].level3Name}<span>${_level4Name}</span></div>
 										<div class="price_div">
 											<div class="pirce_left">
-												￥<span>${_arr.price[i].price}</span>/${_arr.price[i].durationType}
+												￥<span>${_arr.price[i].price}</span><span class="_dw">/${_arr.price[i].durationType}</span>
 											</div>
 											<div class="pirce_right">
 												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}${_dd}</span>
@@ -123,7 +121,7 @@ $(document).ready(function() {
 										<div>${_arr.price[i].level3Name}<span class="span_nor"}>${_level4Name}</span></div>
 										<div class="price_div">
 											<div class="pirce_left">
-												￥<span>${_arr.price[i].price}</span>${_arr.price[i].durationType}
+												￥<span>${_arr.price[i].price}</span><span class="_dw">/${_arr.price[i].durationType}</span>
 											</div>
 											<div class="pirce_right">
 												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}${_dd}</span>
@@ -138,7 +136,7 @@ $(document).ready(function() {
 										<div>${_arr.price[i].level3Name}<span class="span_nor">${_level4Name}</span></div>
 										<div class="price_div">
 											<div class="pirce_left">
-												￥<span>${_arr.price[i].price}</span>/${_arr.price[i].durationType}
+												￥<span>${_arr.price[i].price}</span><span class="_dw">/${_arr.price[i].durationType}</span>
 											</div>
 											<div class="pirce_right">
 												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}${_dd}</span>
@@ -157,7 +155,7 @@ $(document).ready(function() {
 										<div>${_arr.price[i].level3Name}</div>
 										<div class="price_div">
 											<div class="pirce_left">
-												￥<span>${_arr.price[i].price}</span>/${_arr.price[i].durationType}
+												￥<span>${_arr.price[i].price}</span><span class="_dw">/${_arr.price[i].durationType}</span>
 											</div>
 											<div class="pirce_right">
 												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}${_dd}</span>
@@ -172,7 +170,7 @@ $(document).ready(function() {
 										<div>${_arr.price[i].level3Name}</div>
 										<div class="price_div">
 											<div class="pirce_left">
-												￥<span>${_arr.price[i].price}</span>/${_arr.price[i].durationType}
+												￥<span>${_arr.price[i].price}</span><span class="_dw">/${_arr.price[i].durationType}</span>
 											</div>
 											<div class="pirce_right">
 												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}${_dd}</span>
@@ -187,7 +185,7 @@ $(document).ready(function() {
 										<div>${_arr.price[i].level3Name}</div>
 										<div class="price_div">
 											<div class="pirce_left">
-												￥<span>${_arr.price[i].price}</span>/${_arr.price[i].durationType}
+												￥<span>${_arr.price[i].price}</span><span class="_dw">/${_arr.price[i].durationType}</span>
 											</div>
 											<div class="pirce_right">
 												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}${_dd}</span>
@@ -201,6 +199,9 @@ $(document).ready(function() {
 					}
 					$(".tariff_list").empty();
 					$(".tariff_list").append(list);
+					if(_type == "10"){
+						$("._dw").html("/人")
+					}
 				}
 			
 			}
