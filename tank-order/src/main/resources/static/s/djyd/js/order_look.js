@@ -26,14 +26,25 @@ $(document).ready(function() {
 			},
 			success: function(resp) { //请求完成
 				if(resp.code == "200"){
-					var _Level1 = resp.data.typeLevel1;//第一级
-					var _Level2 = resp.data.typeLevel2;//第二级
-					var _Level3 = resp.data.typeLevel3;//第三级					
-					var order_xx = resp.data.playOrder;//订单 信息
-					if(_Level3 == "" || _Level3 == null || _Level3 == undefined){
-						$(".order_cp").html(_Level1+">"+_Level2)
-					}else{
-						$(".order_cp").html(_Level1+">"+_Level2+">"+ _Level3)
+					if(resp.data.playOrder.orderType == "Quick"){
+						var order_xx = resp.data.playOrder;//订单 信息
+						$(".order_cp").html(order_xx.product.productType.name);
+						$("#qd_gods").hide();
+						$("#order_remark").html("服务补充：")
+						$("#order_time").hide();
+						$("#fw_price").html("支付金额：")
+						
+					}else if(resp.data.playOrder.orderType == "Common"){
+						var _Level1 = resp.data.typeLevel1;//第一级
+						var _Level2 = resp.data.typeLevel2;//第二级
+						var _Level3 = resp.data.typeLevel3;//第三级					
+						var order_xx = resp.data.playOrder;//订单 信息
+						if(_Level3 == "" || _Level3 == null || _Level3 == undefined){
+							$(".order_cp").html(_Level1+">"+_Level2)
+						}else{
+							$(".order_cp").html(_Level1+">"+_Level2+">"+ _Level3)
+						}
+						$(".gods_qw").html(order_xx.coach.name);//期望服务大神
 					}
 					var time_dw = order_xx.product.durationType;//时间单位单位
 					$(".order_zh_xx").html("服务时长：");
@@ -59,11 +70,14 @@ $(document).ready(function() {
 					}else if(time_dw == "NoLimitation"){
 						time_dw = "不限"					
 					} 
+					if(order_xx.duration == "0"){
+						order_xx.duration ="";
+					}
 					$(".zh_js").html(order_xx.duration+time_dw);//服务时长
 					if(time_dw == "NoLimitation"){
 						$(".zh_js").html("不限");
 					}
-					$(".gods_qw").html(order_xx.coach.name);//期望服务大神
+					
 					if(order_xx.status == "NotPay"){
 						$("#tj_btn").attr("order_id","1")
 						order_xx.status = "未支付"
@@ -128,6 +142,7 @@ $(document).ready(function() {
 						$(".YY").show();
 						$(".order_yy").html(_yy);
 					}
+					
 					
 					//点击 去。。。。
 					$("#tj_btn").click(function(){

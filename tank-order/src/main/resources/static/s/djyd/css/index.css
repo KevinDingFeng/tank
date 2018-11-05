@@ -77,8 +77,40 @@ body {
 .banner{
 	background: url(../images/banner.png) no-repeat;
 	width: 100%;
-  	background-size: 100%;
-  	height: 3.5rem;
+  	background-size: contain;
+  	height: 2.42rem;
+}
+.kj_go{
+	background-color: #ffb033;
+	border-radius: 44px;
+	color:#fff;
+	padding: 0.2rem 0;
+	margin:0.23rem 0;
+	font-size: 0.30rem;
+	display:flex;
+	flex-direction: row;
+	justify-content: center
+}
+.kj_img{
+  	width: 0.44rem;
+	height: 0.44rem;
+	margin-right:0.16rem;
+}
+.kj_jm{
+	position:fixed;
+	background-color: rgba(255, 176, 51, 0.95);
+	opacity: 0.95;
+	border-radius: 30px;
+	width: 1.5rem;
+	height: 0.6rem;
+	top:49%;
+	right:-5%;
+	padding:0.17rem 0;
+	padding-left:0.25rem;
+	color:#fff;
+}
+.kj_jm>a{
+	color:#fff;
 }
 .listnumber_left_xing{
 	color: #ffb033;
@@ -1461,6 +1493,200 @@ body {
    }
 }
 
+/*价目表*/
+.tariff_ul{
+	display: flex;
+	flex-direction: row;
+	background-color:#fff;
+	box-shadow: 0px 0px 10px 0px 
+		rgba(0, 0, 0, 0.23);
+}
+.tariff_ul>li{
+	list-style:none;
+	padding:0.26rem 0.48rem 0.25rem 0.48rem;
+	text-align:center;
+}
+.tariff_ul>li:nth-child(3){
+	padding:0.26rem 0.46rem 0.25rem 0.46rem;
+}
+.tariff_ul>li>img{
+	width: 0.8rem;
+	height: 0.8rem;
+}
+.tariff_ul>li>div{
+	font-size:0.3rem;
+	color: #767676;
+}
+.kj_active{
+	color: #202020!important;
+}
+
+
+.tariff_list {
+	/* display: flex;
+	flex-direction: row; */
+	padding:0 0.1rem;
+	overflow-y:scroll;
+	max-height: 9rem;
+}
+.tariff_list::-webkit-scrollbar {
+    display: none;
+}
+.tariff_list>li:first-child{
+	margin-top:0.19rem;
+}
+.tariff_list>li{
+	list-style:none;
+	background: url(../images/kj/kj_list.png) no-repeat;
+	width: 100%;
+  	background-size: 100%;
+  	height: 1.7rem;
+  	position: relative;
+  	padding-top:0.05rem;
+}
+
+.tariff_list>li>div{
+	margin-left:0.4rem;
+	font-size: 0.28rem;
+}
+.tariff_list>li>div:first-child{
+	margin-top:0.25rem;
+	margin-bottom:0.2rem;
+}
+.tariff_list>li>div:nth-child(2){
+	font-size: 0.22rem;
+	color: #767676;
+}
+.pirce_time{
+	color:#767676!important;
+	font-size: 0.22rem!important;
+}
+.price_div{
+	display: flex;
+	flex-direction: row;
+}
+.pirce_left{
+	width:30%;
+}
+.pirce_right{
+	width:62%;
+	text-align:right;
+	padding-top:3px;
+}
+.tariff_list>li>div:nth-child(2) span{
+	font-size: 0.32rem;
+	color: #ff1400;
+	font-weight:700;
+}
+.kj_pq{
+	position:absolute;
+	top:0.1rem;
+	right:0.7rem;
+	color: #ffffff;
+	font-size: 0.24rem;
+}
+.kj_zf{
+	position:fixed;
+	bottom:0;
+	text-align:center;
+	background-color: #ffb033;
+	width:100%;
+	padding:0.33rem 0;
+}
+.kj_zf>div{
+	color:#fff;
+}
+
+/* 快捷下单 确认订单页面 */
+.kj_list{
+	margin-top:0.21rem;
+	padding: 0.3rem 0.27rem;
+	background-color:#fff;
+	box-shadow: 0px 0px 10px 0px 
+		rgba(0, 0, 0, 0.23);
+}
+.kj_text{
+	font-size: 0.24rem;
+	padding-top: 2px;
+}
+.kj_text>a{
+	color:#fff;
+}
+.kj_order_list{
+	display: flex;
+	flex-direction: row;
+	margin-top:0.3rem;
+}
+.kj_order_list>li{
+	list-style:none;
+	border-radius: 8px;
+	border: solid 1px #adadad;
+	padding: 0.17rem 0.44rem;
+	margin-right: 0.25rem;
+	font-size: 0.28rem;
+}
+.kj_order_list>li:nth-child(3){
+	padding: 0.17rem 0.3rem;
+}
+.kj_order_list>li:last-child{
+	margin-right: 0;
+}
+
+.kj_order_active{
+	background-color: #ffb033;
+	border-radius: 8px;
+	color:#fff;
+}
+
+.order_fw_pc{
+	width:94%;
+	height:1.27rem;
+	margin-top:0.27rem;
+	border-radius: 4px;
+	border: solid 1px #eeeeee;
+	padding: 0.16rem 0.24rem;
+}
+.price_kj{
+	border-radius: 4px;
+	border: solid 1px #eeeeee;
+	padding: 0.16rem 0.24rem;
+	margin-top:0.22rem;
+	width:84%;
+}
+.kj_list>div:last-child{
+	margin-top:0.19rem;
+	font-size: 0.18rem;
+	color: #ffb033;
+}
+.kj_y{
+	font-size: 0.24rem;
+	color: #ff1400;
+	font-weight:700;
+}
+.kj_bor{
+	/* border-top: solid 1px #eeeeee; */
+	margin-top:0.22rem;
+	/* padding-top:0.22rem; */
+}
+
+.my_order_list{
+	display: flex;
+	flex-direction: row;
+	background-color: #fff;
+}
+.my_order_list>li{
+	list-style:none;
+	width:50%;
+	text-align:center;
+	color: #202020;
+	font-size: 0.3rem;
+	font-weight:700;
+	padding:0.21rem 1.36rem;
+}
+
+.my_order_list_active{
+	color: #ffb033!important;
+}
 
 
 

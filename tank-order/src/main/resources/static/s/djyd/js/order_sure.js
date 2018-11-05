@@ -183,7 +183,7 @@ $(document).ready(function() {
 			})
 		}
 		
-		var MAX = 90,
+		var MAX = 1000,
 		MIN = bc_num;
 		//减少
 		$('.weui-count__decrease').click(function(e) {
@@ -457,8 +457,8 @@ $(document).ready(function() {
 			$.toast(`请输入大于等于${_num}的正整数`, "forbidden");
 			$("#timeStart").val(bc_num);
 			return
-		}else if(_val >90){
-			$.toast(`输入最大数字不能大于90`, "forbidden");
+		}else if(_val >1000){
+			$.toast(`输入最大数字不能大于1000`, "forbidden");
 			$("#timeStart").val(bc_num);
 			var three_code = $(".zi_arr_active").attr("code");//产品id
 			var gods_id = $(".zi_arr_active1").attr("id");//大神id
