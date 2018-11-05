@@ -105,12 +105,14 @@ body {
 	height: 0.6rem;
 	top:49%;
 	right:-5%;
-	padding:0.17rem 0;
 	padding-left:0.25rem;
 	color:#fff;
 }
 .kj_jm>a{
 	color:#fff;
+	height: 0.6rem;
+    display: inline-block;
+    margin-top: 1px;
 }
 .listnumber_left_xing{
 	color: #ffb033;
@@ -1592,6 +1594,7 @@ body {
 	background-color: #ffb033;
 	width:100%;
 	padding:0.33rem 0;
+	margin-top:0.2rem;
 }
 .kj_zf>div{
 	color:#fff;
@@ -1621,7 +1624,7 @@ body {
 	list-style:none;
 	border-radius: 8px;
 	border: solid 1px #adadad;
-	padding: 0.17rem 0.44rem;
+	padding: 0.17rem 0.3rem;
 	margin-right: 0.25rem;
 	font-size: 0.28rem;
 }
