@@ -10,7 +10,7 @@ $(document).ready(function() {
 	}
 	//选中的报价id
 	var _type = getQueryString("_type");
-	var _num_reg = /^(?!00)(?:[0-9]{1,4}|20000)$/;
+	var _num_reg = /^[^0]\d{1,5}$||^200000$/;
 	var _iphone = /^[1][0-9][0-9]{9}$/;//手机号码正则
 	//支付
 	var appIdVal,timeStampVal,nonceStrVal,packageVal,signTypeVal,paySignVal;
@@ -31,6 +31,8 @@ $(document).ready(function() {
 		//点击切换服务类型
 		$(".kj_order_list>li").click(function(){
 			$(this).addClass("kj_order_active");
+			$(".price_je").val("");
+			$(".money_num").html("1");
 			$(this).siblings().removeClass("kj_order_active");
 			
 		})
@@ -50,12 +52,22 @@ $(document).ready(function() {
 			var _length = $.trim($(this)[0].value);
 			if(_length == ""){
 				$.toast(`输入金额不能为空！`, "forbidden");
+				$(".price_je").val("")
 			    return false;
-			}else if(!_num_reg.test(_length)){
+			}else if(parseInt(_length)<=0 || parseInt(_length)>20000){
 				$.toast(`输入金额为1~20000(勿加小数点)！`, "forbidden");
+				var _cc = parseInt(_length);
+				if(_cc<=0){
+					$(".price_je").val("1")
+					$(".money_num").html(1+`<span class="title_span">元</span></span>`);
+				}else if(_cc>=20000){
+					$(".price_je").val("20000")
+					$(".money_num").html(20000+`<span class="title_span">元</span></span>`);
+				}
 			    return false;
 			}
-			$(".money_num").html(`${_length}<span class="title_span">元</span></span>`)
+			$(".price_je").val(parseInt(_length))
+			$(".money_num").html(`${parseInt(_length)}<span class="title_span">元</span></span>`)
 		})
 		//手机号
 		$(".phone_code").blur(function(){
@@ -86,7 +98,7 @@ $(document).ready(function() {
 			if(_totalFee == ""){
 				$.toast(`输入金额不能为空！`, "forbidden");
 			    return false;
-			}else if(!_num_reg.test(_totalFee)){
+			}else if(parseInt(_totalFee)<=0 || parseInt(_totalFee)>20000){
 				$.toast(`输入金额为1~20000(勿加小数点)！`, "forbidden");
 			    return false;
 			}
@@ -121,7 +133,6 @@ $(document).ready(function() {
 					$.toast("下单信息错误！错误信息:" + errorInfo, "forbidden");
 				},
 				success: function(resp) { //请求完成
-					debugger
 					if (resp.code == "200") {
 						appIdVal = resp.data.prepay.appId;
 						timeStampVal = resp.data.prepay.timeStamp;

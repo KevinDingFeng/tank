@@ -82,19 +82,36 @@ $(document).ready(function() {
 					}
 					var list = "";
 					for(var i=0;i<_arr.price.length;i++){
+						
+						if(_arr.price[i].durationType =="时"){
+							var _dd = "小时"
+						}else if(_arr.price[i].durationType =="1万经验"){
+							var _dd = "无";
+							_arr.price[i].duration =""
+						}else if(_arr.price[i].durationType =="10万经验"){
+							var _dd = "无";
+							_arr.price[i].duration =""
+						}else if(_arr.price[i].durationType =="15万经验"){
+							var _dd = "无";
+							_arr.price[i].duration =""
+						}else if(_arr.price[i].durationType =="次"){
+							var _dd = "次";
+						}else if(_arr.price[i].durationType =="天"){
+							var _dd = "天";
+						}
 						if(_arr.price[i].hasOwnProperty("level4Name")){//判断有没有第四级
 							var _level4Name= _arr.price[i].level4Name;//
-						
+							
 							if(_arr.price[i].level2Name.length == 4){
 								list +=`
 									<li>
 										<div>${_arr.price[i].level3Name}<span>${_level4Name}</span></div>
 										<div class="price_div">
 											<div class="pirce_left">
-												￥<span>${_arr.price[i].price}</span class="span_nor">${_arr.price[i].durationType}
+												￥<span>${_arr.price[i].price}</span>/${_arr.price[i].durationType}
 											</div>
 											<div class="pirce_right">
-												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}小时</span>
+												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}${_dd}</span>
 											</div>
 										</div>
 										<span class="kj_pq">${_arr.price[i].level2Name}</span>
@@ -106,10 +123,10 @@ $(document).ready(function() {
 										<div>${_arr.price[i].level3Name}<span class="span_nor"}>${_level4Name}</span></div>
 										<div class="price_div">
 											<div class="pirce_left">
-												￥<span>${_arr.price[i].price}</span class="span_nor">/${_arr.price[i].durationType}
+												￥<span>${_arr.price[i].price}</span>${_arr.price[i].durationType}
 											</div>
 											<div class="pirce_right">
-												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}小时</span>
+												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}${_dd}</span>
 											</div>
 										</div>
 										<span class="kj_pq" style="right:0.6rem">${_arr.price[i].level2Name}</span>
@@ -124,7 +141,7 @@ $(document).ready(function() {
 												￥<span>${_arr.price[i].price}</span>/${_arr.price[i].durationType}
 											</div>
 											<div class="pirce_right">
-												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}小时</span>
+												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}${_dd}</span>
 											</div>
 										</div>
 										<span class="kj_pq" style="right:1rem">${_arr.price[i].level2Name}</span>
@@ -140,10 +157,10 @@ $(document).ready(function() {
 										<div>${_arr.price[i].level3Name}</div>
 										<div class="price_div">
 											<div class="pirce_left">
-												￥<span>${_arr.price[i].price}</span class="span_nor">${_arr.price[i].durationType}
+												￥<span>${_arr.price[i].price}</span>/${_arr.price[i].durationType}
 											</div>
 											<div class="pirce_right">
-												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}小时</span>
+												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}${_dd}</span>
 											</div>
 										</div>
 										<span class="kj_pq">${_arr.price[i].level2Name}</span>
@@ -155,10 +172,10 @@ $(document).ready(function() {
 										<div>${_arr.price[i].level3Name}</div>
 										<div class="price_div">
 											<div class="pirce_left">
-												￥<span>${_arr.price[i].price}</span class="span_nor">/${_arr.price[i].durationType}
+												￥<span>${_arr.price[i].price}</span>/${_arr.price[i].durationType}
 											</div>
 											<div class="pirce_right">
-												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}小时</span>
+												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}${_dd}</span>
 											</div>
 										</div>
 										<span class="kj_pq" style="right:0.6rem">${_arr.price[i].level2Name}</span>
@@ -173,7 +190,7 @@ $(document).ready(function() {
 												￥<span>${_arr.price[i].price}</span>/${_arr.price[i].durationType}
 											</div>
 											<div class="pirce_right">
-												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}小时</span>
+												<span class="pirce_time pirce_right">服务时长${_arr.price[i].duration}${_dd}</span>
 											</div>
 										</div>
 										<span class="kj_pq" style="right:1rem">${_arr.price[i].level2Name}</span>

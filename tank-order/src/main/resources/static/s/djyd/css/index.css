@@ -1568,10 +1568,10 @@ body {
 	flex-direction: row;
 }
 .pirce_left{
-	width:30%;
+	width:35%;
 }
 .pirce_right{
-	width:62%;
+	width:57%;
 	text-align:right;
 	padding-top:3px;
 }
@@ -1624,7 +1624,7 @@ body {
 	list-style:none;
 	border-radius: 8px;
 	border: solid 1px #adadad;
-	padding: 0.17rem 0.3rem;
+	padding: 0.17rem 0.4rem;
 	margin-right: 0.25rem;
 	font-size: 0.28rem;
 }
@@ -1692,4 +1692,10 @@ body {
 }
 
 
-
+.span_nor{
+	margin-left: 10px;
+    border: 1px solid #3988ff;
+    border-radius: 8px;
+    padding: 0.05rem 0.15rem;
+    font-size: 0.24rem;
+}
