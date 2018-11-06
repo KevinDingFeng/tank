@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="Amaze UI" />
   <link rel="stylesheet" href="/assets/css/amazeui.min.css"/>
   <link rel="stylesheet" href="/assets/css/admin.css">
+  <script src="/assets/js/jquery-2.1.4.min.js"></script>
 </head>
 <body>
 <!--[if lte IE 9]>
@@ -117,14 +118,30 @@
               <div class="am-hide-sm-only am-u-md-6"></div>
             </div>
             <#if entity.orderType == 'Quick'>
-            <div>
-            	<select name ="product_type_code">
-            		<option> --- 请选择 --- </option>
+           	<div class="am-g am-margin-top">
+            	<input type="hidden" id="code" name="code" />
+           		<div class="am-u-sm-4 am-u-md-2 am-text-right">选择服务:</div>
+           		<div class="am-u-sm-8 am-u-md-4">
+            	<select id ="level1" >
+            		<option> --- 请选择一级服务 --- </option>
             		<#list productTypes as p>
             			<option value="${p.level1Code}">${p.level1Name}</option>
             		</#list>
             	</select>
+            	<select id ="level2" >
+            		<option> --- 请选择二级服务 --- </option>
+            	</select>
+            	<select id ="level3" >
+            		<option> --- 请选择三级服务 --- </option>
+            	</select>
+            	<select id ="level4" >
+            		<option> --- 请选择四级服务 --- </option>
+            	</select>
+            	</div>
+            	<div class="am-hide-sm-only am-u-md-6"></div>
             </div>
+            <#else>
+            	<input type="hidden" id="code" name ="code" value="${entity.product.ProductType.code}">
             </#if>
         	<div class="am-g am-margin-top">
               <div class="am-u-sm-4 am-u-md-2 am-text-right">金额</div>
@@ -188,8 +205,93 @@
     <script>
 function doSubmit(){
 	//console.log($("input[name='coach']:checked").val());
+	var code = $("#code").val();
+	console.log(code);
+	if(code == "" || code ==null || code == undefined){
+		alert("请选择服务类型");
+		return false;
+	}
 	$("#assignCoachForm").submit();
-}   
+}
+$("#level1").change(function(){
+	$("#level2").html("<option>" + "--- 请选择二级服务 ---" + "</option>");
+	$("#level3").html("<option>" + "--- 请选择三级服务 ---" + "</option>");
+	$("#level4").html("<option>" + "--- 请选择四级服务 ---" + "</option>");
+	var level1_code = $("#level1").find("option:selected").val();
+	var selectedIndex = $("#level1").get(0).selectedIndex
+	if(selectedIndex > 0){
+		$.ajax({url:"/play_order/assign/product_type?level1="+level1_code , type:"get",
+			success:function(res){
+				if(res.code =="200"){
+					var data = res.data.level2;
+					for(var i=0;i<data.length;i++){
+						$("#level2").append("<option value= '" + data[i].code + "'>" + data[i].name + "</option>");
+					}
+				}	
+			}
+		})
+	}
+	$("#code").val("");
+	
+})
+$("#level2").change(function(){
+	$("#level3").html("<option>" + "--- 请选择三级服务 ---" + "</option>");
+	$("#level4").html("<option>" + "--- 请选择四级服务 ---" + "</option>");
+	var level2_code = $("#level2").find("option:selected").val();
+	var selectedIndex = $("#level2").get(0).selectedIndex
+	if(selectedIndex > 0){
+		$.ajax({url:"/play_order/assign/product_type?level2="+level2_code , type:"get",
+			success:function(res){
+				if(res.code =="200"){
+					var data = res.data.level3;
+					for(var i=0;i<data.length;i++){
+						$("#level3").append("<option value= '" + data[i].code + "'>" + data[i].name + "</option>");
+					}
+				}
+			}
+		})
+	}
+	$("#code").val("");
+	
+})
+$("#level3").change(function(){
+	$("#level4").html("<option>" + "--- 请选择四级服务 ---" + "</option>");
+	var selectedIndex = $("#level3").get(0).selectedIndex
+	var level3_code = $("#level3").find("option:selected").val();
+	if(selectedIndex > 0){
+		$.ajax({url:"/play_order/assign/product_type?level3="+level3_code , type:"get",
+			success:function(res){
+				if(res.code !="200"){
+					$("#level4").html("<option>" + "--- 无 ---" + "</option>");
+					$("#code").val($("#level3").find("option:selected").val());
+				}else{
+					var data = res.data.level4;
+					for(var i=0;i<data.length;i++){
+						$("#level4").append("<option value= '" + data[i].code + "'>" + data[i].name + "</option>");
+					}
+					var selectedIndex = $("#level4").get(0).selectedIndex;
+					if(selectedIndex == 0){
+						$("#code").val("");
+					}else{
+						$("#code").val($("#level4").find("option:selected").val());
+					}
+				}
+			}
+		})
+	}else{
+		$("#code").val("");
+	}
+})
+$("#level4").change(function(){
+	var selectedIndex = $("#level4").get(0).selectedIndex;
+	var level4_code = $("#level4").find("option:selected").val();
+	if(selectedIndex > 0){
+		$("#code").val($("#level4").find("option:selected").val());
+	}else{
+		$("#code").val("");
+	}
+})
+
     </script>
   </div>
 

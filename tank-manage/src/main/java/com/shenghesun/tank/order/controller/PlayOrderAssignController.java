@@ -42,6 +42,7 @@ import com.shenghesun.tank.service.QuotedProductService;
 import com.shenghesun.tank.service.entity.Product;
 import com.shenghesun.tank.service.entity.ProductType;
 import com.shenghesun.tank.service.entity.QuotedProduct;
+import com.shenghesun.tank.utils.JsonUtils;
 
 @Controller
 @RequestMapping(value = "/play_order/assign")
@@ -64,10 +65,10 @@ public class PlayOrderAssignController {
 			@RequestParam(value = "pageNum", required = false) Integer pageNum,
 			@RequestParam(value = "keyword", required = false) String keyword, Model model) {
 		//权限校验  判断当前登录用户，是否拥有 分派 订单的权限
-//		Subject subject = SecurityUtils.getSubject();
-//		if(!subject.isPermitted("order:assign")) {
-//			throw new AuthorizationException("缺少派单权限");
-//		}
+		Subject subject = SecurityUtils.getSubject();
+		if(!subject.isPermitted("order:assign")) {
+			throw new AuthorizationException("缺少派单权限");
+		}
 		pageNum = pageNum == null ? 0 : pageNum;
 		Pageable pageable = this.getListPageable(pageNum);
 		Page<PlayOrder> page = playOrderService.findBySpecification(this.getSpecification(keyword,OrderType.Quick), pageable);
@@ -88,10 +89,10 @@ public class PlayOrderAssignController {
 		@RequestParam(value = "pageNum", required = false) Integer pageNum,
 		@RequestParam(value = "keyword", required = false) String keyword, Model model) {
 		//权限校验  判断当前登录用户，是否拥有 分派 订单的权限
-//		Subject subject = SecurityUtils.getSubject();
-//		if(!subject.isPermitted("order:assign")) {
-//			throw new AuthorizationException("缺少派单权限");
-//		}
+		Subject subject = SecurityUtils.getSubject();
+		if(!subject.isPermitted("order:assign")) {
+			throw new AuthorizationException("缺少派单权限");
+		}
 		pageNum = pageNum == null ? 0 : pageNum;
 		Pageable pageable = this.getListPageable(pageNum);
 		Page<PlayOrder> page = playOrderService.findBySpecification(this.getSpecification(keyword,OrderType.Common), pageable);
@@ -147,10 +148,10 @@ public class PlayOrderAssignController {
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
 	public String form(@RequestParam(value = "id") Long id, Model model) {
 		//权限校验  判断当前登录用户，是否拥有 分派 订单的权限
-//		Subject subject = SecurityUtils.getSubject();
-//		if(!subject.isPermitted("order:assign")) {
-//			throw new AuthorizationException("缺少派单权限");
-//		}
+		Subject subject = SecurityUtils.getSubject();
+		if(!subject.isPermitted("order:assign")) {
+			throw new AuthorizationException("缺少派单权限");
+		}
 		PlayOrder playOrder = playOrderService.findById(id);
 		List<QuotedProduct> qpList = quotedProductService.findByProductId(playOrder.getProductId());
 		List<Coach> coaches = this.getCoaches(qpList);
@@ -169,61 +170,94 @@ public class PlayOrderAssignController {
 		return "order_assign/form";
 	}
 	
-	// 测试
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@RequestMapping(value = "/entire_level" ,method = RequestMethod.GET)
+	@RequestMapping(value = "/product_type" , method = RequestMethod.GET)
 	@ResponseBody
-	public JSONObject initProductType() {
-		JSONObject map = new JSONObject();
-		
-		List list1 = new ArrayList<>();
-		List<ProductType> level1 = productTypeService.findByParentCode(1);
-		for (ProductType p1 : level1) {
-			JSONObject map1 = new JSONObject();
-			
-			List<ProductType> level2 = productTypeService.findByParentCode(p1.getCode());
-			map1.put("level1Code", p1.getCode());
-			map1.put("level1Name", p1.getName());
-			
-			List list2= new ArrayList<>();
-			for (ProductType p2 : level2) {
-				JSONObject map2 = new JSONObject();
-				
-				List<ProductType> level3 = productTypeService.findByParentCode(p2.getCode());
-				map2.put("level2Code", p2.getCode());
-				map2.put("level2Name", p2.getName());
-				
-				List list3= new ArrayList<>();
-				for (ProductType p3 : level3) {
-					JSONObject map3 = new JSONObject();
-					
-					map3.put("level3Code", p3.getCode());
-					map3.put("level3Name", p3.getName());
-					
-					List list4 = new ArrayList<>();
-					List<ProductType> level4 = productTypeService.findByParentCode(p3.getCode());
-					if (level4 != null && level4.size() > 0) {
-						for (ProductType p4 : level4) {
-							JSONObject map4 = new JSONObject();
-							map4.put("level4Code", p4.getCode());
-							map4.put("level4Name", p4.getName());
-							list4.add(map4);
-						}
-						map3.put("level4", list4);
-					}else {
-						map3.put("level4", new ArrayList<>(0));
-					}
-					list3.add(map3);
-				}
-				map2.put("level3", list3);
-				list2.add(map2);
-			}
-			map1.put("level2", list2);
-			list1.add(map1);
+	public JSONObject getLevels(
+			@RequestParam(value = "level1",required = false) String level1,
+			@RequestParam(value = "level2",required = false) String level2,
+			@RequestParam(value = "level3",required = false) String level3) {
+//		if(StringUtils.isBlank(level1) && StringUtils.isBlank(level2) 
+//				&& StringUtils.isBlank(level3)) {
+//			List<ProductType> list = productTypeService.findByParentCode(1);
+//			json.put("level1", list);
+//		}
+		JSONObject json = new JSONObject();
+		if(StringUtils.isNotBlank(level1)) {
+			List<ProductType> list = productTypeService.findByParentCode(Integer.valueOf(level1));
+			json.put("level2", list);
+			return JsonUtils.getSuccessJSONObject(json);
 		}
-		map.put("data", list1);
-		return map;
+		if(StringUtils.isNotBlank(level2)) {
+			List<ProductType> list = productTypeService.findByParentCode(Integer.valueOf(level2));
+			json.put("level3", list);
+			return JsonUtils.getSuccessJSONObject(json);
+		}
+		if(StringUtils.isNotBlank(level3)) {
+			List<ProductType> list = productTypeService.findByParentCode(Integer.valueOf(level3));
+			if(list == null || list.size() == 0) {
+				return JsonUtils.getFailJSONObject();
+			}
+			json.put("level4", list);
+			return JsonUtils.getSuccessJSONObject(json);
+		}
+		return null;
 	}
+	
+	// 测试
+//	@SuppressWarnings({ "rawtypes", "unchecked" })
+//	@RequestMapping(value = "/entire_level" ,method = RequestMethod.GET)
+//	@ResponseBody
+//	public JSONObject initProductType() {
+//		JSONObject map = new JSONObject();
+//		
+//		List list1 = new ArrayList<>();
+//		List<ProductType> level1 = productTypeService.findByParentCode(1);
+//		for (ProductType p1 : level1) {
+//			JSONObject map1 = new JSONObject();
+//			
+//			List<ProductType> level2 = productTypeService.findByParentCode(p1.getCode());
+//			map1.put("level1Code", p1.getCode());
+//			map1.put("level1Name", p1.getName());
+//			
+//			List list2= new ArrayList<>();
+//			for (ProductType p2 : level2) {
+//				JSONObject map2 = new JSONObject();
+//				
+//				List<ProductType> level3 = productTypeService.findByParentCode(p2.getCode());
+//				map2.put("level2Code", p2.getCode());
+//				map2.put("level2Name", p2.getName());
+//				
+//				List list3= new ArrayList<>();
+//				for (ProductType p3 : level3) {
+//					JSONObject map3 = new JSONObject();
+//					
+//					map3.put("level3Code", p3.getCode());
+//					map3.put("level3Name", p3.getName());
+//					
+//					List list4 = new ArrayList<>();
+//					List<ProductType> level4 = productTypeService.findByParentCode(p3.getCode());
+//					if (level4 != null && level4.size() > 0) {
+//						for (ProductType p4 : level4) {
+//							JSONObject map4 = new JSONObject();
+//							map4.put("level4Code", p4.getCode());
+//							map4.put("level4Name", p4.getName());
+//							list4.add(map4);
+//						}
+//						map3.put("level4", list4);
+//					}else {
+//						map3.put("level4", new ArrayList<>(0));
+//					}
+//					list3.add(map3);
+//				}
+//				map2.put("level3", list3);
+//				list2.add(map2);
+//			}
+//			map1.put("level2", list2);
+//			list1.add(map1);
+//		}
+//		map.put("data", list1);
+//		return map;
+//	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private List initProductTypes() {
@@ -278,22 +312,26 @@ public class PlayOrderAssignController {
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
 	public String form(@RequestParam(value = "id") Long id, 
 			@RequestParam(value = "coach") Long executorId, 
-			@RequestParam(value = "code",required = false)String code ,Model model) {
+			@RequestParam(value = "code",required = true)String code ,Model model) throws Exception {
 		//权限校验  判断当前登录用户，是否拥有 分派 订单的权限
-//		Subject subject = SecurityUtils.getSubject();
-//		if(!subject.isPermitted("order:assign")) {
-//			throw new AuthorizationException("缺少派单权限");
-//		}
+		Subject subject = SecurityUtils.getSubject();
+		if(!subject.isPermitted("order:assign")) {
+			throw new AuthorizationException("缺少派单权限");
+		}
 		PlayOrder playOrder = playOrderService.findById(id);
 		playOrder.setExecutor(coachService.findById(executorId));
 		playOrder.setExecutorId(executorId);
-		if (code != null) {
-			Product product = playOrder.getProduct();
-			ProductType productType = productTypeService.findByCode(Integer.valueOf(code));
-			product.setProductTypeId(productType.getId());
-			product.setProductType(productType);
-			product =  productService.save(product);
-			playOrder.setProduct(product);
+		if(playOrder.getOrderType().equals(OrderType.Quick)) {
+			if (code != null) {
+				Product product = playOrder.getProduct();
+				ProductType productType = productTypeService.findByCode(Integer.valueOf(code));
+				product.setProductTypeId(productType.getId());
+				product.setProductType(productType);
+				product =  productService.save(product);
+				playOrder.setProduct(product);
+			}else{
+				throw new Exception("缺少服务类型");
+			}
 		}
 		playOrderService.save(playOrder);
 		return "redirect:/play_order/assign/list";
