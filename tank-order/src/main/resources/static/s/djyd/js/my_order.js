@@ -33,6 +33,7 @@ $(document).ready(function() {
 							`);
 						}else{
 							var list_order = "";//order列表
+							
 							for(var i=0; i< list_xx.length;i++){
 								var _order_xx = list_xx[i].product.productType;//订单信息
 								if(_order_xx.name == "手工代练"){
@@ -47,13 +48,24 @@ $(document).ready(function() {
 								}else if(list_xx[i].status == "Cancel"){
 									list_xx[i].status = "已取消"
 								}
-								list_order+=`
-									<div class="orderbg_list" order_id=${list_xx[i].id}>
-										<p class="fw_order">${_order_xx.name}</p>
-										<p class="price_order"><span class="r_col f_weight">￥${list_xx[i].totalFee}元</span></p>
-										<p class="zt_order">${list_xx[i].status}</p>
-									</div>
-								`;
+								if(_order_xx.name.length>3){
+									list_order+=`
+										<div class="orderbg_list" order_id=${list_xx[i].id}>
+											<p class="fw_order" style="font-size:0.1rem;left: 0.15rem;">${_order_xx.name}</p>
+											<p class="price_order"><span class="r_col f_weight">￥${list_xx[i].totalFee}元</span></p>
+											<p class="zt_order">${list_xx[i].status}</p>
+										</div>
+									`;
+								}else{
+									list_order+=`
+										<div class="orderbg_list" order_id=${list_xx[i].id}>
+											<p class="fw_order">${_order_xx.name}</p>
+											<p class="price_order"><span class="r_col f_weight">￥${list_xx[i].totalFee}元</span></p>
+											<p class="zt_order">${list_xx[i].status}</p>
+										</div>
+									`;
+								}
+								
 							}
 							$(".order_list").empty();
 							$(".order_list").append(list_order);
