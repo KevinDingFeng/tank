@@ -73,15 +73,15 @@ $(document).ready(function() {
 					if(_type == "10"){
 						var _arr = resp.data.teaching;//教学
 					}else if(type == "11"){
-						var _arr = resp.data.replacing;//代练
+						var _arr = resp.data.replacing;//职业选手主播
 					}else if(type == "12"){
-						var _arr = resp.data.craftreplacing;//手工代练
+						var _arr = resp.data.accompany;//手工代练
 					}else if(type == "13"){
-						var _arr = resp.data.accompany;//陪玩
+						var _arr = resp.data.craftreplacing;//陪玩
 					}
 					var list = "";
 					for(var i=0;i<_arr.price.length;i++){
-						if(_arr.price[i].durationType =="时"){
+						if(_arr.price[i].durationType =="小时"){
 							var _dd = "小时"
 						}else if(_arr.price[i].durationType =="1万经验"){
 							var _dd = "无";
@@ -96,6 +96,9 @@ $(document).ready(function() {
 							var _dd = "次";
 						}else if(_arr.price[i].durationType =="天"){
 							var _dd = "天";
+						}
+						if(_arr.price[i].level3Name.length>8){
+							_arr.price[i].level3Name = _arr.price[i].level3Name.substring(0,8)+"..."
 						}
 						if(_arr.price[i].hasOwnProperty("level4Name")){//判断有没有第四级
 							var _level4Name= _arr.price[i].level4Name;//
