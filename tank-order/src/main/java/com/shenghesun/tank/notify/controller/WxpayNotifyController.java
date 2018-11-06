@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 
 import javax.servlet.ServletInputStream;
@@ -106,15 +108,16 @@ public class WxpayNotifyController {
 		return "";
 	}
 
-	private Timestamp formatTimestamp(Element element) {
+	private Timestamp formatTimestamp(Element element) throws ParseException {
 		if (element != null) {
 			String str = element.getText();
-			Timestamp t = new Timestamp(Long.valueOf(str) * 1000);
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+			Timestamp t = new Timestamp(simpleDateFormat.parse(str).getTime());
 			return t;
 		}
 		return new Timestamp(System.currentTimeMillis());
 	}
-
+	
 	private BigDecimal formatBigDecimal(Element element) {
 		if (element != null) {
 			String str = element.getText();
