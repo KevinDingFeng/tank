@@ -75,9 +75,9 @@ $(document).ready(function() {
 					}else if(type == "11"){
 						var _arr = resp.data.replacing;//职业选手主播
 					}else if(type == "12"){
-						var _arr = resp.data.craftreplacing;//手工代练
+						var _arr = resp.data.accompany;//手工代练
 					}else if(type == "13"){
-						var _arr = resp.data.accompany;//陪玩
+						var _arr = resp.data.craftreplacing;//陪玩
 					}
 					var list = "";
 					for(var i=0;i<_arr.price.length;i++){
