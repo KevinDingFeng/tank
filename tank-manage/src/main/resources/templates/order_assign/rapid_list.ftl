@@ -59,20 +59,20 @@
     <div class="am-offcanvas-bar admin-offcanvas-bar">
       <ul class="am-list admin-sidebar-list">
         <li><a href="javascript:;"><span class="am-icon-home"></span> 首页</a></li>
-        <#-- <@shiro.hasPermissionOne name=["order:assign","order:receive"]> -->
+        <@shiro.hasPermissionOne name=["order:assign","order:receive"]>
         <li class="admin-parent">
           <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-file"></span> 订单管理  <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
           <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
-          	<#--<@shiro.hasPermission name="order:assign"> -->
+          	<@shiro.hasPermission name="order:assign">
         	<li><a href="/play_order/assign/list"><span class="am-icon-table"></span> 普通派单</a></li>
         	<li><a href="/play_order/assign/rapid_list"><span class="am-icon-table"></span> 快捷派单</a></li>
-        	<#--</@shiro.hasPermission> -->
-        	<#--<@shiro.hasPermission name="order:receive"> -->
+        	</@shiro.hasPermission>
+        	<@shiro.hasPermission name="order:receive">
         	<li><a href="/play_order/receive/list"><span class="am-icon-table"></span> 接单</a></li>
-        	<#--</@shiro.hasPermission> -->
+        	</@shiro.hasPermission>
           </ul>
         </li>
-        <#--</@shiro.hasPermissionOne> -->
+        </@shiro.hasPermissionOne>
       </ul>
     </div>
   </div>
