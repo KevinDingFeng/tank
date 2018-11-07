@@ -33,9 +33,16 @@ $(document).ready(function() {
 							`);
 						}else{
 							var list_order = "";//order列表
-							
 							for(var i=0; i< list_xx.length;i++){
 								var _order_xx = list_xx[i].product.productType;//订单信息
+								var _id ="t"+list_xx[i].product.productTypeId;
+								var _t = resp.data.types[_id];
+								var _cc = "";
+								if(_t == undefined){
+									_cc = _order_xx.name;
+								}else{
+									_cc = _t.level1Name;
+								}
 								if(list_xx[i].status == "NotPay"){
 									list_xx[i].status = "未支付"
 									var cc = "col_red";
@@ -49,10 +56,10 @@ $(document).ready(function() {
 									list_xx[i].status = "已取消"
 									var cc = "y_col"; 
 								}
-								if(_order_xx.name.length>3){
+								if(_cc.length>3){
 									list_order+=`
 										<div class="orderbg_list" order_id=${list_xx[i].id}>
-											<p class="fw_order " style="font-size:0.2rem;left: 0.15rem;top: 0.6rem;">${_order_xx.name}</p>
+											<p class="fw_order" style="font-size:0.2rem;left: 0.15rem;top: 0.6rem;">${_cc}</p>
 											<p class="price_order"><span class="r_col f_weight">￥${list_xx[i].totalFee}元</span></p>
 											<p class="zt_order ${cc}">${list_xx[i].status}</p>
 										</div>
@@ -60,7 +67,7 @@ $(document).ready(function() {
 								}else{
 									list_order+=`
 										<div class="orderbg_list" order_id=${list_xx[i].id}>
-											<p class="fw_order">${_order_xx.name}</p>
+											<p class="fw_order">${_cc}</p>
 											<p class="price_order"><span class="r_col f_weight">￥${list_xx[i].totalFee}元</span></p>
 											<p class="zt_order">${list_xx[i].status}</p>
 										</div>
