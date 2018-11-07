@@ -161,6 +161,9 @@ public class PlayOrderAssignController {
 		//考虑到 not in 关键词在 数据库中的执行效率不高，这里使用第二种方式，直接查出所有可用的coach信息，然后使用代码过滤掉 coaches中的 ids
 		List<Coach> all = coachService.findAll();
 		List<Coach> spareCoach = this.getSpareCoach(all, coaches);
+		if(playOrder.getOrderType().equals(OrderType.Common)) {
+			model.addAttribute("code", playOrder.getProduct().getProductType().getCode());
+		}
 		
 		model.addAttribute("coaches", coaches);
 		model.addAttribute("spareCoach", spareCoach);

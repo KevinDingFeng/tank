@@ -66,7 +66,8 @@
           <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-file"></span> 订单管理  <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
           <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
           	<@shiro.hasPermission name="order:assign">
-        	<li><a href="/play_order/assign/list"><span class="am-icon-table"></span> 派单</a></li>
+        	<li><a href="/play_order/assign/list"><span class="am-icon-table"></span> 普通订单</a></li>
+        	<li><a href="/play_order/assign/rapid_list"><span class="am-icon-table"></span> 快捷订单</a></li>
         	</@shiro.hasPermission>
         	<@shiro.hasPermission name="order:receive">
         	<li><a href="/play_order/receive/list"><span class="am-icon-table"></span> 接单</a></li>
@@ -84,7 +85,7 @@
   <div class="admin-content-body">
     <div class="am-cf am-padding am-padding-bottom-0">
       <div class="am-fl am-cf">
-        <strong class="am-text-primary am-text-lg">派单</strong> / <small>Order Assign</small>
+        <strong class="am-text-primary am-text-lg"><#if entity.orderType == 'Quick'>快捷派单<#else>普通派单</#if></strong> / <small>Order Assign</small>
       </div>
     </div>
 
@@ -141,7 +142,7 @@
             	<div class="am-hide-sm-only am-u-md-6"></div>
             </div>
             <#else>
-            	<input type="hidden" id="code" name ="code" value="${entity.product.ProductType.code}">
+            	<input type="hidden" id="code" name ="code" value="${code?c}">
             </#if>
         	<div class="am-g am-margin-top">
               <div class="am-u-sm-4 am-u-md-2 am-text-right">金额</div>
@@ -200,9 +201,13 @@
     </div>
     
     <div class="am-margin">
+      <button type="button" onclick="cancel()" class="am-btn am-btn-primary am-btn-xs">取消</button>
       <button type="button" onclick="doSubmit()" class="am-btn am-btn-primary am-btn-xs">提交保存</button>
     </div>
     <script>
+function cancel(){
+	window.history.back();
+}
 function doSubmit(){
 	//console.log($("input[name='coach']:checked").val());
 	var code = $("#code").val();

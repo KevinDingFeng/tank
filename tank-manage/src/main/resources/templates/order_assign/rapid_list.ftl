@@ -64,10 +64,10 @@
           <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-file"></span> 订单管理  <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
           <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
           	<@shiro.hasPermission name="order:assign">
-        	<li><a href="/play_order/assign/list"><span class="am-icon-table"></span> 普通派单</a></li>
-        	<li><a href="/play_order/assign/rapid_list"><span class="am-icon-table"></span> 快捷派单</a></li>
+        	<li><a href="/play_order/assign/list"><span class="am-icon-table"></span> 普通订单</a></li>
+        	<li><a href="/play_order/assign/rapid_list"><span class="am-icon-table"></span> 快捷订单</a></li>
         	</@shiro.hasPermission>
-        	<@shiro.hasPermission name="order:receive">
+        	<@shiro.hasPermission name="order:receive"> 
         	<li><a href="/play_order/receive/list"><span class="am-icon-table"></span> 接单</a></li>
         	</@shiro.hasPermission>
           </ul>
@@ -82,7 +82,7 @@
   <div class="admin-content">
     <div class="admin-content-body">
       <div class="am-cf am-padding am-padding-bottom-0">
-        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">订单列表</strong> / <small>Order List</small></div>
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">快捷订单列表</strong> / <small>Order List</small></div>
       </div>
 
       <hr>
@@ -116,7 +116,7 @@
           </div>
         </div>
         <div class="am-u-sm-12 am-u-md-3">
-          <form method="post" class="am-form" action="/play_order/assign/list" id="assignOrderForm">
+          <form method="post" class="am-form" action="/play_order/assign/rapid_list" id="assignOrderForm">
           <div class="am-input-group am-input-group-sm">
               <input type="text" class="am-form-field" name="keyword" value="${keyword!}" placeholder="请输入手机号或订单号" />
 	          <span class="am-input-group-btn">
