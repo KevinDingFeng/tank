@@ -45,7 +45,7 @@ $(document).ready(function () {
 				gods_search("11");
 				$(".Ringer_logo_left span").html("代练大神")
 				$(".Ringer_logo_right a").attr("href","Ringer_xq.html?id=9&code=11");
-			} else if (c_v == "12") {
+			} else if (c_v == "10") {
 				window.location.href = "Ringer_xq.html?id=1&code=10";
 			} else {
 				$(".Ringer").css("display", "block");
