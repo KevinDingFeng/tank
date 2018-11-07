@@ -103,7 +103,7 @@ body {
 	border-radius: 30px;
 	width: 1.5rem;
 	height: 0.6rem;
-	top:49%;
+	top:52%;
 	right:-5%;
 	padding-left:0.25rem;
 	color:#fff;
@@ -112,7 +112,7 @@ body {
 	color:#fff;
 	height: 0.6rem;
     display: inline-block;
-    margin-top: 1px;
+    margin-top: 6px;
     font-size:0.24rem;
 }
 .listnumber_left_xing{
@@ -1534,6 +1534,7 @@ body {
 	padding:0 0.1rem;
 	overflow-y:scroll;
 	max-height: 9rem;
+	margin-bottom:1rem;
 }
 .tariff_list::-webkit-scrollbar {
     display: none;
@@ -1598,7 +1599,6 @@ body {
 	background-color: #ffb033;
 	width:100%;
 	padding:0.33rem 0;
-	margin-top:0.5rem;
 }
 .kj_zf>div{
 	color:#fff;

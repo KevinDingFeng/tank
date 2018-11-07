@@ -97,9 +97,7 @@ $(document).ready(function() {
 						}else if(_arr.price[i].durationType =="天"){
 							var _dd = "天";
 						}
-						if(_arr.price[i].level3Name.length>8){
-							_arr.price[i].level3Name = _arr.price[i].level3Name.substring(0,8)+"..."
-						}
+						
 						if(_arr.price[i].hasOwnProperty("level4Name")){//判断有没有第四级
 							var _level4Name= _arr.price[i].level4Name;//
 							
