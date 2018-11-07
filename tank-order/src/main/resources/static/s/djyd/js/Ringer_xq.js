@@ -55,7 +55,7 @@ $(document).ready(function() {
 				get_product(_code,_id);
 			})
 			
-		}else if(_type == "12"){//陪玩
+		}else if(_type == "13"){//陪玩
 			get_user(gods_id);
 			//点击左侧代练二级
 			$(".prise_left").on('click',".left_text",function(e){
