@@ -52,7 +52,7 @@ $(document).ready(function() {
 								if(_order_xx.name.length>3){
 									list_order+=`
 										<div class="orderbg_list" order_id=${list_xx[i].id}>
-											<p class="fw_order " style="font-size:0.1rem;left: 0.15rem;">${_order_xx.name}</p>
+											<p class="fw_order " style="font-size:0.2rem;left: 0.15rem;top: 0.6rem;">${_order_xx.name}</p>
 											<p class="price_order"><span class="r_col f_weight">￥${list_xx[i].totalFee}元</span></p>
 											<p class="zt_order ${cc}">${list_xx[i].status}</p>
 										</div>
