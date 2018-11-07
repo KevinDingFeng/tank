@@ -116,7 +116,7 @@
           </div>
         </div>
         <div class="am-u-sm-12 am-u-md-3">
-          <form method="post" class="am-form" action="/play_order/assign/list" id="assignOrderForm">
+          <form method="post" class="am-form" action="/play_order/assign/rapid_list" id="assignOrderForm">
           <div class="am-input-group am-input-group-sm">
               <input type="text" class="am-form-field" name="keyword" value="${keyword!}" placeholder="请输入手机号或订单号" />
 	          <span class="am-input-group-btn">
