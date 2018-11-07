@@ -51,9 +51,9 @@ public class ShiroConfig {
 		/**
 		 * 本地调试须知  接口链接 shiro 配置  //提交代码时 删除下面的三行配置
 		 */
-		filterChainDefinitionMap.put("/order/save_rapid", "anon");
-		filterChainDefinitionMap.put("/quoted_product/rapid_price", "anon");
-		filterChainDefinitionMap.put("/order/rapid_list", "anon");
+//		filterChainDefinitionMap.put("/order/save_rapid", "anon");
+//		filterChainDefinitionMap.put("/quoted_product/rapid_price", "anon");
+//		filterChainDefinitionMap.put("/order/rapid_list", "anon");
 		
 		filterChainDefinitionMap.put("/logout", "logout");
 		// 配置不会被拦截的链接 顺序判断

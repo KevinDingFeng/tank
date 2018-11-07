@@ -291,8 +291,8 @@ public class PlayOrderController {
 		/**
 		 * 本地调试须知 
 		 */
-//		WxUserInfo wxUser = wxUserService.findById(info.getWxUserId());  //提交代码时 使用该行
-		WxUserInfo wxUser = wxUserService.findById(info == null ?15l : info.getWxUserId());  //提交代码时 注释该行
+		WxUserInfo wxUser = wxUserService.findById(info.getWxUserId());  //提交代码时 使用该行
+//		WxUserInfo wxUser = wxUserService.findById(info == null ?15l : info.getWxUserId());  //提交代码时 注释该行
 		
 		String openId = wxUser.getOpenId();
 		JSONObject prepay = new JSONObject();
@@ -324,8 +324,8 @@ public class PlayOrderController {
 		/**
 		 * 本地调试须知
 		 */
-//		WxUserInfo wxUser = wxUserService.findById(info.getWxUserId());  //提交代码时 使用该行
-		WxUserInfo wxUser = wxUserService.findById(info == null ? 15l :info.getWxUserId());  //提交代码时 注释该行
+		WxUserInfo wxUser = wxUserService.findById(info.getWxUserId());  //提交代码时 使用该行
+//		WxUserInfo wxUser = wxUserService.findById(info == null ? 15l :info.getWxUserId());  //提交代码时 注释该行
 		
 		playOrder.setWxUserId(wxUser.getSysUserId());
 		playOrder.setWxUser(wxUser);
@@ -439,8 +439,8 @@ public class PlayOrderController {
 		Map<String, String> map = this.getUnifiedOrderData(orderNo, openId, ip, totalFee);
 		WXPayConfig conf = new WXPayConfigImpl();
 //		WXPay wxPay = new WXPay(conf, "https://wxpay.dazonghetong.com/wxpay/notify");
-//		WXPay wxPay = new WXPay(conf, "http://tank.dazonghetong.com/wxpay/notify");
-		WXPay wxPay = new WXPay(conf, "http://tk.dazonghetong.com/wxpay/notify");
+		WXPay wxPay = new WXPay(conf, "http://tank.dazonghetong.com/wxpay/notify");
+//		WXPay wxPay = new WXPay(conf, "http://tk.dazonghetong.com/wxpay/notify");
 		Map<String, String> resultMap = wxPay.unifiedOrder(map);
 		// 解析统一下单返回的信息，生成唤醒微信支付的数据
 		String returnCode = (String) resultMap.get("return_code");// 通信标识
@@ -529,8 +529,8 @@ public class PlayOrderController {
 		/**
 		 * 本地测试须知 
 		 */
-//		Long wxUserId = info.getWxUserId();    //提交代码时 使用该行
-		Long wxUserId = info == null ? 15l : info.getWxUserId();   //提交代码时 删除该行
+		Long wxUserId = info.getWxUserId();    //提交代码时 使用该行
+//		Long wxUserId = info == null ? 15l : info.getWxUserId();   //提交代码时 删除该行
 		Pageable pageable = this.getPageable();
 		Page<PlayOrder> page = playOrderService.findPlayOrder(wxUserId, OrderType.Quick, pageable);
 		JSONObject json = new JSONObject();
