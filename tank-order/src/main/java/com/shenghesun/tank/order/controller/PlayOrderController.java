@@ -291,8 +291,8 @@ public class PlayOrderController {
 		/**
 		 * 本地调试须知 
 		 */
-//		WxUserInfo wxUser = wxUserService.findById(info.getWxUserId());  //提交代码时 使用该行
-		WxUserInfo wxUser = wxUserService.findById(info == null ?15l : info.getWxUserId());  //提交代码时 注释该行
+		WxUserInfo wxUser = wxUserService.findById(info.getWxUserId());  //提交代码时 使用该行
+//		WxUserInfo wxUser = wxUserService.findById(info == null ?15l : info.getWxUserId());  //提交代码时 注释该行
 		
 		String openId = wxUser.getOpenId();
 		JSONObject prepay = new JSONObject();
@@ -324,8 +324,8 @@ public class PlayOrderController {
 		/**
 		 * 本地调试须知
 		 */
-//		WxUserInfo wxUser = wxUserService.findById(info.getWxUserId());  //提交代码时 使用该行
-		WxUserInfo wxUser = wxUserService.findById(info == null ? 15l :info.getWxUserId());  //提交代码时 注释该行
+		WxUserInfo wxUser = wxUserService.findById(info.getWxUserId());  //提交代码时 使用该行
+//		WxUserInfo wxUser = wxUserService.findById(info == null ? 15l :info.getWxUserId());  //提交代码时 注释该行
 		
 		playOrder.setWxUserId(wxUser.getSysUserId());
 		playOrder.setWxUser(wxUser);
@@ -529,8 +529,8 @@ public class PlayOrderController {
 		/**
 		 * 本地测试须知 
 		 */
-//		Long wxUserId = info.getWxUserId();    //提交代码时 使用该行
-		Long wxUserId = info == null ? 15l : info.getWxUserId();   //提交代码时 删除该行
+		Long wxUserId = info.getWxUserId();    //提交代码时 使用该行
+//		Long wxUserId = info == null ? 15l : info.getWxUserId();   //提交代码时 删除该行
 		Pageable pageable = this.getPageable();
 		Page<PlayOrder> page = playOrderService.findPlayOrder(wxUserId, OrderType.Quick, pageable);
 		JSONObject json = new JSONObject();
