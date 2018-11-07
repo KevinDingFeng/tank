@@ -36,24 +36,25 @@ $(document).ready(function() {
 							
 							for(var i=0; i< list_xx.length;i++){
 								var _order_xx = list_xx[i].product.productType;//订单信息
-								if(_order_xx.name == "手工代练"){
-									_order_xx.name = "代练"
-								}
 								if(list_xx[i].status == "NotPay"){
 									list_xx[i].status = "未支付"
+									var cc = "col_red";
 								}else if(list_xx[i].status == "Operation"){
 									list_xx[i].status = "待服务"
+									var cc = "y_col";
 								}else if(list_xx[i].status == "Complete"){
 									list_xx[i].status = "已服务"
+									var cc = "b_col";
 								}else if(list_xx[i].status == "Cancel"){
 									list_xx[i].status = "已取消"
+									var cc = "y_col"; 
 								}
 								if(_order_xx.name.length>3){
 									list_order+=`
 										<div class="orderbg_list" order_id=${list_xx[i].id}>
-											<p class="fw_order" style="font-size:0.1rem;left: 0.15rem;">${_order_xx.name}</p>
+											<p class="fw_order " style="font-size:0.1rem;left: 0.15rem;">${_order_xx.name}</p>
 											<p class="price_order"><span class="r_col f_weight">￥${list_xx[i].totalFee}元</span></p>
-											<p class="zt_order">${list_xx[i].status}</p>
+											<p class="zt_order ${cc}">${list_xx[i].status}</p>
 										</div>
 									`;
 								}else{
@@ -69,13 +70,7 @@ $(document).ready(function() {
 							}
 							$(".order_list").empty();
 							$(".order_list").append(list_order);
-							if($(".zt_order").html("未支付")){
-								$(".zt_order").addClass("col_red")
-							}else if($(".zt_order").html("待服务")){
-								$(".zt_order").addClass("y_col")
-							}else if($(".zt_order").html("已服务")){
-								$(".zt_order").addClass("b_col")
-							}
+							
 							//点击查询详情
 							$(".orderbg_list").click(function(){
 								var _id = $(this).attr("order_id");
@@ -112,12 +107,16 @@ $(document).ready(function() {
 								var _t = resp.data.types[_id];
 								if(list_xx[i].status == "NotPay"){
 									list_xx[i].status = "未支付"
+									var cc = "col_red";
 								}else if(list_xx[i].status == "Operation"){
 									list_xx[i].status = "待服务"
+									var cc = "y_col";
 								}else if(list_xx[i].status == "Complete"){
 									list_xx[i].status = "已服务"
+									var cc = "b_col";
 								}else if(list_xx[i].status == "Cancel"){
 									list_xx[i].status = "已取消"
+									var cc = "y_col"; 
 								}
 								list_order+=`
 									<div class="orderbg_list" order_id=${list_xx[i].id}>
