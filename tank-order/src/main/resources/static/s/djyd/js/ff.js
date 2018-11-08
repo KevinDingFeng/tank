@@ -19,13 +19,13 @@ $(document).ready(function () {
 			$("#Ringer>.bottom_bor").css("display","block");
 			$("#ladder>.bottom_bor").css("display","none");
 		}else if(_type == "pw"){
-			gods_search("12");
+			gods_search("13");
 			$("#ladder").addClass("active");
 			$("#ladder").siblings().removeClass("active");
 			$("#ladder>.bottom_bor").css("display","block");
 			$("#Ringer>.bottom_bor").css("display","none");
 		}else if(_type == "jx"){
-			window.location.href = "Ringer_xq.html?id=1&code=10";
+			window.location.href = "Ringer_xq.html?id=9&code=10";
 		}else{
 			gods_search("11");
 		}
@@ -46,14 +46,14 @@ $(document).ready(function () {
 				$(".Ringer_logo_left span").html("代练大神")
 				$(".Ringer_logo_right a").attr("href","Ringer_xq.html?id=9&code=11");
 			} else if (c_v == "10") {
-				window.location.href = "Ringer_xq.html?id=1&code=10";
+				window.location.href = "Ringer_xq.html?id=9&code=10";
 			} else {
 				$(".Ringer").css("display", "block");
 				$(".student").css("display", "none");
 				$(".ladder").css("display", "none");
 				$(".Ringer_logo_right a").attr("href","Ringer_xq.html?id=9&code=12");
 				$(".Ringer_logo_left span").html("陪玩大神")
-				gods_search("12");
+				gods_search("13");
 			}
 		});
 
