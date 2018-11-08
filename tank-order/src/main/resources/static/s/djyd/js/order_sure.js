@@ -83,7 +83,7 @@ $(document).ready(function() {
 			})
 		}
 		//陪玩类型
-		else if(_code == "12"){
+		else if(_code == "13"){
 			var _type = "陪玩";
 			$(".sure_title").html("陪玩");
 			$(".dl_xz").css("display","block");
