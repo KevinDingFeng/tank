@@ -614,13 +614,15 @@ public class PlayOrderController {
 			for (ProductType t : types) {
 				if(t.getLevel() == 3) {
 					if (level4CodeMap.values().contains(t.getCode())) {
-						for (Integer level4Code : level4CodeMap.keySet()) {
-							ProductType productType = productTypeService.findByCode(level4Code);
-							JSONObject typeJson = new JSONObject();
-							typeJson.put("code", level4Code);
-							typeJson.put("name", level4Map.get(level4Code));
+						List<ProductType> pTypes = productTypeService.findByParentCode(t.getCode());
+						for (ProductType pType : pTypes) {
 							
-							Integer level3code = level4CodeMap.get(level4Code);
+//							ProductType productType = productTypeService.findByCode(level4Code);
+							JSONObject typeJson = new JSONObject();
+							typeJson.put("code", pType.getCode());
+							typeJson.put("name", pType.getName());
+							
+							Integer level3code = level4CodeMap.get(pType.getCode());
 							typeJson.put("level3Code", level3code);
 							typeJson.put("level3Name", level3Map.get(level3code));
 							
@@ -631,7 +633,7 @@ public class PlayOrderController {
 							Integer level1Code = level2CodeMap.get(level2Code);
 							typeJson.put("level1Code", level1Code);
 							typeJson.put("level1Name", level1Map.get(level1Code));
-							json.put("t" + productType.getId(), typeJson);
+							json.put("t" + pType.getId(), typeJson);
 						}
 					}else {
 						JSONObject typeJson = new JSONObject();
