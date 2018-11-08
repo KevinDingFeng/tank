@@ -69,7 +69,7 @@ $(document).ready(function() {
 										<div class="orderbg_list" order_id=${list_xx[i].id}>
 											<p class="fw_order">${_cc}</p>
 											<p class="price_order"><span class="r_col f_weight">￥${list_xx[i].totalFee}元</span></p>
-											<p class="zt_order">${list_xx[i].status}</p>
+											<p class="zt_order ${cc}">${list_xx[i].status}</p>
 										</div>
 									`;
 								}
