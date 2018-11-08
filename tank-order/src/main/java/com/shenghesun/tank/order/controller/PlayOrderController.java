@@ -384,6 +384,8 @@ public class PlayOrderController {
 					qp.getProduct().getDuration());
 		}
 		playOrder.setTotalFee(totalFee);
+
+		playOrder.setOrderType(OrderType.Common);
 		playOrder = playOrderService.save(playOrder);
 
 		// 调用统一下单流程
@@ -439,8 +441,8 @@ public class PlayOrderController {
 		Map<String, String> map = this.getUnifiedOrderData(orderNo, openId, ip, totalFee);
 		WXPayConfig conf = new WXPayConfigImpl();
 //		WXPay wxPay = new WXPay(conf, "https://wxpay.dazonghetong.com/wxpay/notify");
-		WXPay wxPay = new WXPay(conf, "http://tank.dazonghetong.com/wxpay/notify");
-//		WXPay wxPay = new WXPay(conf, "http://tk.dazonghetong.com/wxpay/notify");
+//		WXPay wxPay = new WXPay(conf, "http://tank.dazonghetong.com/wxpay/notify");
+		WXPay wxPay = new WXPay(conf, "http://tk.dazonghetong.com/wxpay/notify");
 		Map<String, String> resultMap = wxPay.unifiedOrder(map);
 		// 解析统一下单返回的信息，生成唤醒微信支付的数据
 		String returnCode = (String) resultMap.get("return_code");// 通信标识

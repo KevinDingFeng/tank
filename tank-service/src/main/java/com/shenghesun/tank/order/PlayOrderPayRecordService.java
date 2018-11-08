@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.shenghesun.tank.order.entity.PlayOrder;
 import com.shenghesun.tank.order.entity.PlayOrderPayRecord;
+import com.shenghesun.tank.order.entity.PlayOrderPayRecord.PayStatus;
 
 @Service
 public class PlayOrderPayRecordService {
@@ -21,7 +22,7 @@ public class PlayOrderPayRecordService {
 		record.setPlayOrder(playOrder);
 		record.setPlayOrderId(playOrder.getId());
 		
-//		record.setStatus(PayStatus.NotPay);
+		record.setStatus(PayStatus.Complete);
 //		record.setAmount(amount);
 		record.setIntegralAmount(0L);
 //		record.setChannel(PayChannel.Weixin);
