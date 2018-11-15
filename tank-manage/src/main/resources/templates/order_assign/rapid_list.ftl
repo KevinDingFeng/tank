@@ -185,7 +185,7 @@
 			      </td>
                 <td>${em.status.text}</td>
                 <td>
-                  <#if em.status.name() == "Operation" || em.status.name() == "ToBeConfirmed">
+                  <#if em.status.name() == "Operation">
                   <div class="am-btn-toolbar">
                     <div class="am-btn-group am-btn-group-xs">
                       <a href="/play_order/assign/form?id=${em.id}" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 派单</a>
