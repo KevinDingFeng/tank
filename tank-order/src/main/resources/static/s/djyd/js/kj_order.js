@@ -42,8 +42,8 @@ $(document).ready(function() {
 			if(_length == ""){
 				$.toast(`服务补充字数不能为空！`, "forbidden");
 			    return false;
-			}else if(_length.length>50){
-				$.toast(`服务补充字数不能超过50！`, "forbidden");
+			}else if(_length.length>150){
+				$.toast(`服务补充字数不能超过150！`, "forbidden");
 			    return false;
 			}
 		})
@@ -90,8 +90,8 @@ $(document).ready(function() {
 			if(_remark == ""){
 				$.toast(`服务补充字数不能为空！`, "forbidden");
 			    return false;
-			}else if(_remark.length>50){
-				$.toast(`服务补充字数不能超过50！`, "forbidden");
+			}else if(_remark.length>150){
+				$.toast(`服务补充字数不能超过150！`, "forbidden");
 			    return false;
 			}
 			

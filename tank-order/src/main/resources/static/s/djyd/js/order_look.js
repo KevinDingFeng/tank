@@ -81,6 +81,9 @@ $(document).ready(function() {
 					if(order_xx.status == "NotPay"){
 						$("#tj_btn").attr("order_id","1")
 						order_xx.status = "未支付"
+					}else if(order_xx.status == "ToBeConfirmed"){
+						$("#tj_btn").attr("order_id","2")	
+						order_xx.status  = "待确认完成"
 					}else if(order_xx.status == "Operation"){
 						$("#tj_btn").attr("order_id","2")
 						order_xx.status = "待服务"
@@ -107,6 +110,9 @@ $(document).ready(function() {
 						$("#tj_btn").attr("order_id","1")
 					}else if(order_xx.status == "已服务"){
 						$(".my_order_sure").css("display","none")
+					}else if(order_xx.status  == "待确认完成"){
+						$("#tj_btn").html("确认完成")
+						$("#tj_btn").attr("order_id","2");
 					}
 					
 					var _cellphone = order_xx.cellphone;//电话号码
@@ -182,7 +188,7 @@ $(document).ready(function() {
 									}
 								}
 							});
-						}else{
+						}else if(_attr == "2"){
 							$.ajax({
 								type: "POST",
 								url: $main_URL_yd+"/order/exe/"+order_id,
