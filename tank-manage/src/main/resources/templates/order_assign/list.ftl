@@ -153,6 +153,7 @@
                 <th class="table-author am-hide-sm-only">QQ账号</th>
                 <th class="table-author am-hide-sm-only">YY账号</th>
                  -->
+                <th class="table-author am-hide-sm-only">服务补充</th>
                 <th class="table-author am-hide-sm-only">状态</th>
                 <th class="table-set">操作</th>
               </tr>
@@ -177,6 +178,15 @@
                 <td>${em.qqAccount!}</td>
                 <td>${em.yyAccount!}</td>
                  -->
+                <td data-toggle="tooltip" data-placement="top" title="${em.remark!}">
+			      			<#if  em.remark?? &&  em.remark?length gt 4>  
+    							${em.remark?substring(0,4)}...  
+							<#elseif em.remark?? &&  em.remark?length lte 4>
+								${em.remark}
+							<#else>
+								-
+							</#if>  
+			    </td>
                 <td>${em.status.text}</td>
                 <td>
                   <#if em.status.name() == "Operation">
