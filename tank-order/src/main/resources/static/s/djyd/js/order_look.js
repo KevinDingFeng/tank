@@ -107,10 +107,12 @@ $(document).ready(function() {
 					
 					if(order_xx.status == "未支付"){
 						$("#tj_btn").html("去支付")
+						$(".my_order_sure").css("display","block")
 						$("#tj_btn").attr("order_id","1")
 					}else if(order_xx.status == "已服务"){
 						$(".my_order_sure").css("display","none")
 					}else if(order_xx.status  == "待确认完成"){
+						$(".my_order_sure").css("display","block")
 						$("#tj_btn").html("确认完成")
 						$("#tj_btn").attr("order_id","2");
 					}
