@@ -520,8 +520,8 @@ $(document).ready(function() {
 					var _quotedProductId = resp.data.quotes;//选中的报价id
 					var _w_chart = $.trim($("#w_chart").val());//微信号
 					var _m_iphone = $.trim($("#m_iphone").val());//手机号
-					var _t_qq = $.trim($("#t_qq").val());//QQ号
-					var _y_yy = $.trim($("#y_yy").val());//YY号
+//					var _t_qq = $.trim($("#t_qq").val());//QQ号
+//					var _y_yy = $.trim($("#y_yy").val());//YY号
 					
 					if(_w_chart && !wxreg.test(_w_chart)){
 						$.toast(`微信号格式错误！`, "forbidden");
@@ -532,18 +532,18 @@ $(document).ready(function() {
 						$.toast(`手机号码 格式错误！`, "forbidden");
 					    return false;
 					}
-					//验证QQ
-					if(_t_qq && !qqreg.test(_t_qq)){
-						$.toast(`QQ号格式错误！`, "forbidden");
-					    return false;
-					} 
-					//验证YY
-					if(_y_yy && !yyreg.test(_y_yy)){
-						$.toast(`YY号格式错误！`, "forbidden");
-					    return false;
-					} 
+//					//验证QQ
+//					if(_t_qq && !qqreg.test(_t_qq)){
+//						$.toast(`QQ号格式错误！`, "forbidden");
+//					    return false;
+//					} 
+//					//验证YY
+//					if(_y_yy && !yyreg.test(_y_yy)){
+//						$.toast(`YY号格式错误！`, "forbidden");
+//					    return false;
+//					} 
 					
-					if(!(_w_chart || _m_iphone || _t_qq || _y_yy)){
+					if(!(_w_chart || _m_iphone)){
 						$.toast(`4种联系方式必须选择一种！`, "forbidden");
 					    return false;
 					}
@@ -565,8 +565,8 @@ $(document).ready(function() {
 						url: $main_URL_yd + "/order/save",
 						data:{
 							wxAccount: _w_chart,
-							qqAccount: _t_qq,
-							yyAccount: _y_yy,
+//							qqAccount: _t_qq,
+//							yyAccount: _y_yy,
 							cellphone: _m_iphone,
 							remark: _m_remark,
 							duration: _time,
