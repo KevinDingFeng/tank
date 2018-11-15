@@ -149,8 +149,10 @@
                 <th class="table-author am-hide-sm-only">下单时长</th>
                 <th class="table-author am-hide-sm-only">联系方式</th>
                 <th class="table-author am-hide-sm-only">微信账号</th>
+                <#-- 
                 <th class="table-author am-hide-sm-only">QQ账号</th>
                 <th class="table-author am-hide-sm-only">YY账号</th>
+                 -->
                 <th class="table-author am-hide-sm-only">状态</th>
                 <th class="table-set">操作</th>
               </tr>
@@ -171,8 +173,10 @@
                 <td>${em.duration} / ${em.product.durationType.text}</td>
                 <td>${em.cellphone!}</td>
                 <td>${em.wxAccount!}</td>
+                <#-- 
                 <td>${em.qqAccount!}</td>
                 <td>${em.yyAccount!}</td>
+                 -->
                 <td>${em.status.text}</td>
                 <td>
                   <#if em.status.name() == "Operation">
