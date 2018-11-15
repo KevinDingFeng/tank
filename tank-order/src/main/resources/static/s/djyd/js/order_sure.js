@@ -27,7 +27,7 @@ $(document).ready(function() {
 	var bc_num = null;//记录步长
 	var quotedProductId =null;//选中报价id
 	var _iphone = /^[1][0-9][0-9]{9}$/;//手机号码正则
-	var wxreg=/^[a-zA-Z]([-_a-zA-Z0-9]{5,40})+$/;//微信号正则
+	var wxreg=/^[a-zA-Z][-_a-zA-Z0-9]{5,19}$/;//微信号正则
 //	var qqreg=/^\d{4,20}$/;//QQ正则
 //	var yyreg=/^[a-zA-Z]([-_a-zA-Z0-9]{5,40})+$/;//yy正则
 	var ex = /^\d+$/;//正整数正则
@@ -216,7 +216,7 @@ $(document).ready(function() {
 			get_price(_jl_id1,_fw_id1,number)
 		})
 		//验证微信
-		$("#w_chart").blur(function(){			
+		$("#w_chart").blur(function(){	
 			var _w_chart = $.trim($("#w_chart").val());//微信号
 			if(!wxreg.test(_w_chart)){
 				$.toast(`微信号格式错误！`, "forbidden");

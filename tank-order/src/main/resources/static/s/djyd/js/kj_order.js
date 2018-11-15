@@ -11,7 +11,7 @@ $(document).ready(function() {
 	//选中的报价id
 	var _type = getQueryString("_type");
 	var _num_reg = /^[^0]\d{1,5}$||^200000$/;
-	var wxreg=/^[a-zA-Z]([-_a-zA-Z0-9]{5,40})+$/;//微信号正则
+	var wxreg=/^[a-zA-Z][-_a-zA-Z0-9]{5,19}$/;//微信号正则
 	var _iphone = /^[1][0-9][0-9]{9}$/;//手机号码正则
 	//支付
 	var appIdVal,timeStampVal,nonceStrVal,packageVal,signTypeVal,paySignVal;
@@ -82,8 +82,8 @@ $(document).ready(function() {
 			}
 		})
 		//验证微信
-		$(".w_chart").blur(function(){			
-			var _length = $.trim($(this)[0].value);//微信号
+		$(".wx_code").blur(function(){			
+			var _length = $.trim($(this)[0].value);//微信号	
 			if(!wxreg.test(_length)){
 				$.toast(`微信号格式错误！`, "forbidden");
 			    return false;
