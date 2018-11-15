@@ -28,8 +28,8 @@ $(document).ready(function() {
 	var quotedProductId =null;//选中报价id
 	var _iphone = /^[1][0-9][0-9]{9}$/;//手机号码正则
 	var wxreg=/^[a-zA-Z]([-_a-zA-Z0-9]{5,40})+$/;//微信号正则
-	var qqreg=/^\d{4,20}$/;//QQ正则
-	var yyreg=/^[a-zA-Z]([-_a-zA-Z0-9]{5,40})+$/;//yy正则
+//	var qqreg=/^\d{4,20}$/;//QQ正则
+//	var yyreg=/^[a-zA-Z]([-_a-zA-Z0-9]{5,40})+$/;//yy正则
 	var ex = /^\d+$/;//正整数正则
 	init();
 	function init(){
@@ -223,22 +223,22 @@ $(document).ready(function() {
 			    return false;
 			} //TODO kevin 暂时去掉 微信账号格式校验
 		})
-		//验证QQ
-		$("#t_qq").blur(function(){
-			var _qq = $.trim($("#t_qq").val());//QQ号
-			if(!qqreg.test(_qq)){
-				$.toast(`QQ号格式错误！`, "forbidden");
-			    return false;
-			} 
-		})
-		//验证YY
-		$("#y_yy").blur(function(){
-			var _yy = $.trim($("#y_yy").val());//QQ号
-			if(!yyreg.test(_yy)){
-				$.toast(`YY号格式错误！`, "forbidden");
-			    return false;
-			} 
-		})
+//		//验证QQ
+//		$("#t_qq").blur(function(){
+//			var _qq = $.trim($("#t_qq").val());//QQ号
+//			if(!qqreg.test(_qq)){
+//				$.toast(`QQ号格式错误！`, "forbidden");
+//			    return false;
+//			} 
+//		})
+//		//验证YY
+//		$("#y_yy").blur(function(){
+//			var _yy = $.trim($("#y_yy").val());//QQ号
+//			if(!yyreg.test(_yy)){
+//				$.toast(`YY号格式错误！`, "forbidden");
+//			    return false;
+//			} 
+//		})
 		//验证手机号
 		$("#m_iphone").blur(function(){			
 			var _m_iphone = $.trim($("#m_iphone").val());//手机号

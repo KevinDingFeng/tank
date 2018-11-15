@@ -23,8 +23,7 @@ $(document).ready(function() {
 					$.toast("查询快捷单信息错误！错误信息:" + errorInfo, "forbidden");
 				},
 				success: function(resp) { //请求完成
-					if(resp.code == "200"){
-						
+					if(resp.code == "200"){			
 						var list_xx = resp.data.page.content;
 						if(list_xx.length<=0){
 							$(".order_list").empty();
