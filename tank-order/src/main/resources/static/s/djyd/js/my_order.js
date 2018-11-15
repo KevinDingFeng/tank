@@ -46,6 +46,9 @@ $(document).ready(function() {
 								if(list_xx[i].status == "NotPay"){
 									list_xx[i].status = "未支付"
 									var cc = "col_red";
+								}else if(list_xx[i].status == "ToBeConfirmed"){
+									list_xx[i].status = "待确认"
+									var cc = "y_col";
 								}else if(list_xx[i].status == "Operation"){
 									list_xx[i].status = "待服务"
 									var cc = "y_col";
