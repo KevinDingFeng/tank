@@ -151,6 +151,7 @@
                 <th class="table-author am-hide-sm-only">微信账号</th>
                 <th class="table-author am-hide-sm-only">QQ账号</th>
                 <th class="table-author am-hide-sm-only">YY账号</th>
+                <th class="table-author am-hide-sm-only">服务补充</th>
                 <th class="table-author am-hide-sm-only">状态</th>
                 <th class="table-set">操作</th>
               </tr>
@@ -173,9 +174,18 @@
                 <td>${em.wxAccount!}</td>
                 <td>${em.qqAccount!}</td>
                 <td>${em.yyAccount!}</td>
+                <td data-toggle="tooltip" data-placement="top" title="${em.remark!}">
+			      			<#if  em.remark?? &&  em.remark?length gt 4>  
+    							${em.remark?substring(0,4)}...  
+							<#elseif em.remark?? &&  em.remark?length lte 4>
+								${em.remark}
+							<#else>
+								-
+							</#if>  
+			      </td>
                 <td>${em.status.text}</td>
                 <td>
-                  <#if em.status.name() == "Operation">
+                  <#if em.status.name() == "Operation" || em.status.name() == "ToBeConfirmed">
                   <div class="am-btn-toolbar">
                     <div class="am-btn-group am-btn-group-xs">
                       <a href="/play_order/assign/form?id=${em.id}" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 派单</a>

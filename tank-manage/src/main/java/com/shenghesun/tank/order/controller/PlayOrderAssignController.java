@@ -36,6 +36,7 @@ import com.shenghesun.tank.order.PlayOrderService;
 import com.shenghesun.tank.order.entity.PlayOrder;
 import com.shenghesun.tank.order.entity.PlayOrder.OperationType;
 import com.shenghesun.tank.order.entity.PlayOrder.OrderType;
+import com.shenghesun.tank.order.entity.PlayOrder.PlayOrderStatus;
 import com.shenghesun.tank.service.ProductService;
 import com.shenghesun.tank.service.ProductTypeService;
 import com.shenghesun.tank.service.QuotedProductService;
@@ -324,6 +325,7 @@ public class PlayOrderAssignController {
 		PlayOrder playOrder = playOrderService.findById(id);
 		playOrder.setExecutor(coachService.findById(executorId));
 		playOrder.setExecutorId(executorId);
+		playOrder.setStatus(PlayOrderStatus.ToBeConfirmed);
 		if(playOrder.getOrderType().equals(OrderType.Quick)) {
 			if (code != null) {
 				Product product = playOrder.getProduct();
@@ -337,7 +339,12 @@ public class PlayOrderAssignController {
 			}
 		}
 		playOrderService.save(playOrder);
-		return "redirect:/play_order/assign/list";
+		if(playOrder.getOrderType().equals(OrderType.Quick)) {
+			return "redirect:/play_order/assign/rapid_list";
+		}else {
+			return "redirect:/play_order/assign/list";
+		}
+		
 	}
 	
 	
