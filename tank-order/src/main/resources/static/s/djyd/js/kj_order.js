@@ -11,6 +11,7 @@ $(document).ready(function() {
 	//选中的报价id
 	var _type = getQueryString("_type");
 	var _num_reg = /^[^0]\d{1,5}$||^200000$/;
+	var wxreg=/^[a-zA-Z]([-_a-zA-Z0-9]{5,40})+$/;//微信号正则
 	var _iphone = /^[1][0-9][0-9]{9}$/;//手机号码正则
 	//支付
 	var appIdVal,timeStampVal,nonceStrVal,packageVal,signTypeVal,paySignVal;
@@ -80,6 +81,14 @@ $(document).ready(function() {
 			    return false;
 			}
 		})
+		//验证微信
+		$(".w_chart").blur(function(){			
+			var _length = $.trim($(this)[0].value);//微信号
+			if(!wxreg.test(_length)){
+				$.toast(`微信号格式错误！`, "forbidden");
+			    return false;
+			} //TODO kevin 暂时去掉 微信账号格式校验
+		})
 		//去支付
 		$(".go_zf").click(function(){
 			var _code = $(".kj_order_active").attr("_type");//服务类型
@@ -108,6 +117,13 @@ $(document).ready(function() {
 			    return false;
 			}else if(!_iphone.test(_cellphone)){
 				$.toast(`手机号不符合规则！`, "forbidden");
+			    return false;
+			}
+			if(_wxAccount == ""){
+				$.toast(`微信号不能为空！`, "forbidden");
+			    return false;
+			}else if(!wxreg.test(_wxAccount)){
+				$.toast(`微信号不符合规则！`, "forbidden");
 			    return false;
 			}
 			var _obj = {
