@@ -110,7 +110,6 @@ $(document).ready(function() {
 									<div class="no_list">暂无订单</div>
 							`);
 						}else{
-							
 							var list_order = "";//order列表
 							for(var i=0; i< list_xx.length;i++){
 								var _id ="t"+list_xx[i].product.productTypeId;
@@ -131,24 +130,29 @@ $(document).ready(function() {
 									list_xx[i].status = "已取消"
 									var cc = "y_col"; 
 								}
-								list_order+=`
-									<div class="orderbg_list" order_id=${list_xx[i].id}>
-										<p class="fw_order">${_t.level1Name}</p>
-										<p class="type_order">${_t.level2Name}</p>
-										<p class="price_order"><span class="r_col f_weight">￥${list_xx[i].totalFee}元</span></p>
-										<p class="zt_order ${cc}">${list_xx[i].status}</p>
-									</div>
-								`;
+								if(_t.level1Name.length>3){
+									list_order+=`
+										<div class="orderbg_list" order_id=${list_xx[i].id}>
+											<p class="fw_order" style="font-size:0.2rem;left: 0.15rem;top: 0.6rem;">${_t.level1Name}</p>
+											<p class="type_order">${_t.level2Name}</p>
+											<p class="price_order"><span class="r_col f_weight">￥${list_xx[i].totalFee}元</span></p>
+											<p class="zt_order ${cc}">${list_xx[i].status}</p>
+										</div>
+									`;
+								}else{
+									list_order+=`
+										<div class="orderbg_list" order_id=${list_xx[i].id}>
+											<p class="fw_order">${_t.level1Name}</p>
+											<p class="type_order">${_t.level2Name}</p>
+											<p class="price_order"><span class="r_col f_weight">￥${list_xx[i].totalFee}元</span></p>
+											<p class="zt_order ${cc}">${list_xx[i].status}</p>
+										</div>
+									`;
+								}
 							}
 							$(".order_list").empty();
 							$(".order_list").append(list_order);
-							if($(".zt_order").html("未支付")){
-								$(".zt_order").addClass("col_red")
-							}else if($(".zt_order").html("待服务")){
-								$(".zt_order").addClass("y_col")
-							}else if($(".zt_order").html("已服务")){
-								$(".zt_order").addClass("b_col")
-							}
+							
 							//点击查询详情
 							$(".orderbg_list").click(function(){
 								var _id = $(this).attr("order_id");
