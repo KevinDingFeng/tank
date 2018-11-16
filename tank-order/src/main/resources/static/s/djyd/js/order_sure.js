@@ -544,7 +544,7 @@ $(document).ready(function() {
 //					} 
 					
 					if(!(_w_chart || _m_iphone)){
-						$.toast(`4种联系方式必须选择一种！`, "forbidden");
+						$.toast(`2种联系方式必须选择一种！`, "forbidden");
 					    return false;
 					}
 					var _m_remark = $.trim($("#m_remark").val());//备注
