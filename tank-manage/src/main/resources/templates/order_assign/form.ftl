@@ -141,12 +141,17 @@
             	</div>
             	<div class="am-hide-sm-only am-u-md-6"></div>
             </div>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">服务补充</div>
+              <div class="am-u-sm-8 am-u-md-4"><textarea rows="10" cols="40" style="resize:none" readonly>${entity.remark!}</textarea></div>
+              <div class="am-hide-sm-only am-u-md-6"></div>
+            </div>
             <#else>
             	<input type="hidden" id="code" name ="code" value="${code?c}">
             </#if>
         	<div class="am-g am-margin-top">
               <div class="am-u-sm-4 am-u-md-2 am-text-right">金额</div>
-              <div class="am-u-sm-8 am-u-md-4">${entity.totalFee}</div>
+              <div class="am-u-sm-8 am-u-md-4">${entity.totalFee} 元</div>
               <div class="am-hide-sm-only am-u-md-6"></div>
             </div>
         	<div class="am-g am-margin-top">
@@ -161,16 +166,16 @@
             </div>
             <div class="am-g am-margin-top">
               <div class="am-u-sm-4 am-u-md-2 am-text-right">QQ账号</div>
-              <div class="am-u-sm-8 am-u-md-4">${entity.qqAccount!}</div>
+              <div class="am-u-sm-8 am-u-md-4">${entity.qqAccount!"-"}</div>
               <div class="am-hide-sm-only am-u-md-6"></div>
             </div>
             <div class="am-g am-margin-top">
               <div class="am-u-sm-4 am-u-md-2 am-text-right">YY账号</div>
-              <div class="am-u-sm-8 am-u-md-4">${entity.yyAccount!}</div>
+              <div class="am-u-sm-8 am-u-md-4">${entity.yyAccount!"-"}</div>
               <div class="am-hide-sm-only am-u-md-6"></div>
             </div>
         	<div class="am-g am-margin-top">
-            <div class="am-u-sm-4 am-u-md-2 am-text-right">显示状态</div>
+            <div class="am-u-sm-4 am-u-md-2 am-text-right">执行大神</div>
             <div class="am-u-sm-8 am-u-md-10">
               <div class="am-btn-group" data-am-button>
               <p>推荐大神</p>

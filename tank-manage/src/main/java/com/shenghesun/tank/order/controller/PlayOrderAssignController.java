@@ -180,11 +180,6 @@ public class PlayOrderAssignController {
 			@RequestParam(value = "level1",required = false) String level1,
 			@RequestParam(value = "level2",required = false) String level2,
 			@RequestParam(value = "level3",required = false) String level3) {
-//		if(StringUtils.isBlank(level1) && StringUtils.isBlank(level2) 
-//				&& StringUtils.isBlank(level3)) {
-//			List<ProductType> list = productTypeService.findByParentCode(1);
-//			json.put("level1", list);
-//		}
 		JSONObject json = new JSONObject();
 		if(StringUtils.isNotBlank(level1)) {
 			List<ProductType> list = productTypeService.findByParentCode(Integer.valueOf(level1));
@@ -206,62 +201,6 @@ public class PlayOrderAssignController {
 		}
 		return null;
 	}
-	
-	// 测试
-//	@SuppressWarnings({ "rawtypes", "unchecked" })
-//	@RequestMapping(value = "/entire_level" ,method = RequestMethod.GET)
-//	@ResponseBody
-//	public JSONObject initProductType() {
-//		JSONObject map = new JSONObject();
-//		
-//		List list1 = new ArrayList<>();
-//		List<ProductType> level1 = productTypeService.findByParentCode(1);
-//		for (ProductType p1 : level1) {
-//			JSONObject map1 = new JSONObject();
-//			
-//			List<ProductType> level2 = productTypeService.findByParentCode(p1.getCode());
-//			map1.put("level1Code", p1.getCode());
-//			map1.put("level1Name", p1.getName());
-//			
-//			List list2= new ArrayList<>();
-//			for (ProductType p2 : level2) {
-//				JSONObject map2 = new JSONObject();
-//				
-//				List<ProductType> level3 = productTypeService.findByParentCode(p2.getCode());
-//				map2.put("level2Code", p2.getCode());
-//				map2.put("level2Name", p2.getName());
-//				
-//				List list3= new ArrayList<>();
-//				for (ProductType p3 : level3) {
-//					JSONObject map3 = new JSONObject();
-//					
-//					map3.put("level3Code", p3.getCode());
-//					map3.put("level3Name", p3.getName());
-//					
-//					List list4 = new ArrayList<>();
-//					List<ProductType> level4 = productTypeService.findByParentCode(p3.getCode());
-//					if (level4 != null && level4.size() > 0) {
-//						for (ProductType p4 : level4) {
-//							JSONObject map4 = new JSONObject();
-//							map4.put("level4Code", p4.getCode());
-//							map4.put("level4Name", p4.getName());
-//							list4.add(map4);
-//						}
-//						map3.put("level4", list4);
-//					}else {
-//						map3.put("level4", new ArrayList<>(0));
-//					}
-//					list3.add(map3);
-//				}
-//				map2.put("level3", list3);
-//				list2.add(map2);
-//			}
-//			map1.put("level2", list2);
-//			list1.add(map1);
-//		}
-//		map.put("data", list1);
-//		return map;
-//	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private List initProductTypes() {
@@ -325,7 +264,6 @@ public class PlayOrderAssignController {
 		PlayOrder playOrder = playOrderService.findById(id);
 		playOrder.setExecutor(coachService.findById(executorId));
 		playOrder.setExecutorId(executorId);
-		playOrder.setStatus(PlayOrderStatus.ToBeConfirmed);
 		if(playOrder.getOrderType().equals(OrderType.Quick)) {
 			if (code != null) {
 				Product product = playOrder.getProduct();
@@ -338,6 +276,23 @@ public class PlayOrderAssignController {
 				throw new Exception("缺少服务类型");
 			}
 		}
+		playOrderService.save(playOrder);
+		if(playOrder.getOrderType().equals(OrderType.Quick)) {
+			return "redirect:/play_order/assign/rapid_list";
+		}else {
+			return "redirect:/play_order/assign/list";
+		}
+		
+	}
+	@RequestMapping(value = "/confirm", method = RequestMethod.GET)
+	public String confirm(@RequestParam(value = "id") Long id, Model model) throws Exception {
+		//权限校验  判断当前登录用户，是否拥有 分派 订单的权限
+		Subject subject = SecurityUtils.getSubject();
+		if(!subject.isPermitted("order:assign")) {
+			throw new AuthorizationException("缺少派单权限");
+		}
+		PlayOrder playOrder = playOrderService.findById(id);
+		playOrder.setStatus(PlayOrderStatus.ToBeConfirmed);
 		playOrderService.save(playOrder);
 		if(playOrder.getOrderType().equals(OrderType.Quick)) {
 			return "redirect:/play_order/assign/rapid_list";
