@@ -124,13 +124,24 @@
            		<div class="am-u-sm-4 am-u-md-2 am-text-right">选择服务:</div>
            		<div class="am-u-sm-8 am-u-md-4">
             	<select id ="level1" >
-            		<option> --- 请选择一级服务 --- </option>
-            		<#list productTypes as p>
-            			<option value="${p.level1Code}">${p.level1Name}</option>
-            		</#list>
+            		<#if entity.product.productType.level == 1>
+	            		<#list productTypes as p>
+	            			<option value="${p.level1Code}" <#if p.level1Code == entity.product.productType.code?string> selected </#if> >${p.level1Name}</option>
+	            		</#list>
+            		<#else>
+            			<option> --- 请选择一级服务 --- </option>
+	            		<#list productTypes as p>
+	            			<option value="${p.level1Code}" >${p.level1Name}</option>
+	            		</#list>
+            		</#if>
             	</select>
             	<select id ="level2" >
             		<option> --- 请选择二级服务 --- </option>
+            		<#if level2??>
+	            		<#list level2 as l2>
+	            		<option value ="${l2.code?c}" >${l2.name}</option>	
+	            		</#list>
+            		</#if>
             	</select>
             	<select id ="level3" >
             		<option> --- 请选择三级服务 --- </option>
@@ -164,6 +175,7 @@
               <div class="am-u-sm-8 am-u-md-4">${entity.wxAccount!}</div>
               <div class="am-hide-sm-only am-u-md-6"></div>
             </div>
+            <#-- 
             <div class="am-g am-margin-top">
               <div class="am-u-sm-4 am-u-md-2 am-text-right">QQ账号</div>
               <div class="am-u-sm-8 am-u-md-4">${entity.qqAccount!"-"}</div>
@@ -174,6 +186,7 @@
               <div class="am-u-sm-8 am-u-md-4">${entity.yyAccount!"-"}</div>
               <div class="am-hide-sm-only am-u-md-6"></div>
             </div>
+             -->
         	<div class="am-g am-margin-top">
             <div class="am-u-sm-4 am-u-md-2 am-text-right">执行大神</div>
             <div class="am-u-sm-8 am-u-md-10">
@@ -228,8 +241,10 @@ $("#level1").change(function(){
 	$("#level3").html("<option>" + "--- 请选择三级服务 ---" + "</option>");
 	$("#level4").html("<option>" + "--- 请选择四级服务 ---" + "</option>");
 	var level1_code = $("#level1").find("option:selected").val();
-	var selectedIndex = $("#level1").get(0).selectedIndex
-	if(selectedIndex > 0){
+	<#-- 
+	// var selectedIndex = $("#level1").get(0).selectedIndex
+	// if(selectedIndex > 0){
+	 -->
 		$.ajax({url:"/play_order/assign/product_type?level1="+level1_code , type:"get",
 			success:function(res){
 				if(res.code =="200"){
@@ -240,7 +255,7 @@ $("#level1").change(function(){
 				}	
 			}
 		})
-	}
+	<#--  //}  -->
 	$("#code").val("");
 	
 })

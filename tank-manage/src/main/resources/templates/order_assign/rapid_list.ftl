@@ -164,7 +164,7 @@
               <tr>
                 <#--<td><input type="checkbox" /></td>
                 <td>1</td>-->
-                <td>${em.no}</td>
+                <td><a href="/play_order/assign/detail?id=${em.id}">${em.no}</a></td>
                 <td>${(em.wxUser.nickName)!"未命名"}</td>
                 <td>${em.creation}</td>
                 <td>${em.coach.name}</td>
@@ -195,7 +195,7 @@
                       <a href="/play_order/assign/form?id=${em.id}" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 派单</a>
                     </div>
                     <div class="am-btn-group am-btn-group-xs">
-                      <a href="/play_order/assign/confirm?id=${em.id}" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 确认</a>
+                      <a onclick="exeComplete(${em.id},'${em.no}')" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 确认</a>
                     </div>
                   </div>
                   </#if>
@@ -262,6 +262,17 @@
             function doPages(n){
             	$("#pageNum").val(n);
             	$("#assignOrderPageForm").submit();
+            }
+            function exeComplete(id,no){
+            	if(confirm("确定编号为"+no+"的订单执行完成？")){
+            		$.ajax({type:'POST',url:'/play_order/assign/confirm/'+id,data:{},
+            		success:function(res){
+            			if(res.code == '200'){
+            				window.location.reload();
+            			}
+            		}
+            		})
+            	}
             }
             </script>
             <hr />

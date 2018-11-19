@@ -24,6 +24,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,11 +33,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.shenghesun.tank.coach.CoachService;
 import com.shenghesun.tank.coach.entity.Coach;
+import com.shenghesun.tank.order.PlayOrderPayRecordService;
 import com.shenghesun.tank.order.PlayOrderService;
 import com.shenghesun.tank.order.entity.PlayOrder;
 import com.shenghesun.tank.order.entity.PlayOrder.OperationType;
 import com.shenghesun.tank.order.entity.PlayOrder.OrderType;
 import com.shenghesun.tank.order.entity.PlayOrder.PlayOrderStatus;
+import com.shenghesun.tank.order.entity.PlayOrderPayRecord;
 import com.shenghesun.tank.service.ProductService;
 import com.shenghesun.tank.service.ProductTypeService;
 import com.shenghesun.tank.service.QuotedProductService;
@@ -59,6 +62,8 @@ public class PlayOrderAssignController {
 	private ProductTypeService productTypeService;
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private PlayOrderPayRecordService playOrderPayRecordService;
 	
 	
 	@RequestMapping(value = "/rapid_list" , method = {RequestMethod.GET, RequestMethod.POST})
@@ -168,8 +173,27 @@ public class PlayOrderAssignController {
 		
 		model.addAttribute("coaches", coaches);
 		model.addAttribute("spareCoach", spareCoach);
-		
 		model.addAttribute("productTypes", this.initProductTypes());
+		if(playOrder.getProduct().getProductType().getLevel() == 1) {
+			//level2
+			List<ProductType> level2 = productTypeService.findByParentCode(playOrder.getProduct().getProductType().getCode());
+			model.addAttribute("level2", level2);
+		}else {
+			int level =  playOrder.getProduct().getProductType().getLevel();
+			if (level == 3) {
+				ProductType pt2 = productTypeService.findByCode(playOrder.getProduct().getProductType().getParentCode());
+				ProductType pt1 = productTypeService.findByCode(pt2.getParentCode());
+				List<ProductType> level2 = productTypeService.findByParentCode(pt1.getCode());
+				model.addAttribute("level2", level2);
+			}else if (level == 4) {
+				ProductType pt3 = productTypeService.findByCode(playOrder.getProduct().getProductType().getParentCode());
+				ProductType pt2 = productTypeService.findByCode(pt3.getParentCode());
+				ProductType pt1 = productTypeService.findByCode(pt2.getParentCode());
+				List<ProductType> level2 = productTypeService.findByParentCode(pt1.getCode());
+				model.addAttribute("level2", level2);
+			}
+		}
+		
 		model.addAttribute("entity", playOrder);
 		return "order_assign/form";
 	}
@@ -284,8 +308,9 @@ public class PlayOrderAssignController {
 		}
 		
 	}
-	@RequestMapping(value = "/confirm", method = RequestMethod.GET)
-	public String confirm(@RequestParam(value = "id") Long id, Model model) throws Exception {
+	@RequestMapping(value = "/confirm/{id}", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject confirm(@PathVariable(value = "id") Long id, Model model) throws Exception {
 		//权限校验  判断当前登录用户，是否拥有 分派 订单的权限
 		Subject subject = SecurityUtils.getSubject();
 		if(!subject.isPermitted("order:assign")) {
@@ -294,14 +319,44 @@ public class PlayOrderAssignController {
 		PlayOrder playOrder = playOrderService.findById(id);
 		playOrder.setStatus(PlayOrderStatus.ToBeConfirmed);
 		playOrderService.save(playOrder);
-		if(playOrder.getOrderType().equals(OrderType.Quick)) {
-			return "redirect:/play_order/assign/rapid_list";
-		}else {
-			return "redirect:/play_order/assign/list";
-		}
-		
+		return JsonUtils.getSuccessJSONObject();
 	}
 	
+	@RequestMapping(value = "/detail" , method = RequestMethod.GET)
+	public String detail(@RequestParam(value = "id" , required = true)Long id,Model model) {
+		Subject subject = SecurityUtils.getSubject();
+		if (!subject.isPermitted("order:assign")) {
+			throw new AuthorizationException("缺少派单权限");
+		}
+		PlayOrder playOrder = playOrderService.findById(id);
+		int level =  playOrder.getProduct().getProductType().getLevel();
+		if (level == 3) {
+			ProductType pt2 = productTypeService.findByCode(playOrder.getProduct().getProductType().getParentCode());
+			model.addAttribute("level2", pt2);
+			ProductType pt1 = productTypeService.findByCode(pt2.getParentCode());
+			model.addAttribute("level1", pt1);;
+		}else if (level == 4) {
+			ProductType pt3 = productTypeService.findByCode(playOrder.getProduct().getProductType().getParentCode());
+			model.addAttribute("level3", pt3);
+			ProductType pt2 = productTypeService.findByCode(pt3.getParentCode());
+			model.addAttribute("level2", pt2);
+			ProductType pt1 = productTypeService.findByCode(pt2.getParentCode());
+			model.addAttribute("level1", pt1);
+		} 
+		//支付信息
+		List<PlayOrderPayRecord> list = playOrderPayRecordService.findByOrderId(playOrder.getId());
+		if (list.size() > 0 && list != null) {
+			model.addAttribute("record", list.get(0));
+			model.addAttribute("channel", list.get(0).getChannel().text());
+		}
+		//单价 - 普通单
+		if (playOrder.getOrderType().equals(OrderType.Common)) {
+			QuotedProduct quotedProduct = quotedProductService.findByCoachIdAndProductProductTypeCode(playOrder.getCoachId(), playOrder.getProduct().getProductType().getCode());
+			model.addAttribute("quoted", quotedProduct);
+		}
+		model.addAttribute("entity", playOrder);
+		return "order_assign/detail";
+	}
 	
 	private List<Coach> getCoaches(List<QuotedProduct> qpList) {
 		if(qpList != null && qpList.size() > 0) {

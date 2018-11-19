@@ -1,5 +1,6 @@
 package com.shenghesun.tank.service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class QuartzService {
 	/**
 	 * 每小时自动更新订单 完成状态
 	 */
-	@Scheduled(cron = "0 * */1 * * ?")
+	@Scheduled(cron = "0 0 */1 * * ?")
 	public void autoUpdatePlayOrder() {
 		List<PlayOrder> list = playOrderService.findByStatus(this.getSpecification());
 		List<PlayOrder> orders = new ArrayList<>();
@@ -34,10 +35,11 @@ public class QuartzService {
 			for (PlayOrder playOrder : list) {
 				if(( System.currentTimeMillis() - playOrder.getLastModified().getTime() ) > 24*60*60*1000) {
 					playOrder.setStatus(PlayOrderStatus.Complete);
+					playOrder.setPlayCompleteTime(new Timestamp(System.currentTimeMillis()));
 					orders.add(playOrder);
 				}
 			}
-			System.out.println("自动完成订单！");
+			System.out.println("自动完成"+orders.size()+"个订单！");
 			playOrderService.saveAll(orders);
 		}
 		

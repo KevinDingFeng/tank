@@ -1,5 +1,7 @@
 package com.shenghesun.tank.order;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,4 +40,9 @@ public class PlayOrderPayRecordService {
 	public PlayOrderPayRecord findByPrepayId(String prepayId) {
 		return recordDao.findByPrepayId(prepayId);
 	}
+	
+	public List<PlayOrderPayRecord> findByOrderId(Long playId){
+		return recordDao.findByPlayOrderIdOrderByLastModifiedDesc(playId);
+	}
+	
 }
