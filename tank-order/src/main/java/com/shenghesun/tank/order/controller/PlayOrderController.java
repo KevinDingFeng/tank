@@ -1,6 +1,7 @@
 package com.shenghesun.tank.order.controller;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -712,6 +713,7 @@ public class PlayOrderController {
 //		if(order.getExecutor().getSysUserId().longValue() != loginUserId.longValue()) {
 //			throw new AuthorizationException("操作的订单不属于当前登录用户");
 //		}
+		order.setPlayCompleteTime(new Timestamp(System.currentTimeMillis()));
 		order.setStatus(PlayOrderStatus.Complete);
 		playOrderService.save(order);
 		
