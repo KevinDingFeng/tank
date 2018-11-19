@@ -47,4 +47,10 @@ public class PlayOrderService {
 	public List<PlayOrder> findByNoAndMain(String no, boolean bool){
 		return playOrderDao.findByNoAndMain(no, true);
 	}
+	public List<PlayOrder> findByStatus(Specification<PlayOrder> specification){
+		return playOrderDao.findAll(specification);
+	}
+	public List<PlayOrder> saveAll(List<PlayOrder> list ){
+		return playOrderDao.save(list);
+	}
 }
