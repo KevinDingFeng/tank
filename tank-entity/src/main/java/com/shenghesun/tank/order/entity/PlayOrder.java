@@ -193,7 +193,7 @@ public class PlayOrder extends BaseEntity {
 	private PlayOrderStatus status = PlayOrderStatus.NotPay;
 	
 	public enum PlayOrderStatus{
-		NotPay("未支付"),Operation("待执行"),ToBeConfirmed("待确认完成"),Complete("完成"),Cancel("取消");
+		NotPay("未支付"),Operation("待服务"),ToBeConfirmed("待确认完成"),Complete("已完成"),Cancel("取消");
 		
 		private String text;
 		
