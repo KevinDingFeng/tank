@@ -46,13 +46,13 @@ $(document).ready(function() {
 									list_xx[i].status = "未支付"
 									var cc = "col_red";
 								}else if(list_xx[i].status == "ToBeConfirmed"){
-									list_xx[i].status = "待确认"
+									list_xx[i].status = "待确认完成"
 									var cc = "y_col";
 								}else if(list_xx[i].status == "Operation"){
 									list_xx[i].status = "待服务"
 									var cc = "y_col";
 								}else if(list_xx[i].status == "Complete"){
-									list_xx[i].status = "已服务"
+									list_xx[i].status = "已完成"
 									var cc = "b_col";
 								}else if(list_xx[i].status == "Cancel"){
 									list_xx[i].status = "已取消"

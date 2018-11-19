@@ -89,7 +89,7 @@ $(document).ready(function() {
 						order_xx.status = "待服务"
 					}else if(order_xx.status == "Complete"){
 						$("#tj_btn").attr("order_id","2")
-						order_xx.status = "已服务"
+						order_xx.status = "已完成"
 					}else if(order_xx.status == "Cancel"){
 						$("#tj_btn").attr("order_id","2")
 						order_xx.status = "已取消"
@@ -169,7 +169,6 @@ $(document).ready(function() {
 								},
 								success: function(resp) { //请求完成
 									if(resp.code == "200"){
-										
 										appIdVal = resp.data.prepay.appId;
 										timeStampVal = resp.data.prepay.timeStamp;
 										nonceStrVal = resp.data.prepay.nonceStr;
