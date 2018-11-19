@@ -129,9 +129,9 @@
 	            			<option value="${p.level1Code}" <#if p.level1Code == entity.product.productType.code?string> selected </#if> >${p.level1Name}</option>
 	            		</#list>
             		<#else>
-            			<option> --- 请选择一级服务 --- </option>
+            			<#-- <option> --- 请选择一级服务 --- </option>  -->
 	            		<#list productTypes as p>
-	            			<option value="${p.level1Code}" >${p.level1Name}</option>
+	            			<option value="${p.level1Code}" <#if level1.code == p.level1Code>selected</#if> >${p.level1Name}</option>
 	            		</#list>
             		</#if>
             	</select>
