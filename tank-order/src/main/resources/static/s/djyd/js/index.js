@@ -82,7 +82,7 @@ $(document).ready(function() {
 		});
 		$(".weui-dialog__ft>a:nth-child(2)").html("快捷下单")
 	})
-	$(".nav_left").click(function(){
+	/*$(".nav_left").click(function(){
 		$.confirm({
 		  title: '敬请期待',
 		  text: '当前模块正在努力建设中...<br/>建设过程中，<br/>请通过"快捷下单"入口进入下单，多谢您的理解~',
@@ -97,7 +97,7 @@ $(document).ready(function() {
 		  }
 		});
 		$(".weui-dialog__ft>a:nth-child(2)").html("快捷下单")
-	})
+	})*/
 	//点击qq客服
 	$(".qq_kf").click(function(){
 		$("#cumtor").show();
