@@ -39,7 +39,7 @@ $(document).ready(function() {
 		  
 		  onOK: function () {
 		    //点击确认
-			window.location.href = "../djyd/kj_order.html";
+			window.location.href = "../djyd/kj_tariff.html";
 			  
 		  },
 		  onCancel: function () {
@@ -57,7 +57,7 @@ $(document).ready(function() {
 		  
 		  onOK: function () {
 		    //点击确认
-			window.location.href = "../djyd/kj_order.html";
+			window.location.href = "../djyd/kj_tariff.html";
 			  
 		  },
 		  onCancel: function () {
@@ -75,7 +75,7 @@ $(document).ready(function() {
 		  
 		  onOK: function () {
 		    //点击确认
-			window.location.href = "../djyd/kj_order.html";
+			window.location.href = "../djyd/kj_tariff.html";
 			  
 		  },
 		  onCancel: function () {
