@@ -12,6 +12,15 @@ body {
   padding-bottom: constant(safe-area-inset-bottom);
 
 }
+.weui-dialog__btn{
+	color:#FFB133;
+}
+.weui-dialog__title{
+	font-weight:700;
+}
+.weui-dialog__bd{
+	line-height: 2;
+}
 .ds_hidden{
 	display:none!important;
 }

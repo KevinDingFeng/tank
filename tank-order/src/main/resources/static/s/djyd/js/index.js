@@ -1,6 +1,6 @@
-//var $main_URL_yd = "http://localhost:7002"; //移动连接服务的主地址
+var $main_URL_yd = "http://localhost:7002"; //移动连接服务的主地址
 //var $main_URL_yd = "http://tank.dazonghetong.com"; //移动连接服务的主地址
-var $main_URL_yd = "http://tk.dazonghetong.com"; //移动连接服务的主地址
+//var $main_URL_yd = "http://tk.dazonghetong.com"; //移动连接服务的主地址
 (function(win, doc) {
 	if(!win.addEventListener) return;
 	var html = document.documentElement;
@@ -31,7 +31,73 @@ $(document).ready(function() {
             });
         }
     })();
-	
+	//点击教学
+	$(".type_jx").click(function(){
+		$.confirm({
+		  title: '敬请期待',
+		  text: '当前模块正在努力建设中...<br/>建设过程中，<br/>请通过"快捷下单"入口进入下单，多谢您的理解~',
+		  
+		  onOK: function () {
+		    //点击确认
+			window.location.href = "../djyd/kj_order.html";
+			  
+		  },
+		  onCancel: function () {
+			  
+		  }
+		});
+		$(".weui-dialog__ft>a:nth-child(2)").html("快捷下单")
+	})
+	//点击代练
+	$(".type_dl").click(function(){
+		$.confirm({
+		  title: '敬请期待',
+		  text: '当前模块正在努力建设中...<br/>建设过程中，<br/>请通过"快捷下单"入口进入下单，多谢您的理解~',
+		  
+		  onOK: function () {
+		    //点击确认
+			window.location.href = "../djyd/kj_order.html";
+			  
+		  },
+		  onCancel: function () {
+			  
+		  }
+		});
+		$(".weui-dialog__ft>a:nth-child(2)").html("快捷下单")
+	})
+	//点击陪玩
+	$(".type_pw").click(function(){
+		$.confirm({
+		  title: '敬请期待',
+		  text: '当前模块正在努力建设中...<br/>建设过程中，<br/>请通过"快捷下单"入口进入下单，多谢您的理解~',
+		  
+		  onOK: function () {
+		    //点击确认
+			window.location.href = "../djyd/kj_order.html";
+			  
+		  },
+		  onCancel: function () {
+			  
+		  }
+		});
+		$(".weui-dialog__ft>a:nth-child(2)").html("快捷下单")
+	})
+	$(".nav_left").click(function(){
+		$.confirm({
+		  title: '敬请期待',
+		  text: '当前模块正在努力建设中...<br/>建设过程中，<br/>请通过"快捷下单"入口进入下单，多谢您的理解~',
+		  
+		  onOK: function () {
+		    //点击确认
+			window.location.href = "../djyd/kj_order.html";
+			  
+		  },
+		  onCancel: function () {
+			  
+		  }
+		});
+		$(".weui-dialog__ft>a:nth-child(2)").html("快捷下单")
+	})
 	//点击qq客服
 	$(".qq_kf").click(function(){
 		$("#cumtor").show();
