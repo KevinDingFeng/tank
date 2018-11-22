@@ -46,6 +46,7 @@ $(document).ready(function() {
 			  
 		  }
 		});
+		$(".weui-dialog__ft>a:nth-child(1)").html("我知道了")
 		$(".weui-dialog__ft>a:nth-child(2)").html("快捷下单")
 	})
 	//点击代练
@@ -63,6 +64,7 @@ $(document).ready(function() {
 			  
 		  }
 		});
+		$(".weui-dialog__ft>a:nth-child(1)").html("我知道了")
 		$(".weui-dialog__ft>a:nth-child(2)").html("快捷下单")
 	})
 	//点击陪玩
@@ -80,6 +82,7 @@ $(document).ready(function() {
 			  
 		  }
 		});
+		$(".weui-dialog__ft>a:nth-child(1)").html("我知道了")
 		$(".weui-dialog__ft>a:nth-child(2)").html("快捷下单")
 	})
 	/*$(".nav_left").click(function(){
