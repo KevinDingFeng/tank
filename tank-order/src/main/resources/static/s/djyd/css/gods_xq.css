@@ -1,0 +1,134 @@
+.gods_xq{
+	width:100%;
+}
+#xq_banner{
+	width: 100%;
+	height: 4.5rem;
+	/* background-color: #000000; */
+}
+.xq_title{
+	background-color:#fff;
+	font-size: 0.30rem;
+	color: #333333;
+    padding-right:0!important;
+}
+.xq_title>p:nth-child(2){
+	color: #999999;
+}
+.bor_jl{
+	padding:0.25rem 0.23rem;
+}
+
+.xq_sj{
+	display: flex;
+    align-items: center;
+    flex-direction: row;
+    background-color:#fff;
+    font-size: 0.26rem;
+}
+.xq_sj>p:nth-child(2){
+	margin:0 1rem;
+}
+.mar_xq{
+	margin:0.2rem 0;
+}
+.xq_service{
+	background-color:#fff;
+	display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 0.26rem;
+}
+.xq_service>.service_top:nth-child(2){
+	margin-top:0.23rem;
+}
+.service_top{
+	width:100%;
+	
+}
+.service_top>div{
+	display: flex;
+    align-items: center;
+    flex-direction: row;
+    width:100%;
+}
+
+.service_top>div:nth-child(2){
+	margin-top:0.24rem;
+	padding-bottom:0.21rem;
+	border-bottom:1px solid #eeeeee;
+}
+.service_top>div>.center_sty{
+	margin-left:0.3rem;
+	width:77%;
+	
+}
+.xq_syllabus{
+	background-color:#fff;
+	display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 0.26rem;
+}
+.syllabus_name{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	text-align:center;
+	width:100%;
+	padding-top:0.25rem;
+}
+.syllabus_g{
+	 height:1px;
+     font-size: 0.26rem;
+     color:#c1c1c1;
+     background:#333;
+     padding:0 0.52rem;
+     text-align: center;
+     margin:0 0.16rem;
+     position:relative;
+     z-index:2;
+}
+.syllabus_list{
+	display: flex;
+    align-items: center;
+    flex-direction: row;
+    width:100%;
+}
+.syllabus_list>video{
+	width: 2.24rem;
+	height: 2.23rem;
+	background-color: rgba(255, 255, 255, 0.08);
+	border-radius: 2px;
+}
+.syllabus_list>video:nth-child(2){
+	margin: 0 0.17rem;
+}
+.xq_others{
+	background-color:#fff;
+}
+.xq_others>.syllabus_name{
+	padding-bottom:0.26rem;
+	border-bottom:1px solid #eee;
+}
+.others_list{
+	display: flex;
+    align-items: center;
+}
+
+.others_list>div>img{
+	width: 7.04rem;
+	height: 2.46rem;
+}
+
+.gods_textjs{
+	font-size: 0.24rem;
+	color: #333333;
+}
+
+
+
+
+
+

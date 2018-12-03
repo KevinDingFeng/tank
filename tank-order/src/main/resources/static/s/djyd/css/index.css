@@ -27,31 +27,7 @@ body {
 .ds_show{
 	display:block!important;
 }
-/* 遮盖层 */
-#cumtor{
-	z-index:999;
-	width: 100%;
-	height:100%;
-	position: absolute;
-	background-color: #000;
-	opacity: 0.5;
-    left: 0px;
-    top: 0px;
-    display: none;
-    text-align: center;
-}
 
-#cumtor_img img{
-	position: absolute;
-	left: 11%;
-    top: 0px;
-	z-index:1999;
-	width:80%;
-	height: 50%;
-	margin-top:40%;
-	opacity: 1!important;
-	background:rgba(255,255,255,0.3);
-}
 .cl_b{
 	clear:both;
 }
@@ -66,6 +42,9 @@ body {
 }
 .b_col{
 	color: #3988ff;
+}
+.col_ffb529{
+	color: #ffb529;
 }
 .bg_bcol{
 	background-color: #3988ff!important;
@@ -84,25 +63,26 @@ body {
 	margin-left: 0.18rem;
 }
 .banner{
-	background: url(../images/banner.png) no-repeat;
+	background: url(../images/new/banner.png) no-repeat;
 	width: 100%;
-  	background-size: contain;
-  	height: 2.42rem;
+  	background-size: cover;
+  	height: 3rem;
 }
 .kj_go{
-	background-color: #ffb033;
-	border-radius: 44px;
-	color:#fff;
-	padding: 0.2rem 0;
-	margin:0.23rem 0;
-	font-size: 0.30rem;
+	background: url(../images/new/kj_backghround.png) no-repeat;
+	color: #202020;
+	width: 7.04rem;
+	height: 2.36rem;
+	font-size: 0.34rem;
+	margin:0.1rem 0;
 	display:flex;
 	flex-direction: row;
-	justify-content: center
+	justify-content: center;
+	align-items: center;
 }
 .kj_img{
-  	width: 0.44rem;
-	height: 0.44rem;
+  	width: 1.3rem;
+	height: 0.84rem;
 	margin-right:0.16rem;
 }
 .kj_jm{
@@ -277,7 +257,7 @@ body {
 	bottom: 0;
 	background-color: #fff;
 	height: 0.98rem;
-	
+	align-items: center;
 }
 #bottom_nav a{
 	text-align:center;
@@ -294,8 +274,8 @@ body {
 	
 }
 #bottom_nav a>img{
-	width: 0.43rem;
-	height: 0.37rem;
+	width: 0.41rem;
+	height: 0.4rem;
 	margin-right: 0.05rem;
 }
 
@@ -304,7 +284,6 @@ body {
 	text-align: center;
 	margin: 0 1.16rem;
 	color: #ffb033;
-	margin-top: 0.1rem!important;
 	position: relative;
 }
 .k_dis{
@@ -336,159 +315,24 @@ body {
 	color: #000;
 	position: relative;
 	font-weight:700;
-	
+	width: 40%;
+	text-align: center;
 }
-.god_top a:nth-child(2){
-	margin: 0 0.91rem;
-}
+
 .active{
 	color: #ffb033!important;
 }
 .bottom_bor{
 	position: absolute;
-	width: 1rem;
+	width: 1.5rem;
 	height: 3px;
-	top: 0.6rem;
-    left: -0.2rem;
+	top: 0.25rem;
+    left: 0.38rem;
 	background-color: #ffb033;
 	display: none;
 }
-.gods{
-	display: flex;
-	flex-direction: column;
-	margin: 0 0.22rem;
-	margin-top: -2px;
-	margin-bottom: 1rem;
-}
-/*濞寸媴绲跨划灞惧緞瑜忛〃锟�*/
-.Ringer{
-	display: flex;
-	flex-direction: column;
-}
-.Ringer_logo {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	margin-top: 0.29rem;
-}
-.Ringer_logo img{
-	width: 0.31rem;
-	height: 0.29rem;
-}
-.Ringer span{
-	color: #000;
-	font-size: 0.24rem;
-	margin-left: 0.08rem;
-	font-weight:700;
-}
-.Ringer_logo_left{
-	display: flex;
-}
-.Ringer_logo_right{
-	display: flex;
-}
-.Ringer_logo_right a{
-	font-size: 0.24rem;
-	color: #000;
-}
-.Ringer_logo_right img{
-	width: 0.16rem;
-	height: 0.17rem;
-}
-.Ringer_content{
-	margin-top: 0.32rem;
-}
-.gods_list{
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-start;
-	padding-left: 0.11rem;
-	padding-top: 0.19rem;
-	background-color: #FFFFFF;
-	margin-bottom: 0.22rem;
-	border:1px solid #ddd;
-}
-.gods_content_price{
-	margin-bottom:0.08rem!important;
-}
-.gods_toux img{
-	width: 1.17rem;
-	height: 1.2rem;
-	border-radius: 5px;
-	line-height: 1.5;
-}
-.gods_content{
-	font-size: 0.24rem;
-	margin-left: 0.36rem;
-}
-.gods_content_jse{
-	margin-top: 5px;
-}
-.gods_content p{
-	
-	margin-top: 0;
-}
-.gods_content p:first-child{
-	font-weight: 700;
-	font-size: 0.3rem;
-	line-height: 1.2;
-}
 
-.gods_content p:nth-child(3){
-	color: #2c2c2c;
-}
-/*濞寸媴绲跨划宀�鎷犻敂钘夊壈*/
-.Ringer_xq{
-	width: 100%;
-}
-.Ringer_xq_content{
-	display: flex;
-	flex-direction: column;
-	margin-top: 0.25rem;
-	border-radius: 5px;
-	margin-bottom: 1.2rem;
-}
-.gods_js{
-	display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    width:93%;
-    border-radius: 5px;
-    padding: 0.22rem 0.23rem;
-    color: #000;
-    background:#fff;
-}
-.xx_js{
-	display: flex;
-	flex-direction: column;
-	background:#fff;
-	padding: 0.22rem 0.23rem;
-	margin: 0.29rem 0;
-	
-}
-.xx_js p:first-child{
-	font-size: 0.24rem;
-	color: #2c2c2c;
-	font-weight: 700;
-}
-.xx_js p:nth-child(2){
-	font-size: 0.24rem;
-	color: #515151;
-}
-.xx_list{
-	display: flex;
-    flex-direction: row;
-}
-.xx_list div>img{
-	width: 1.85rem;
-	height: 1.68rem;
-}
-.dl_gods_zj >.bor{
-	height: 1.68rem;
-}
-.xx_list div:nth-child(2) {
-    margin: 0 0.15rem;
-}
+
 /*闁规亽鍎卞畷鐔煎极閿燂拷*/
 .gods_listnumber{
 	display: flex;
@@ -1193,19 +1037,20 @@ body {
 }
 
 .show_num{
-	font-size: 0.28rem!important;
-	color: #2c2c2c!important;
-	width: 0.5rem!important;
-	border-left: 1px solid #adadad!important;
-	border-right: 1px solid #adadad!important;
+	width: 0.70rem!important;
+	height: 0.56rem!important;
+	background-color: #eeeeee!important;
+	border-radius: 4px!important;
+	margin:0 0.08rem!important;
+	font-size: 0.24rem!important;
 }
-.bor_inpt{
-	border:1px solid #adadad;
-	border-radius:10px;
-	padding:5px;
-}
+
 .weui-count .weui-count__btn{
-	border:none!important;
+	background-color: #eeeeee;
+	border-radius: 4px;
+	width: 0.56rem;
+	height: 0.56rem;
+	border:none;
 }
 .dot_mar{
 	margin-bottom: 2.5rem!important;
@@ -1328,18 +1173,30 @@ body {
 /* 鏂扮増 */
 .cp_list{
 	width:100%;
-	margin-top:0.2rem;
+	margin-top:0.16rem;
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.cp_list>li:nth-child(1){
+	background: url(../images/new/jx_background.png) no-repeat;
 }
 .cp_list>li:nth-child(2){
-	margin: 0 0.31rem;
+	margin: 0 0.1rem;
 }
 .cp_list>li{
-	float:left;
+	background: url(../images/new/dl_background.png) no-repeat;
 	list-style: none;
-	background-color:#fff;
-	padding:0.25rem 0.54rem;
-	width:15%;
-	text-align:center;
+	width: 2.28rem;
+	height: 2.42rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.gods_go{
+	background: url(../images/new/dl_background.png) no-repeat!important;
 }
 .cp_list>li>a{
 	color:#000;
@@ -1353,19 +1210,9 @@ body {
 	font-size: 0.3rem;
 }
 
-.team_sj{
-	width:90%;
-	margin-top:0.2rem;
-	padding:0.2rem 0.34rem;
-	background-color:#fff;
-}
-.team_sj>p{
-	font-size: 0.2rem;
-	margin-top:0.1rem;
-}
 .two_width{
-	width:18%!important;
-	margin: 0 0.2rem!important;
+
+	background: url(../images/new/jx_background.png) no-repeat!important;
 }
 
 .bot_height{

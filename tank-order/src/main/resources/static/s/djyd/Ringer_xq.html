@@ -2,96 +2,161 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>11</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="js/jq_weiui/css/jquery-weui.css"/>
 		<link rel="stylesheet" type="text/css" href="css/weiui/weui.css"/>
+		<link rel="stylesheet" type="text/css" href="js/swiper/swiper-3.4.2.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/home.css"/>
 		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+		<link rel="stylesheet" type="text/css" href="css/Ringer_xq.css"/>
 	</head>
 	<body>
 		<div class="Ringer_xq">
-			<!--代练-->
-			<div class="Ringer_xq_content">
-				<div class="gods_js">
-					<div class="gods_toux">
-						<img src="images/toux.png"/>
+			<div class="swiper-container" id="xq_banner">
+				<div class="row swiper-wrapper">
+					<div class="col-xs-12 col-md-12 swiper-slide">
+						<a href="javascript:;" target="_blank">
+							<img src="/s/djyd/images/icon-hl.jpg"/>
+						</a>
 					</div>
-					<div class="gods_content">
-						<p class = "gods_content_m"></p>
-						<p class = "gods_content_j"></p>
-					</div>
-				</div>
-				<div class="xx_js">
-					<p class="dl_name">指定代练详细介绍</p>
-					<p class="dl_js">详细介绍文本详细介绍文本详细介绍文本详细介绍文本详细介绍文本详细介绍文本详细介绍文本详细介绍文本详细介绍文本详细介绍文本</p>
-					<!-- <div class="xx_list dl_gods_zj"></div> -->
-					<div class="gods_listnumber">
-						<div class="listnumber_left">
-							<p class="listnumber_left_num">36</p>
-							<p>接单数</p>
-						</div>
-						<div class="listnumber_center">
-							<p class="listnumber_left_time">100h</p>
-							<p>时长</p>
-						</div>
-						<div class="listnumber_right">
-							<p class="listnumber_left_xing">★★★★★</p>
-							<p>好评指数</p>
-						</div>
+					<div class="col-xs-12 col-md-12 swiper-slide">
+						<a href="javascript:;" target="_blank">
+							<img src="/s/djyd/images/icon-lg.jpg"/>
+						</a>
 					</div>
 				</div>
-				
-				<div class="Ringer_prise" style="display: block;">
-					<div class="prise_left">
-						<!-- <div class="left_text">
-							<text>练车</text>
-							<text class="text_tiao"></text>
-						</div>
-						<div class="left_text">
-							<text>三环</text>
-						</div>
-						<div class="left_text">
-							<text>银币</text>
-						</div> -->
+				<div class="swiper-pagination"></div>
+			</div>
+			<div class="xq_title bor_jl">
+				<p class="xq_name">教学简介教学简介教学简介教学简介教学简介教学简介教学简介教学简介</p>
+				<p>活动</p>
+			</div>
+			<div class="xq_sj bor_jl mar_xq">
+				<p>已接单<span class="col_ffb529"> 38828</span></p>
+				<p>已服务(h)<span class="col_ffb529"> 38828</span></p>
+				<p class="col_ffb529">★★★★★</p>
+			</div>
+			<div class="xq_service bor_jl mar_xq">
+				<div class="service_top">
+					<div>
+						<p class="col_999999">优惠</p>
+						<p class="center_sty">领券，满￥500减￥20</p>
+						<p class="right_sty col_ffb529">领券></p>					
 					</div>
-					<div class="prise_right">
-						<!-- <div class="right_content">
-							 <div class="title_top">
-								<p>高端</p>
-								<p class="title_price">￥<text class="font_col">20</text>元</p>
-								<p class="title_text">详细介绍文本详细介绍文本详细介绍文本介绍文本详细介绍文本介绍文本详细介绍文本</p>
-								<p class="title_xd">
-									<text class="xd_font">我要下单</text>
-									<img src="images/xd_jt.png" />
-								</p>
-							</div> -->
+					<div>
+						<p class="col_999999">活动</p>
+						<p class="center_sty">下单可领取等额积分，积分可当现金用</p>
+					</div>
+				</div>
+				<div class="service_top">
+					<div>
+						<p class="col_999999">服务</p>
+						<p class="center_sty">每日1课  I 职业导师  I 可靠好玩</p>		
+					</div>
+					<div class="no_bor no_pad">
+						<p class="col_999999">服务</p>
+						<p class="center_sty">请选择服务</p>
+						<p class="right_sty col_ffb529" id="choose">选择></p>		
+					</div>
+				</div>
+			</div>
+			<div class="xq_syllabus bor_jl mar_xq">
+				<div class="syllabus_name">
+					<p class="syllabus_g"></p>
+					<span>课程表</span>
+					<p class="syllabus_g"></p>
+				</div>
+				<div class="syllabus_list">
+					<div>
+						<p class="ke_icon col_fefefe">课</p>
+						<p>课程内容课程内容课程内容课程内容课程内容</p>
+						<p class="col_999999">大神昵称</p>
+					</div>
+				</div>
+			</div>
+			<div class="xq_others mar_xq">
+				<div class="syllabus_name">
+					<p class="syllabus_g"></p>
+					<span>其他详情</span>
+					<p class="syllabus_g"></p>
+				</div>
+				<div class="others_list bor_jl">
+					<div>
+						<img src="/s/djyd/images/banner.png" />
+						<div>
+							<p class="f_weight">标题</p>
+							<p>内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
 						</div>
 					</div>
-					<!--练车-->
-					<!-- <div class="prise_car dl_listarr" >
-					</div>	 -->
-				</div>	
+				</div>
 			</div>
 		</div>
-		<!--底部-->
-		<div id="bottom_nav">
-			<a href="ff.html" class="nav_left">
-				<img src="images/fw_y.png"/>
-				<p class="y_col">服务</p>
-			</a>
-			<a href="index.html" class="nav_center">
-				<img class="k_dis" src="images/logo_h.png"/>
-				<img class="d_dis" src="images/index_h.png"/>
-			</a>
-			<a href="my.html" class="nav_right">
-				<img src="images/my_h.png"/>
-				<p>我的</p>
-			</a>
+		<div id="xq_cumtor"></div>
+		<div class="t_pop">
+			<div class="pop_content">
+				<div class="pop_top">
+					<img src="/s/djyd/images/icon-lg.jpg"/>
+					<div style="width:60%;">
+						<p class="col_ffb529">￥<span class="pop_price">200元/人</span></p>
+						<p>请选择服务</span></p>
+					</div>
+					<div class="pop_close"><i id="btn_close" class="weui-icon-cancel"></i></div>
+				</div>
+				<div class="pop_center">
+					<div class="pop_first">
+						<p>服务类型</p>
+						<p class="col_ffb529">教学</p>
+					</div>
+					<div class="fw_dl_name no_bor">服务大类</div>
+					<div class="fw_dl">
+						<div class="dl_active">基础教学</div>
+						<div>晋级教学</div>
+						<div>私人订制</div>
+					</div>
+					<div class="fw_dl_name">服务子类</div>
+					<div class="fw_zl">
+						<div class="zl_active">基础教学</div>
+						<div>晋级教学</div>
+						<div>私人订制</div>
+					</div>
+					<div class="fw_dl_name">服务说明</div>
+					<div>
+						<textarea class="sm_area" placeholder="基本功训练、点位训练、地图训练、车辆训练、基本功训练、点位训练、地图训练、车辆训练"></textarea>
+					</div>
+					<div class="fw_dl_name">课程</div>
+					<div class="fw_class">
+						<div class="class_active">基础教学</div>
+						<div>晋级教学</div>
+					</div>
+					<div class="fw_dl_name">教练</div>
+					<div class="gods_list">
+						<div class="gods_active">刀爷</div>
+						<div>汤圆</div>
+					</div>
+					<div class="choose_time">
+						<p>购买数量</p>
+						<!-- 时间插件  代练独有 -->
+						<div class="weui-cell no_pad" >
+				            <div class="weui-cell__bd">
+				              <div class="weui-count time_cc">
+				                <a class="weui-count__btn weui-count__decrease"></a>
+				                <input class="weui-count__number show_num" type="text" value="1" id="timeStart">
+				                <a class="weui-count__btn weui-count__increase"></a>
+				                <span class="price_time_dw"></span>
+				              </div>
+				            </div>
+				          </div>
+		         	</div>
+		         	<div id="go_money">立即下单</div>
+					<!-- 时间插件结束 -->
+				</div>
+			</div>
 		</div>
 	</body>
 	<script src="js/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/jq_weiui/js/jquery-weui.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript" src="js/scroll.js"></script>
+	<script type="text/javascript" src="js/swiper/swiper-3.4.2.min.js"></script>
 	<script type="text/javascript" src="js/index.js"></script>
 	<script type="text/javascript" src="js/Ringer_xq.js"></script>
 </html>

@@ -1,0 +1,86 @@
+body{
+	margin: 0;
+	padding: 0;
+	background-color: #F2F2F2!important;
+	-webkit-text-size-adjust: 100% !important;
+	padding-bottom: constant(safe-area-inset-bottom);
+}
+a{
+	text-decoration: none;
+}
+.tl_l{
+	text-align:left;
+}
+.tl_c{
+	text-align:center;
+}
+.tl_r{
+	text-align:right;
+}
+.no_bor{
+	border:none!important;
+}
+.no_mar{
+	margin:0!important;
+}
+.no_pad{
+	padding:0!important;
+}
+.f_weight{
+	font-weight: 700;
+}
+/* ÑÕÉ« */
+.col_ffb529{
+	color: #ffb529!important;
+}
+.back_ffb529{
+	background-color:#ffb529!important;
+}
+.col_ffb033{
+	color: #ffb033!important;
+}
+.col_ff1400{
+	color: #ff1400
+}
+.col_ff2918{
+	color: #ff2918
+}
+.col_3988ff{
+	color: #3988ff;
+}
+.col_999999{
+	color: #999999;
+}
+.col_fefefe{
+	color: #fefefe;
+}
+.col_fff{
+	color: #fff;
+}
+/* ÕÚ¸Ç²ã */
+#cumtor{
+	z-index:999;
+	width: 100%;
+	height:100%;
+	position: absolute;
+	background-color: #000;
+	opacity: 0.5;
+    left: 0px;
+    top: 0px;
+    display: none;
+    text-align: center;
+}
+
+#cumtor_img img{
+	position: absolute;
+	left: 11%;
+    top: 0px;
+	z-index:1999;
+	width:80%;
+	height: 50%;
+	margin-top:40%;
+	opacity: 1!important;
+	background:rgba(255,255,255,0.3);
+}
+
+

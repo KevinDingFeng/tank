@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>确认订单</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="js/jq_weiui/css/jquery-weui.css"/>
+		<link rel="stylesheet" type="text/css" href="css/weiui/weui.css"/>
+		<link rel="stylesheet" type="text/css" href="js/swiper/swiper-3.4.2.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/home.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+		<link rel="stylesheet" type="text/css" href="css/order_Prepayment.css"/>
+	</head>
+	<body>
+		<div class="order_Prepayment">
+			<div class="Prepayment_content">
+				<div class="Prepayment_title">
+					<div class="tiao"></div>
+					<div>订单内容</div>
+				</div>
+				<div class="fg_hr">
+					<div class="Prepayment_sty">
+						<div>服务类型</div>
+						<div class="col_ffb529">教学</div>
+					</div>
+					<div class="Prepayment_sty">
+						<div>服务</div>
+						<div class="col_ffb529">基础教学>单人教学</div>
+					</div>
+					<div class="Prepayment_sm">
+						<div>服务说明</div>
+						<div class="col_ffb529">基本功训练、点位训练、地图训练</div>
+					</div>
+					<div class="Prepayment_sty">
+						<div>课程</div>
+						<div class="col_ffb529">轻坦训练</div>
+					</div>
+					<div class="Prepayment_sty">
+						<div>大神</div>
+						<div class="col_ffb529">刀爷</div>
+					</div>
+					<div class="Prepayment_price">
+						<div>单价：<span class="col_ffb529">￥</span><span class="col_ffb529" id="order_price">100</span></div>
+					</div>
+				</div>
+			</div>
+			<div class="order_num">
+				<div>购买数量</div>
+				<div>
+					<div class="choose_time">
+						<!-- 时间插件  代练独有 -->
+						<div class="weui-cell no_pad" >
+				            <div class="weui-cell__bd">
+				              <div class="weui-count time_cc">
+				                <a class="weui-count__btn weui-count__decrease"></a>
+				                <input class="weui-count__number show_num" type="text" value="1" id="timeStart">
+				                <a class="weui-count__btn weui-count__increase"></a>
+				                <span class="price_time_dw"></span>
+				              </div>
+				            </div>
+				         </div>
+		         	</div>
+				</div>
+			</div>
+			<div class="Prepayment_content">
+				<div class="Prepayment_title">
+					<div class="tiao"></div>
+					<div>联系方式</div>
+					<div class="title_bz">手机号和微信号，至少填写一项</div>
+				</div>
+				<div class="fg_hr">
+					<div class="Prepayment_sty">
+						<div><span class="col_ffb529 zy_dian">*</span> 手机号</div>
+						<input class="Prepayment_inpt" type="text" placeholder="请输入您的手机号，11位" max="11"/>
+					</div>
+					<div class="Prepayment_sty">
+						<div><span class="col_ffb529 zy_dian">*</span> 微信号</div>
+						<input class="Prepayment_inpt wx_num" type="text" placeholder="请输入您的微信号，方便客服联系您 " max="20"/>
+					</div>
+					<div class="Prepayment_sty no_mar">
+						<div><span class="col_ffb529 zy_dian">*</span> 备注</div>
+						<textarea class="Prepayment_area order_remark" type="text" placeholder="补充需求，如：期望服务时间"></textarea>					
+					</div>
+				</div>
+			</div>
+			<div class="back_ffb529 go_zf" >
+				<div><span class="col_fff">总价：</span><span class="col_fff">￥</span><span class="col_fff" id="order_price">100</span></div>
+				<div class="col_fff" id="go_zf">去支付  ></div>
+			</div>
+		</div>
+	</body>
+	<script src="js/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jq_weiui/js/jquery-weui.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="js/swiper/swiper-3.4.2.min.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/order_Prepayment.js"></script>
+</html>

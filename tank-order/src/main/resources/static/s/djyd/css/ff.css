@@ -1,0 +1,111 @@
+.ff_god {
+    width: 100%;
+}
+.god_top{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	background-color: #fff;
+	padding: 0.2rem 0.92rem;
+	
+	font-size: 0.3rem;
+}
+.god_top a{
+	color: #000;
+	position: relative;
+	font-weight:700;
+	width: 50%;
+	text-align: center;
+}
+.active{
+	color: #ffb033!important;
+}
+.bottom_bor{
+	position: absolute;
+	width: 1.5rem;
+	height: 3px;
+	top: 0.62rem;
+    left: 0.65rem;
+	background-color: #ffb033;
+	display: none;
+}
+.Ringer{
+	display: flex;
+	flex-direction: column;
+}
+.Ringer_logo {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-top: 0.29rem;
+}
+.Ringer_logo img{
+	width: 0.31rem;
+	height: 0.29rem;
+}
+.Ringer span{
+	color: #000;
+	font-size: 0.24rem;
+	margin-left: 0.08rem;
+	font-weight:700;
+}
+.Ringer_logo_left{
+	display: flex;
+}
+.Ringer_logo_right{
+	display: flex;
+}
+.Ringer_logo_right a{
+	font-size: 0.24rem;
+	color: #000;
+}
+.Ringer_logo_right img{
+	width: 0.16rem;
+	height: 0.17rem;
+}
+.Ringer_content{
+	margin-top: 0.32rem;
+}
+.gods_list{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	padding-left: 0.11rem;
+	padding-top: 0.19rem;
+	background-color: #FFFFFF;
+}
+.gods_content_price{
+	margin-bottom:0.08rem!important;
+}
+.gods_toux img{
+	width: 1.2rem;
+	height: 1.2rem;
+	border-radius: 32px;
+	line-height: 1.5;
+}
+.gods_content{
+	font-size: 0.24rem;
+	margin: 0 0.36rem;
+	margin-left:0.18rem;
+	width:100%;
+	border-bottom:1px solid #ddd;
+	
+}
+.gods_content_jse{
+	margin-top: 5px;
+}
+.gods_content p{
+	
+	margin-top: 0;
+}
+.gods_content p:first-child{
+	display: flex;
+	justify-content: space-between;
+	font-weight: 700;
+	font-size: 0.3rem;
+	line-height: 1.2;
+}
+
+.gods_content p:nth-child(3){
+	color: #2c2c2c;
+}
