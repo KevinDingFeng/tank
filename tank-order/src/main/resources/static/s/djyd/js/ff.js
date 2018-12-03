@@ -1,36 +1,19 @@
 $(document).ready(function () {
-	//url取参
-	function getQueryString(name) {
-	    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-	    var r = window.location.search.substr(1).match(reg);
-	    if (r != null) {
-	        return unescape(r[2]);
-	    }
-	    return null;
-	}
-	var _type = getQueryString("type");//类型
 	init();
-
 	function init() {
-		if(_type == "dl"){
+		var _type = "dl"
 			gods_search("11");
+		if(_type == "dl"){
 			$("#Ringer").addClass("active");
 			$("#Ringer").siblings().removeClass("active");
 			$("#Ringer>.bottom_bor").css("display","block");
 			$("#ladder>.bottom_bor").css("display","none");
 		}else if(_type == "pw"){
-			gods_search("13");
 			$("#ladder").addClass("active");
 			$("#ladder").siblings().removeClass("active");
 			$("#ladder>.bottom_bor").css("display","block");
 			$("#Ringer>.bottom_bor").css("display","none");
-		}else if(_type == "jx"){
-			window.location.href = "Ringer_xq.html?id=9&code=10";
-		}else{
-			gods_search("11");
 		}
-		
-		$(".Ringer_logo_right a").attr("href","Ringer_xq.html?id=9&code=11");
 		//导航显示 下面内容
 		$(".god_top a").click(function () {
 			$(this).addClass("active");
@@ -88,9 +71,8 @@ $(document).ready(function () {
 												<img src=${gods_tou}/>
 											</div>
 											<div class="gods_content">
-												<p class="gods_content_name">${_arrs[i].coach.name}</p>
+												<p class="gods_content_name">${_arrs[i].coach.name}<span class="col_ffb529">￥${_arrs[i].price}元起</span></p>
 												<p class="gods_content_jse">${_arrs[i].coach.introduction}</p>
-												<p class="gods_content_price">￥${_arrs[i].price}元/小时起</p>
 											</div>
 										</div>
 								`)
@@ -99,7 +81,7 @@ $(document).ready(function () {
 							//代练详情跳转
 							$(".gods_list").click(function () {
 								var gods_id = $(this).attr("list_id");
-								window.location.href = "Ringer_xq.html?id=" + gods_id + "&code=" + c_v;
+								window.location.href = "gods_xq.html?id=" + gods_id;
 							})
 						}
 					} else if (resp.code == "400") {
