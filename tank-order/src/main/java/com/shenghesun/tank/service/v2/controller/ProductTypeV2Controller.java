@@ -141,6 +141,8 @@ public class ProductTypeV2Controller {
 		JSONObject typesJson = this.formatTypes(types);
 		json.put("product_type", typesJson);
 		
+		json.put("pre_path", resourceService.getShowFilePath());
+		
 		return JsonUtils.getSuccessJSONObject(json);
 	}
 	
@@ -179,6 +181,8 @@ public class ProductTypeV2Controller {
 		List<ProductType> types = productTypeService.findAll();
 		JSONObject typesJson = this.formatTypes(types);
 		json.put("product_type", typesJson);
+		
+		json.put("pre_path", resourceService.getShowFilePath());
 		
 		return JsonUtils.getSuccessJSONObject(json_list);
 	}
@@ -315,6 +319,8 @@ public class ProductTypeV2Controller {
 		List<ProductType> types = productTypeService.findAll();
 		JSONObject typesJson = this.formatTypes(types);
 		json.put("product_type", typesJson);
+		
+		json.put("pre_path", resourceService.getShowFilePath());
 		
 		return JsonUtils.getSuccessJSONObject(json);
 	}
