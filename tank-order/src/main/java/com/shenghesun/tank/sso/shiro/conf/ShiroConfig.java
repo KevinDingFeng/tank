@@ -49,16 +49,16 @@ public class ShiroConfig {
 		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 		
 		/**
-		 * 本地调试须知  接口链接 shiro 配置  //提交代码时 删除下面的三行配置
+		 * 本地调试须知  接口链接 shiro 配置  //提交代码时 删除下面的三行配置 
 		 */
 //		filterChainDefinitionMap.put("/order/save_rapid", "anon");
 //		filterChainDefinitionMap.put("/quoted_product/rapid_price", "anon");
 //		filterChainDefinitionMap.put("/order/rapid_list", "anon");
-		filterChainDefinitionMap.put("/v2/product_type/detail", "anon");
-		filterChainDefinitionMap.put("/v2/product_type/detail2", "anon");
-		filterChainDefinitionMap.put("/v2/quoted_product/coachs", "anon");
-		filterChainDefinitionMap.put("/v2/product_type/coach_detail", "anon");
-		filterChainDefinitionMap.put("/v2/product_type/course", "anon");
+//		filterChainDefinitionMap.put("/v2/product_type/detail", "anon");
+//		filterChainDefinitionMap.put("/v2/product_type/coachs", "anon");
+//		filterChainDefinitionMap.put("/v2/quoted_product/coachs", "anon");
+//		filterChainDefinitionMap.put("/v2/product_type/coach_detail", "anon");
+//		filterChainDefinitionMap.put("/v2/product_type/course", "anon");
 		
 		filterChainDefinitionMap.put("/logout", "logout");
 		// 配置不会被拦截的链接 顺序判断

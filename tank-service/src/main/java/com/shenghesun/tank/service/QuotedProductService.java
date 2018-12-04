@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.shenghesun.tank.service.entity.QuotedProduct;
@@ -88,8 +90,8 @@ public class QuotedProductService {
 		return quotedProductDao.findByRemovedAndCoachId(removed, coachId);
 	}
 	
-	public List<QuotedProduct> findMinPriceByGroup(){
-		return quotedProductDao.findGroupByCoach();
+	public Page<QuotedProduct> findMinPriceByGroup(Pageable pageable){
+		return quotedProductDao.findGroupByCoach(pageable);
 	}
 	
 }

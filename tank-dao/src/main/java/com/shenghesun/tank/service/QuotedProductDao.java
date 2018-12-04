@@ -2,6 +2,8 @@ package com.shenghesun.tank.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -35,6 +37,6 @@ public interface QuotedProductDao extends JpaRepository<QuotedProduct, Long>, Jp
 	 */
 	
 	@Query("select qp from QuotedProduct qp where qp.price in(select min(price) from QuotedProduct group by qp.coach) order by qp.price asc ")
-	List<QuotedProduct> findGroupByCoach();
+	Page<QuotedProduct> findGroupByCoach(Pageable pageable);
 	
 }

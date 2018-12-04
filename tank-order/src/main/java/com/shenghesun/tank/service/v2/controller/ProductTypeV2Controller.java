@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -273,8 +278,11 @@ public class ProductTypeV2Controller {
 	@RequestMapping(value = "/coachs" , method = RequestMethod.GET)
 	public JSONObject getCoachs(HttpServletRequest request) {
 		JSONObject json = new JSONObject();
-		List<QuotedProduct> list = quotedProductService.findMinPriceByGroup();
-		json.put("list", list);
+		Sort sort = new Sort(Direction.DESC, "creation");
+		Pageable pageable = new PageRequest(0, 20, sort);
+		
+		Page<QuotedProduct> page = quotedProductService.findMinPriceByGroup(pageable);
+		json.put("page", page);
 		
 		return JsonUtils.getSuccessJSONObject(json);
 	}
