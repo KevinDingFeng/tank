@@ -1,11 +1,14 @@
 package com.shenghesun.tank.service.entity;
 
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shenghesun.tank.base.entity.BaseEntity;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -66,4 +69,11 @@ public class ProductType extends BaseEntity {
 	 * 是否已删除
 	 */
 	private boolean removed = false;
+	
+	/**
+	 * 服务类型的图片/视频资源
+	 */
+	@JsonIgnore
+	@OneToMany(cascade = { CascadeType.REFRESH }, fetch = FetchType.LAZY, mappedBy = "productType")
+	private List<Resource> paths;
 }

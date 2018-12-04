@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.shenghesun.tank.service.entity.QuotedProduct;
@@ -28,5 +29,12 @@ public interface QuotedProductDao extends JpaRepository<QuotedProduct, Long>, Jp
 
 	
 	List<QuotedProduct> findByRemovedAndCoachId(boolean removed,Long coachId);
+	
+	/**
+	 * v2 版本
+	 */
+	
+	@Query("select qp from QuotedProduct qp where qp.price in(select min(price) from QuotedProduct group by qp.coach) order by qp.price asc ")
+	List<QuotedProduct> findGroupByCoach();
 	
 }

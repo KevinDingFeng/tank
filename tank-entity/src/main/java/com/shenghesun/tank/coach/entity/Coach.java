@@ -91,9 +91,9 @@ public class Coach extends BaseEntity {
 	/**
 	 * 大神所拥有的课程
 	 */
-	@JsonIgnore
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY, mappedBy = "coaches")
-	private Set<Course> courses;
+//	@JsonIgnore
+//	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY, mappedBy = "coaches")
+//	private Set<Course> courses;
 	
 //	/**
 //	 * 大神提供的服务 有点儿多余 通过报价获取大神支持的服务

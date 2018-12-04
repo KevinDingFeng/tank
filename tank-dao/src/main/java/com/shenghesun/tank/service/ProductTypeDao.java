@@ -11,10 +11,10 @@ import com.shenghesun.tank.service.entity.ProductType;
 @Repository
 public interface ProductTypeDao extends JpaRepository<ProductType, Long>, JpaSpecificationExecutor<ProductType> {
 
-	ProductType findByCode(Integer code);
+	ProductType findByCode(int code);
 
-	List<ProductType> findByParentCode(Integer code);
+	List<ProductType> findByParentCode(int code);
 
 	List<ProductType> findByParentCodeIn(List<Integer> parentCodes);
-
+	
 }

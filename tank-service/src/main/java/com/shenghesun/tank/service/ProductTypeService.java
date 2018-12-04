@@ -92,4 +92,13 @@ public class ProductTypeService {
 		return null;		
 	}
 	
+	/**
+	 * 2018年11月29日11:49:35
+	 * 
+	 * v2 版本
+	 */
+	public ProductType findOne(Long id) {
+		return productTypeDao.findOne(id);
+	}
+	
 }

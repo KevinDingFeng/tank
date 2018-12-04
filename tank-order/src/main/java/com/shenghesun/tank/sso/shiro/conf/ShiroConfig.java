@@ -54,6 +54,11 @@ public class ShiroConfig {
 //		filterChainDefinitionMap.put("/order/save_rapid", "anon");
 //		filterChainDefinitionMap.put("/quoted_product/rapid_price", "anon");
 //		filterChainDefinitionMap.put("/order/rapid_list", "anon");
+		filterChainDefinitionMap.put("/v2/product_type/detail", "anon");
+		filterChainDefinitionMap.put("/v2/product_type/detail2", "anon");
+		filterChainDefinitionMap.put("/v2/quoted_product/coachs", "anon");
+		filterChainDefinitionMap.put("/v2/product_type/coach_detail", "anon");
+		filterChainDefinitionMap.put("/v2/product_type/course", "anon");
 		
 		filterChainDefinitionMap.put("/logout", "logout");
 		// 配置不会被拦截的链接 顺序判断

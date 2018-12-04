@@ -9,4 +9,12 @@ import com.shenghesun.tank.service.entity.Product;
 @Repository
 public interface ProductDao extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
 
+	/**
+	 * 2018年11月30日10:51:51
+	 * v2 版本
+	 * @param ptId
+	 * @return
+	 */
+	Product findByProductTypeId(Long ptId);
+	
 }

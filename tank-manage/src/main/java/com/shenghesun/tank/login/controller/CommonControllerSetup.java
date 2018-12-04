@@ -18,7 +18,7 @@ import com.shenghesun.tank.sso.model.LoginInfo;
 @ControllerAdvice("com.shenghesun.tank")
 public class CommonControllerSetup {
 
-	@ModelAttribute("loginUser")
+//	@ModelAttribute("loginUser")
 	public LoginInfo loginUser(HttpServletRequest req) {
 		LoginInfo login = null;
 		Subject sub = SecurityUtils.getSubject();

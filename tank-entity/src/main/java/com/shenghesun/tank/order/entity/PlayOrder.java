@@ -226,6 +226,13 @@ public class PlayOrder extends BaseEntity {
 			this.text = text;
 		}
 	}
+	
+	/**
+	 * 所选课程Id  部分服务无课程 
+	 */
+	@Column(nullable = true )
+	private Long courseId;
+	
 
 }
 //private int hour;

@@ -40,4 +40,14 @@ public class ProductService {
 		
 		return save(product);
 	}
+	
+	/**
+	 * 2018年11月30日10:52:05
+	 * 
+	 * v2版本
+	 */
+	public Product findByPtId(Long pTId) {
+		return productDao.findByProductTypeId(pTId);
+	}
+
 }

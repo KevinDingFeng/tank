@@ -32,6 +32,7 @@ import lombok.ToString;
 public class QuotedProduct extends BaseEntity {
 	
 //	@JsonIgnore
+	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 	@ManyToOne(cascade = { CascadeType.REFRESH }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "coach_id", nullable = false)
 	private Coach coach;

@@ -61,6 +61,24 @@ public class QuotedProductService {
 		}
 		return totalFee;
 	}
+	
+	/**
+	 * v2 
+	 * @param duration
+	 * @param price
+	 * @param qpDuration
+	 * @return
+	 */
+	public BigDecimal getTotalFeeV2(int duration, BigDecimal price) {
+		
+		BigDecimal totalFee = BigDecimal.ZERO;
+		if(price != null && price.compareTo(BigDecimal.ZERO) > 0) {
+				//大神针对单个服务的具体报价的单价 X （选择服务的时长 / 服务的单位时长）
+			totalFee = price.multiply(new BigDecimal(duration)); 
+		}
+		return totalFee;
+	}
+	
 
 	public QuotedProduct save(QuotedProduct entity) {
 		return quotedProductDao.save(entity);
@@ -69,5 +87,9 @@ public class QuotedProductService {
 	public List<QuotedProduct> findByRemovedAndCoachId(boolean removed,Long coachId){
 		return quotedProductDao.findByRemovedAndCoachId(removed, coachId);
 	}
-
+	
+	public List<QuotedProduct> findMinPriceByGroup(){
+		return quotedProductDao.findGroupByCoach();
+	}
+	
 }
