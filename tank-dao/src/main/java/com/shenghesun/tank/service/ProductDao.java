@@ -1,5 +1,7 @@
 package com.shenghesun.tank.service;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -16,5 +18,7 @@ public interface ProductDao extends JpaRepository<Product, Long>, JpaSpecificati
 	 * @return
 	 */
 	Product findByProductTypeId(Long ptId);
+	
+	List<Product> findByProductTypeIdIn(List<Long> ptIds);
 	
 }

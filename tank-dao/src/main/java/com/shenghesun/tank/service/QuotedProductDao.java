@@ -39,4 +39,6 @@ public interface QuotedProductDao extends JpaRepository<QuotedProduct, Long>, Jp
 	@Query("select qp from QuotedProduct qp where qp.price in(select min(price) from QuotedProduct group by qp.coach) order by qp.price asc ")
 	Page<QuotedProduct> findGroupByCoach(Pageable pageable);
 	
+	List<QuotedProduct> findByProductIdInOrderByPriceAsc(List<Long> pIds);
+	
 }

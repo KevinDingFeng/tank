@@ -1,5 +1,6 @@
 package com.shenghesun.tank.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -48,6 +49,15 @@ public class ProductService {
 	 */
 	public Product findByPtId(Long pTId) {
 		return productDao.findByProductTypeId(pTId);
+	}
+	
+	public List<Long> findByProductTypeIdIn(List<Long> ptIds){
+		List<Product> list = productDao.findByProductTypeIdIn(ptIds);
+		List<Long> pIds = new ArrayList<>(list.size());
+		for (Product product : list) {
+			pIds.add(product.getId());
+		}
+		return pIds;
 	}
 
 }

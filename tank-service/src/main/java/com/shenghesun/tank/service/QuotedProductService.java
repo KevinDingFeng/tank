@@ -94,4 +94,8 @@ public class QuotedProductService {
 		return quotedProductDao.findGroupByCoach(pageable);
 	}
 	
+	public List<QuotedProduct> findByProductIdIn(List<Long> pIds){
+		return quotedProductDao.findByProductIdInOrderByPriceAsc(pIds);
+	}
+	
 }
