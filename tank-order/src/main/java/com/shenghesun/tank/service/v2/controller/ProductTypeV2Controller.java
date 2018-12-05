@@ -134,7 +134,27 @@ public class ProductTypeV2Controller {
 		List<Resource> list = resourceService.findByProductTypeId(productType.getId(),false);
 		json.put("resource", list);
 		//统计 四大服务类型 数据
-		json.put("statis", this.formatDatas());
+		List<StatisDataModel> sdms = this.formatDatas();
+		List<Integer> codes = new ArrayList<>();
+		for (StatisDataModel statisDataModel : sdms) {
+			codes.add(statisDataModel.getCode());
+		}
+		if (!codes.contains(Integer.valueOf(typeCode))) {
+			JSONObject sdm = new JSONObject();
+			sdm.put("code", Integer.valueOf(typeCode));
+			sdm.put("counts", 923);
+			sdm.put("hours", 923);
+			json.put("statis", sdm);
+		}
+		for (StatisDataModel statisDataModel : sdms) {
+			if (statisDataModel.getCode() == Integer.valueOf(typeCode)) {
+				JSONObject sdm = new JSONObject();
+				sdm.put("code", statisDataModel.getCode());
+				sdm.put("counts", statisDataModel.getCounts() < 1000 ? 923 : statisDataModel.getCounts());
+				sdm.put("hours", statisDataModel.getHours() );
+				json.put("statis", sdm);
+			}
+		}
 		//课程表   	前端固定图片
 		//其他详情  	前端固定图片
 		//服务类型 默认价格 默认教练
