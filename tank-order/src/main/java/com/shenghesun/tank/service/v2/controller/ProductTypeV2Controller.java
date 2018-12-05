@@ -128,6 +128,8 @@ public class ProductTypeV2Controller {
 		if (productType == null || (productType != null && productType.getLevel() != 1)) {
 			return JsonUtils.getFailJSONObject("参数错误!");
 		}
+		ProductType p = productTypeService.findByCode(Integer.valueOf(typeCode));
+		json.put("v1", p);
 		//服务类型资源文件列表
 		List<Resource> list = resourceService.findByProductTypeId(productType.getId(),false);
 		json.put("resource", list);
@@ -144,7 +146,7 @@ public class ProductTypeV2Controller {
 		
 		List<ProductType> types = productTypeService.findAll();
 		JSONObject typesJson = this.formatTypes(types);
-		json.put("product_type", typesJson);
+		json.put("product_types", typesJson);
 		
 		json.put("pre_path", resourceService.getShowFilePath());
 		
@@ -159,10 +161,10 @@ public class ProductTypeV2Controller {
 	@RequestMapping(value = "/detail2" , method = RequestMethod.GET)
 	public JSONObject type2(HttpServletRequest request) {
 		List<JSONObject> json_list = new ArrayList<>();
-		
+		JSONObject jsonObject = new JSONObject();
 		List<String> codesList = Arrays.asList("11","12");
-		JSONObject json = new JSONObject();
 		for (String typeCode : codesList) {
+			JSONObject json = new JSONObject();
 			ProductType productType =  productTypeService.findByCode(Integer.parseInt(typeCode));
 			if (productType == null || (productType != null && productType.getLevel() != 1)) {
 				return JsonUtils.getFailJSONObject("参数错误!");
@@ -175,6 +177,8 @@ public class ProductTypeV2Controller {
 			//课程表   	前端固定图片
 			//其他详情  	前端固定图片
 			//服务类型 默认价格 默认教练
+			ProductType p = productTypeService.findByCode(Integer.valueOf(typeCode));
+			json.put("v1", p);
 			json.put("types", this.formatProductTypesByProductType(Integer.valueOf(typeCode)));
 			List<Coach> coachs = coachService.findAll();
 			json.put("coach", coachs);
@@ -185,11 +189,13 @@ public class ProductTypeV2Controller {
 		
 		List<ProductType> types = productTypeService.findAll();
 		JSONObject typesJson = this.formatTypes(types);
-		json.put("product_type", typesJson);
+		jsonObject.put("product_type", typesJson);
 		
-		json.put("pre_path", resourceService.getShowFilePath());
+		jsonObject.put("pre_path", resourceService.getShowFilePath());
 		
-		return JsonUtils.getSuccessJSONObject(json_list);
+		jsonObject.put("list", json_list);
+		
+		return JsonUtils.getSuccessJSONObject(jsonObject);
 	}
 	
 	//统计 四大服务类型 数据
@@ -465,7 +471,7 @@ public class ProductTypeV2Controller {
 							Integer level1Code = level2CodeMap.get(level2Code);
 							typeJson.put("v1_code", level1Code);
 							typeJson.put("v1_name", level1Map.get(level1Code));
-							json.put("t" + pType.getId(), typeJson);
+							json.put("v" + pType.getCode(), typeJson);
 						}
 					}else {
 						JSONObject typeJson = new JSONObject();
@@ -477,7 +483,7 @@ public class ProductTypeV2Controller {
 						Integer level1Code = level2CodeMap.get(level2Code);
 						typeJson.put("v1_code", level1Code);
 						typeJson.put("v1_name", level1Map.get(level1Code));
-						json.put("t" + t.getId(), typeJson);
+						json.put("v" + t.getCode(), typeJson);
 					}
 				}
 			}
