@@ -780,11 +780,12 @@ public class PlayOrderV2Controller {
 	@RequestMapping(value = "/v2form" ,method = RequestMethod.GET)
 	public JSONObject forms(@RequestParam(value = "qpId",required = true)String qpId,
 			@RequestParam(value ="courseId",required = false)String courseId,
-			@RequestParam(value ="count",required = false)int count, HttpServletRequest request) {
+			@RequestParam(value ="count",required = false)String count, HttpServletRequest request) {
 		JSONObject json = new JSONObject();
 		if (StringUtils.isBlank(qpId)) {
 			return JsonUtils.getFailJSONObject("参数错误!");
 		}
+		json.put("count", StringUtils.isBlank(count)? 1 :count );
 		QuotedProduct qp = quotedProductService.findById(Long.parseLong(qpId));
 		json.put("quotedProduct", qp);
 		json.put("coach", qp.getCoach());
