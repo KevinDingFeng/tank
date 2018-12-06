@@ -367,6 +367,7 @@ public class ProductTypeV2Controller {
 	 */
 	@RequestMapping(value = "/coach_detail", method = RequestMethod.GET)
 	public JSONObject coachDetail(@RequestParam(value = "coachId", required = false) String coachId,
+			@RequestParam(value ="qpId",required = false)String qpId,
 			HttpServletRequest request) {
 		JSONObject json = new JSONObject();
 		// 教练详情
@@ -400,10 +401,21 @@ public class ProductTypeV2Controller {
 		List<ProductType> types = productTypeService.findAll();
 		JSONObject typesJson = this.formatTypes(types);
 		json.put("product_type", typesJson);
-
+		
+		//默认信息
+		QuotedProduct qp = quotedProductService.findById(Long.parseLong(qpId));
+		json.put("def", this.formatDefsByCoach(qp,typesJson));
+		
 		json.put("pre_path", resourceService.getShowFilePath());
 
 		return JsonUtils.getSuccessJSONObject(json);
+	}
+	private JSONObject formatDefsByCoach(QuotedProduct qp,JSONObject typesJson) {
+		JSONObject jsdf = new JSONObject();
+		jsdf.put("qp", qp);
+		ProductType ptType = qp.getProduct().getProductType();
+		jsdf.put("pro_type", typesJson.get("v"+ptType.getCode()));
+		return jsdf;
 	}
 
 	// 服务类型 层级 二级开始 ---- 大神列表进入
@@ -431,9 +443,9 @@ public class ProductTypeV2Controller {
 						json_v4.put("v4_code", v4.getCode());
 						json_v4.put("v4_name", v4.getName());
 						json_v4.put("content", StringUtils.isBlank(v4.getRemark()) ? v4.getName() : v4.getRemark());
-						QuotedProduct q = quotedProductService.findByCoachIdAndProductProductTypeCode(coachId,
-								v4.getCode());
-						json_v4.put("default_price", q.getPrice());
+//						QuotedProduct q = quotedProductService.findByCoachIdAndProductProductTypeCode(coachId,
+//								v4.getCode());
+//						json_v4.put("default_price", q.getPrice());
 						List<Course> course = courseService.findByProductTypeIdAndCoachId(v4.getId(), coachId);
 
 						json_v4.put("course", this.formatCourse(course));
@@ -441,9 +453,9 @@ public class ProductTypeV2Controller {
 					}
 					json_v3.put("v4", list4);
 				} else {
-					QuotedProduct q = quotedProductService.findByCoachIdAndProductProductTypeCode(coachId,
-							v3.getCode());
-					json_v3.put("default_price", q.getPrice());
+//					QuotedProduct q = quotedProductService.findByCoachIdAndProductProductTypeCode(coachId,
+//							v3.getCode());
+//					json_v3.put("default_price", q.getPrice());
 					List<Course> course = courseService.findByProductTypeIdAndCoachId(v3.getId(), coachId);
 					json_v3.put("course", this.formatCourse(course));
 					json_v3.put("content", StringUtils.isBlank(v3.getRemark()) ? v3.getName() : v3.getRemark());
