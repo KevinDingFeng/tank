@@ -317,8 +317,8 @@ public class ProductTypeV2Controller {
 //						QuotedProduct q = quotedProductService.findByCoachIdAndProductProductTypeCode(1l, v4.getCode());
 //						json_v4.put("default_price", q.getPrice());
 //						json_v4.put("default_coach", 1l);
-//						List<Course> course = courseService.findByProductTypeIdAndCoachId(v4.getId(), 1l);
-//						json_v4.put("course", this.formatCourse(course));
+						List<Course> course = courseService.findByProductTypeIdAndCoachId(v4.getId(), 1l);
+						json_v4.put("course", this.formatCourse(course));
 						list4.add(json_v4);
 					}
 					json_v3.put("v4", list4);
@@ -326,8 +326,8 @@ public class ProductTypeV2Controller {
 //					QuotedProduct q = quotedProductService.findByCoachIdAndProductProductTypeCode(1l, v3.getCode());
 //					json_v3.put("default_price", q.getPrice());
 //					json_v3.put("default_coach", 1l);
-//					List<Course> course = courseService.findByProductTypeIdAndCoachId(v3.getId(), 1l);
-//					json_v3.put("course", this.formatCourse(course));
+					List<Course> course = courseService.findByProductTypeIdAndCoachId(v3.getId(), 1l);
+					json_v3.put("course", this.formatCourse(course));
 					json_v3.put("content", StringUtils.isBlank(v3.getRemark()) ? v3.getName() : v3.getRemark());
 					json_v3.put("v4", null);
 				}
