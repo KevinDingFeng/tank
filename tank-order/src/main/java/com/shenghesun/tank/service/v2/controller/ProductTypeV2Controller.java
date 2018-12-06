@@ -554,10 +554,12 @@ public class ProductTypeV2Controller {
 							Integer level1Code = level2CodeMap.get(level2Code);
 							typeJson.put("v1_code", level1Code);
 							typeJson.put("v1_name", level1Map.get(level1Code));
+							typeJson.put("content", StringUtils.isBlank(pType.getRemark()) ? pType.getName() : pType.getRemark());
 							json.put("v" + pType.getCode(), typeJson);
 						}
 					} else {
 						JSONObject typeJson = new JSONObject();
+						typeJson.put("content", StringUtils.isBlank(t.getRemark()) ? t.getName() : t.getRemark());
 						typeJson.put("v3_code", t.getCode());
 						typeJson.put("v3_name", t.getName());
 						Integer level2Code = t.getParentCode();
