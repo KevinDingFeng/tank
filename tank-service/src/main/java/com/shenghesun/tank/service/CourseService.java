@@ -25,4 +25,8 @@ public class CourseService {
 		return courseDao.findByProductTypeIdAndCoachId(productTypeId, coachId);
 	}
 	
+	public Course findOne(Long cId) {
+		return courseDao.findOne(cId);
+	}
+	
 }

@@ -59,7 +59,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/v2/product_type/coachs", "anon");
 		filterChainDefinitionMap.put("/v2/quoted_product/coachs", "anon");
 		filterChainDefinitionMap.put("/v2/product_type/coach_detail", "anon");
-		filterChainDefinitionMap.put("/v2/product_type/course", "anon");
+		filterChainDefinitionMap.put("/v2/order/v2form", "anon");
 		
 		filterChainDefinitionMap.put("/logout", "logout");
 		// 配置不会被拦截的链接 顺序判断
