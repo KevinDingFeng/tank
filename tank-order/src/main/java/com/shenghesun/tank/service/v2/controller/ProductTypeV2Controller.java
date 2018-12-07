@@ -167,14 +167,15 @@ public class ProductTypeV2Controller {
 		List<ProductType> types = productTypeService.findAll();
 		JSONObject typesJson = this.formatTypes(types);
 		json.put("product_types", typesJson);
-		
-		// 服务类型 默认价格 默认教练
-		json.put("types", this.formatProductTypesByProductType(Integer.valueOf(typeCode)));
-		
+				
 		//默认信息
 		List<Long> ids = this.getProductIds(typeCode);
 		List<QuotedProduct> qps = quotedProductService.findByProductIdIn(ids);
-		json.put("def", this.formatDefaults(qps, typesJson));
+		JSONObject def = this.formatDefaults(qps, typesJson);
+		json.put("def", def);
+		
+		// 服务类型 默认价格 默认教练
+		json.put("types", this.formatProductTypesByProductType(Integer.valueOf(typeCode),Long.parseLong(def.get("coachId").toString())));
 		//大神排序
 		json.put("coaches", coachService.findAll(new Sort(Direction.DESC, "seqNum")));
 
@@ -249,7 +250,7 @@ public class ProductTypeV2Controller {
 			// 服务类型 默认价格 默认教练
 			ProductType p = productTypeService.findByCode(Integer.valueOf(typeCode));
 			json.put("v1", p);
-			json.put("types", this.formatProductTypesByProductType(Integer.valueOf(typeCode)));
+//			json.put("types", this.formatProductTypesByProductType(Integer.valueOf(typeCode)));
 			List<Coach> coachs = coachService.findAll();
 			json.put("coach", coachs);
 			// 课程 暂无
@@ -294,7 +295,7 @@ public class ProductTypeV2Controller {
 	}
 
 	// 服务类型 层级 二级开始 ---- 服务类型进入
-	private List<JSONObject> formatProductTypesByProductType(int code) {
+	private List<JSONObject> formatProductTypesByProductType(int code,Long coachId) {
 		List<ProductType> v2List = productTypeService.findByParentCode(code);
 		List<JSONObject> list2 = new ArrayList<>();
 		for (ProductType v2 : v2List) {
@@ -318,22 +319,14 @@ public class ProductTypeV2Controller {
 						json_v4.put("v4_code", v4.getCode());
 						json_v4.put("v4_name", v4.getName());
 						json_v4.put("content", StringUtils.isBlank(v4.getRemark()) ? v4.getName() : v4.getRemark());
-//						QuotedProduct q = quotedProductService.findByCoachIdAndProductProductTypeCode(1l, v4.getCode());
-//						json_v4.put("default_price", q.getPrice());
-//						json_v4.put("default_coach", 1l);
-						
-//						List<Course> course = courseService.findByProductTypeIdAndCoachId(v4.getId(), 1l);
-//						json_v4.put("course", this.formatCourse(course));
+						List<Course> course = courseService.findByProductTypeIdAndCoachId(v4.getId(), coachId);
+						json_v4.put("course", course.size() > 0 ? this.formatCourse(course) : null);
 						list4.add(json_v4);
 					}
 					json_v3.put("v4", list4);
 				} else {
-//					QuotedProduct q = quotedProductService.findByCoachIdAndProductProductTypeCode(1l, v3.getCode());
-//					json_v3.put("default_price", q.getPrice());
-//					json_v3.put("default_coach", 1l);
-					
-//					List<Course> course = courseService.findByProductTypeIdAndCoachId(v3.getId(), 1l);
-//					json_v3.put("course", this.formatCourse(course));
+					List<Course> course = courseService.findByProductTypeIdAndCoachId(v3.getId(), coachId);
+					json_v3.put("course", course.size() > 0 ? this.formatCourse(course) : null);
 					json_v3.put("content", StringUtils.isBlank(v3.getRemark()) ? v3.getName() : v3.getRemark());
 					json_v3.put("v4", null);
 				}
@@ -452,21 +445,14 @@ public class ProductTypeV2Controller {
 						json_v4.put("v4_code", v4.getCode());
 						json_v4.put("v4_name", v4.getName());
 						json_v4.put("content", StringUtils.isBlank(v4.getRemark()) ? v4.getName() : v4.getRemark());
-//						QuotedProduct q = quotedProductService.findByCoachIdAndProductProductTypeCode(coachId,
-//								v4.getCode());
-//						json_v4.put("default_price", q.getPrice());
 						List<Course> course = courseService.findByProductTypeIdAndCoachId(v4.getId(), coachId);
-
-						json_v4.put("course", this.formatCourse(course));
+						json_v4.put("course", course.size() > 0 ? this.formatCourse(course) : null);
 						list4.add(json_v4);
 					}
 					json_v3.put("v4", list4);
 				} else {
-//					QuotedProduct q = quotedProductService.findByCoachIdAndProductProductTypeCode(coachId,
-//							v3.getCode());
-//					json_v3.put("default_price", q.getPrice());
 					List<Course> course = courseService.findByProductTypeIdAndCoachId(v3.getId(), coachId);
-					json_v3.put("course", this.formatCourse(course));
+					json_v3.put("course", course.size() > 0 ? this.formatCourse(course) : null);
 					json_v3.put("content", StringUtils.isBlank(v3.getRemark()) ? v3.getName() : v3.getRemark());
 					json_v3.put("v4", null);
 				}
