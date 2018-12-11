@@ -1,4 +1,4 @@
-var $main_URL_yd = "http://localhost:7002"; //移动连接服务的主地址
+var $main_URL_yd = "http://localhost:7000"; //移动连接服务的主地址
 //var $main_URL_yd = "http://tank.dazonghetong.com"; //移动连接服务的主地址
 //var $main_URL_yd = "http://tk.dazonghetong.com"; //移动连接服务的主地址
 (function(win, doc) {
@@ -12,7 +12,10 @@ var $main_URL_yd = "http://localhost:7002"; //移动连接服务的主地址
 	win.addEventListener('resize', setFont, false);
 	setFont();
 })(window, document);
+
 $(document).ready(function() {
+	//轮播
+	
 	(function () {
         if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
             handleFontSize();
