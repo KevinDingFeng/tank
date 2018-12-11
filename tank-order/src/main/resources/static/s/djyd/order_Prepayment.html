@@ -8,7 +8,6 @@
 		<link rel="stylesheet" type="text/css" href="css/weiui/weui.css"/>
 		<link rel="stylesheet" type="text/css" href="js/swiper/swiper-3.4.2.min.css"/>
 		<link rel="stylesheet" type="text/css" href="css/home.css"/>
-		<link rel="stylesheet" type="text/css" href="css/index.css"/>
 		<link rel="stylesheet" type="text/css" href="css/order_Prepayment.css"/>
 	</head>
 	<body>
@@ -19,28 +18,32 @@
 					<div>订单内容</div>
 				</div>
 				<div class="fg_hr">
+					<div class="Prepayment_sty" id="gods_first">
+						<div>大神</div>
+						<div class="col_ffb529 gods_name"></div>
+					</div>
 					<div class="Prepayment_sty">
 						<div>服务类型</div>
-						<div class="col_ffb529">教学</div>
+						<div class="col_ffb529 dl_type"></div>
 					</div>
 					<div class="Prepayment_sty">
 						<div>服务</div>
-						<div class="col_ffb529">基础教学>单人教学</div>
+						<div class="col_ffb529 fw_name"></div>
 					</div>
 					<div class="Prepayment_sm">
 						<div>服务说明</div>
-						<div class="col_ffb529">基本功训练、点位训练、地图训练</div>
+						<div class="col_ffb529 fw_content"></div>
 					</div>
-					<div class="Prepayment_sty">
+					<div class="Prepayment_sty" id='class_ds'>
 						<div>课程</div>
-						<div class="col_ffb529">轻坦训练</div>
+						<div class="col_ffb529 class_name"></div>
 					</div>
-					<div class="Prepayment_sty">
+					<div class="Prepayment_sty" id="others_first">
 						<div>大神</div>
-						<div class="col_ffb529">刀爷</div>
+						<div class="col_ffb529 gods_name">刀爷</div>
 					</div>
 					<div class="Prepayment_price">
-						<div>单价：<span class="col_ffb529">￥</span><span class="col_ffb529" id="order_price">100</span></div>
+						<div>单价:<span class="col_ffb529">￥</span><span class="col_ffb529 order_price"></span></div>
 					</div>
 				</div>
 			</div>
@@ -71,7 +74,7 @@
 				<div class="fg_hr">
 					<div class="Prepayment_sty">
 						<div><span class="col_ffb529 zy_dian">*</span> 手机号</div>
-						<input class="Prepayment_inpt" type="text" placeholder="请输入您的手机号，11位" max="11"/>
+						<input class="Prepayment_inpt phone_num" type="text" placeholder="请输入您的手机号" max="11"/>
 					</div>
 					<div class="Prepayment_sty">
 						<div><span class="col_ffb529 zy_dian">*</span> 微信号</div>
@@ -84,7 +87,7 @@
 				</div>
 			</div>
 			<div class="back_ffb529 go_zf" >
-				<div><span class="col_fff">总价：</span><span class="col_fff">￥</span><span class="col_fff" id="order_price">100</span></div>
+				<div><span class="col_fff">总价：</span><span class="col_fff">￥</span><span class="col_fff order_price" id="z_price">100</span></div>
 				<div class="col_fff" id="go_zf">去支付  ></div>
 			</div>
 		</div>

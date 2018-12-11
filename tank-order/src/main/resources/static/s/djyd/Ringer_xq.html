@@ -8,11 +8,20 @@
 		<link rel="stylesheet" type="text/css" href="css/weiui/weui.css"/>
 		<link rel="stylesheet" type="text/css" href="js/swiper/swiper-3.4.2.min.css"/>
 		<link rel="stylesheet" type="text/css" href="css/home.css"/>
-		<link rel="stylesheet" type="text/css" href="css/index.css"/>
 		<link rel="stylesheet" type="text/css" href="css/Ringer_xq.css"/>
 	</head>
 	<body>
 		<div class="Ringer_xq">
+			 <div class="dl_choose">
+				<a class="active" id="student" href="javascript:void(0)" code="11">
+					主播代练
+					<p class="bottom_bor" style="display:block"></p>
+				</a>		
+				<a id="ladder" href="javascript:void(0)" code="12">
+					代练员代练
+					<p class="bottom_bor"></p>
+				</a>
+			</div>
 			<div class="swiper-container" id="xq_banner">
 				<div class="row swiper-wrapper">
 					<div class="col-xs-12 col-md-12 swiper-slide">
@@ -29,20 +38,20 @@
 				<div class="swiper-pagination"></div>
 			</div>
 			<div class="xq_title bor_jl">
-				<p class="xq_name">教学简介教学简介教学简介教学简介教学简介教学简介教学简介教学简介</p>
-				<p>活动</p>
+				<p class="xq_name" id="type_name"></p>
+				<p style="display:none">活动</p>
 			</div>
 			<div class="xq_sj bor_jl mar_xq">
-				<p>已接单<span class="col_ffb529"> 38828</span></p>
-				<p>已服务(h)<span class="col_ffb529"> 38828</span></p>
-				<p class="col_ffb529">★★★★★</p>
+				<p>已接单<span class="col_ffb529" id="jd_num">38828</span></p>
+				<p>已服务(h)<span class="col_ffb529" id="fw_num">38828</span></p>
+				<p class="col_ffb529" id="xing_num">★★★★★</p>
 			</div>
 			<div class="xq_service bor_jl mar_xq">
 				<div class="service_top">
 					<div>
 						<p class="col_999999">优惠</p>
-						<p class="center_sty">领券，满￥500减￥20</p>
-						<p class="right_sty col_ffb529">领券></p>					
+						<p class="center_sty">暂无优惠券</p><!-- 领券，满￥500减￥20 -->
+						<p class="right_sty col_ffb529" style="display:none">领券></p>					
 					</div>
 					<div>
 						<p class="col_999999">活动</p>
@@ -52,16 +61,16 @@
 				<div class="service_top">
 					<div>
 						<p class="col_999999">服务</p>
-						<p class="center_sty">每日1课  I 职业导师  I 可靠好玩</p>		
+						<p class="center_sty" id="xq_fw">每日1课  I 职业导师  I 可靠好玩</p>		
 					</div>
 					<div class="no_bor no_pad">
 						<p class="col_999999">服务</p>
-						<p class="center_sty">请选择服务</p>
+						<p class="center_sty" id="fw_choose">请选择服务</p>
 						<p class="right_sty col_ffb529" id="choose">选择></p>		
 					</div>
 				</div>
 			</div>
-			<div class="xq_syllabus bor_jl mar_xq">
+			<div class="xq_syllabus bor_jl mar_xq" id="class_biao">
 				<div class="syllabus_name">
 					<p class="syllabus_g"></p>
 					<span>课程表</span>
@@ -91,6 +100,10 @@
 					</div>
 				</div>
 			</div>
+			<div id="go_money_1">
+				<div class="c_dd">￥<span id="zd_price"></span></div>
+				<div>立即下单 ></div>
+			</div>
 		</div>
 		<div id="xq_cumtor"></div>
 		<div class="t_pop">
@@ -106,33 +119,45 @@
 				<div class="pop_center">
 					<div class="pop_first">
 						<p>服务类型</p>
-						<p class="col_ffb529">教学</p>
+						<p id="c_type" class="col_ffb529">教学</p>
 					</div>
-					<div class="fw_dl_name no_bor">服务大类</div>
-					<div class="fw_dl">
-						<div class="dl_active">基础教学</div>
-						<div>晋级教学</div>
-						<div>私人订制</div>
-					</div>
-					<div class="fw_dl_name">服务子类</div>
-					<div class="fw_zl">
-						<div class="zl_active">基础教学</div>
-						<div>晋级教学</div>
-						<div>私人订制</div>
+					<div>
+						<div class="fw_dl_name no_bor">服务大类</div>
+						<div class="fw_dl" >
+							<!-- <div class="dl_active">基础教学</div>
+							<div>晋级教学</div>
+							<div>私人订制</div> -->
+						</div>
+						<div class="fw_dl_name">服务子类</div>
+						<div class="fw_zl" id="fw_san">
+							<!-- <div class="zl_active">基础教学</div>
+							<div>晋级教学</div>
+							<div>私人订制</div> -->
+						</div>
+						<div class="hassi">
+							<div class="fw_dl_name">服务子类</div>
+							<div class="fw_zl" id="fw_si">
+								<!-- <div class="zl_active">基础教学</div>
+								<div>晋级教学</div>
+								<div>私人订制</div> -->
+							</div>
+						</div>
 					</div>
 					<div class="fw_dl_name">服务说明</div>
 					<div>
-						<textarea class="sm_area" placeholder="基本功训练、点位训练、地图训练、车辆训练、基本功训练、点位训练、地图训练、车辆训练"></textarea>
+						<textarea class="sm_area" placeholder="基本功训练、点位训练、地图训练、车辆训练、基本功训练、点位训练、地图训练、车辆训练" disabled></textarea>
 					</div>
-					<div class="fw_dl_name">课程</div>
-					<div class="fw_class">
-						<div class="class_active">基础教学</div>
-						<div>晋级教学</div>
+					<div id="class_ds">
+						<div class="fw_dl_name">课程</div>
+						<div class="fw_class">
+							<!-- <div class="class_active">基础教学</div>
+							<div>晋级教学</div> -->
+						</div>
 					</div>
 					<div class="fw_dl_name">教练</div>
 					<div class="gods_list">
-						<div class="gods_active">刀爷</div>
-						<div>汤圆</div>
+						<!-- <div class="gods_active">刀爷</div>
+						<div>汤圆</div> -->
 					</div>
 					<div class="choose_time">
 						<p>购买数量</p>

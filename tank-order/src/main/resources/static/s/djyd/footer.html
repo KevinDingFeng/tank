@@ -2,11 +2,20 @@
 	<img src="images/new/fw_h.png"/>
 	<p>服务</p>
 </a>
-<a href="index.html" class="nav_center">
+<a href="../djyd/index.html" class="nav_center">
 	<img src="images/new/homes_x.png"/>
 	<p>首页</p>
 </a>
-<a href="my.html" class="nav_right">
+<a href="../djyd/my.html" class="nav_right">
 	<img src="images/new/my_h.png"/>
 	<p>我的</p>
 </a>	
+<script>
+/*footer*/
+var _footer = window.location.href;
+_footer = _footer.split("/djyd/");
+if(_footer[1] == "my.html" || _footer[1] == "my_order.html"  ){
+	$(".nav_center>img").prop("src","images/new/homes_h.png");
+	$(".nav_right>img").prop("src","images/new/my_x.png")
+}
+</script>

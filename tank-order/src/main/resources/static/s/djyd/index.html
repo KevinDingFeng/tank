@@ -7,18 +7,36 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >	
 		<link rel="stylesheet" type="text/css" href="js/jq_weiui/css/jquery-weui.css"/>
 		<link rel="stylesheet" type="text/css" href="css/weiui/weui.css"/>
+		<link rel="stylesheet" type="text/css" href="js/swiper/swiper-3.4.2.min.css"/>
 		<link rel="stylesheet" type="text/css" href="css/home.css"/>
 		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+		<style>
+			.swiper-slide>a>img{
+				width: 100%;
+				height: 3rem;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="dj">
-			<div class="banner">
-				<!--  <p>PEDALWORKS</p>
-				<p>THAN SERVED</p>
-				<p>SENIOR COACH TEAM WITH INTERNATIONAH</p>
-				<p><span>ONSULTANTMORE</span> THAN</p>
-				<p>SERVED AS SALES</p>-->
+			<div class="swiper-container" id="xq_banner">
+				<div class="row swiper-wrapper">
+					<div class="col-xs-12 col-md-12 swiper-slide">
+						<a href="javascript:;" target="_blank">
+							<img src="/s/djyd/images/new/banner.png"/>
+						</a>
+					</div>
+					<div class="col-xs-12 col-md-12 swiper-slide">
+						<a href="javascript:;" target="_blank">
+							<img src="/s/djyd/images/icon-lg.jpg"/>
+						</a>
+					</div>
+				</div>
+				<div class="swiper-pagination"></div>
 			</div>
+			<!-- <div class="banner">
+
+			</div> -->
 			<a class="kj_go" href="../djyd/kj_order.html">
 				<img class="kj_img" src="images/new/kj_img.png"/>
 				<div class="kj_text">
@@ -83,7 +101,14 @@
 	<script src="js/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 	<!--  <script type="text/javascript" src="js/wx_sq.js"></script>-->
 	<script src="js/jq_weiui/js/jquery-weui.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="js/swiper/swiper-3.4.2.min.js"></script>
 	<script type="text/javascript" src="js/index.js"></script>
 	<script type="text/javascript" src="js/scroll.js"></script>
-	
+	<script>
+		var mySwiper = new Swiper('.swiper-container', {
+			autoplay: 100000, //可选选项，自动滑动
+			pagination: ".swiper-pagination",
+			paginationClickable:true,//--实现小圆点点击
+		})
+	</script>
 </html>
