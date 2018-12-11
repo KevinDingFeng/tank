@@ -231,7 +231,7 @@ $(document).ready(function() {
 						}else if(v1_code == "12"){
 							$(".pop_center").css("min-height","14rem");
 						}else if(v1_code == "13"){
-							$(".pop_center").css("min-height","10.5rem");
+							$(".pop_center").css("min-height","11rem");
 						}
 					}else{
 						$.toast(("价格获取失败"+resp.message));

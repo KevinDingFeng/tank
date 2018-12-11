@@ -158,15 +158,14 @@ $(document).ready(function() {
 				$(this).siblings().removeClass("gods_active");
 				var v3_code = $("#fw_san>.zl_active").attr("v3_code");
 				var gods_id = $(this).attr("gods_id");//大神id
-				get_si(v3_code)
-				
+				get_si(v3_code)			
 			})
 			$(".dl_choose>a").click(function(){
 				$(this).addClass("active");
 				$(this).children().css("display","block");
 				$(this).siblings().removeClass("active");
 				$(this).siblings().children().css("display","none");
-				var _type = $(this).attr("code");
+				_type = $(this).attr("code");
 				if(_type == "11"){
 					getlist(_type);
 					//点击服务大类
@@ -214,7 +213,6 @@ $(document).ready(function() {
 						$(this).siblings().removeClass("gods_active");
 						var v3_code = $("#fw_san>.zl_active").attr("v3_code");
 						var gods_id = $(this).attr("gods_id");//大神id
-						debugger
 						if(v4_arr.length<=0){
 							get_price(v3_code,gods_id)
 						}else{
@@ -341,16 +339,10 @@ $(document).ready(function() {
 			$(".sm_area").html($("#fw_san>.zl_active").attr("content"));
 		}
 		if(show_list_4.length!=0){
-			if(_type == "10"){
-				$(".pop_center").css("min-height","14rem");
-			}
 			$("#class_ds").show();
 			$(".fw_class").empty();
 			$(".fw_class").append(show_list_4);
 		}else{
-			if(_type == "10"){
-				$(".pop_center").css("min-height","12rem")
-			}
 			$("#class_ds").hide();
 		}
 		
@@ -385,11 +377,12 @@ $(document).ready(function() {
 			}else{
 				$(".sm_area").html($("#fw_si>.zl_active").attr("content"));
 			}
-			$(".pop_center").css("min-height","15.2rem");
+			$(".pop_center").css("min-height","16rem");
 			var v3_code = $("#fw_si>.zl_active").attr("v4_code");//第三级code
 			var gods_id = $(".gods_list>.gods_active").attr("gods_id");//大神id
 			get_price(v3_code,gods_id);
 		}else{
+			$(".hassi").hide();
 			var v3_code = $("#fw_san>.zl_active").attr("v3_code");//第三级code
 			var gods_id = $(".gods_list>.gods_active").attr("gods_id");//大神id
 			get_price(v3_code,gods_id);
@@ -415,7 +408,6 @@ $(document).ready(function() {
 					var _price = resp.data.quotedProduct.price;
 					$(".pop_price").html(_price+"元/人");//展示的价格
 					$("#zd_price").html(_price.price);//展示的价格
-					
 					//服务大类名字
 					var fw_er = $(".fw_dl>.dl_active").html();
 					//服务子类名字三级
@@ -427,7 +419,18 @@ $(document).ready(function() {
 					}else{
 						fw_si= "I"+fw_si
 					}
-					$("#fw_choose").html(fw_er+" I "+fw_san+ fw_si)
+					$("#fw_choose").html(fw_er+" I "+fw_san+ fw_si);
+					var v2_code = $(".fw_dl>.dl_active").attr("v2_code");
+					if(v2_code == "1101"){
+						$(".pop_center").css("min-height","14rem");
+					}else if(v2_code == "1105" ||v2_code == "1104" ||v2_code == "1106"){
+						$(".pop_center").css("min-height","12rem");
+					}else if(v2_code == "1102" ||v2_code == "1103"){
+						$(".pop_center").css("min-height","16rem");
+					}
+					if(_type =="12"){
+						$(".pop_center").css("min-height","14rem");
+					}
 				}
 			}
 		})
