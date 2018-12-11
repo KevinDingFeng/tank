@@ -8,6 +8,9 @@ body{
 a{
 	text-decoration: none;
 }
+.f_weight{
+	font-weight: 700;
+}
 .tl_l{
 	text-align:left;
 }
@@ -83,4 +86,93 @@ a{
 	background:rgba(255,255,255,0.3);
 }
 
+/* 修改swiper未选择颜色 */
+.swiper-pagination-bullet{
+	background: #fff;
+	opacity: 1;
+}
+.swiper-pagination-bullet-active {
+   opacity: 1;
+   background-image: linear-gradient(90deg, 
+		#fed426 0%, 
+		#fea126 100%), 
+	linear-gradient(
+		#ffffff, 
+		#ffffff);
+}
+/* footer */
+#bottom_nav{
+	position: fixed;
+	display: flex;
+	width: 100%;
+	flex-wrap: nowrap;
+	justify-content: center;
+	z-index: 2;
+	color: #fff;
+	bottom: 0;
+	background-color: #fff;
+	height: 0.98rem;
+	align-items: center;
+}
+#bottom_nav a{
+	text-align:center;
+	margin-top:0.1rem;
+}
 
+#bottom_nav p{
+	margin: 0;
+	font-size: 0.21rem;
+	color: #828385;
+	letter-spacing: 2px;
+	text-align:center;
+	margin-top:-0.1rem;
+	
+}
+#bottom_nav a>img{
+	width: 0.41rem;
+	height: 0.4rem;
+	margin-right: 0.05rem;
+}
+
+.nav_center{
+	position: relative;
+	text-align: center;
+	margin: 0 1.16rem;
+	color: #ffb033;
+	position: relative;
+}
+.k_dis{
+	display:block;
+	width:0.45rem!important;
+	height:0.45rem!important;
+}
+.d_dis{
+	width:0.9rem!important;
+	height:0.21rem!important;
+	position:absolute;
+	top: 0.55rem;
+    left: -0.2rem; 
+}
+/* 时间插件 */
+.show_num{
+	width: 0.70rem!important;
+	height: 0.56rem!important;
+	background-color: #eeeeee!important;
+	border-radius: 4px!important;
+	margin:0 0.08rem!important;
+	font-size: 0.24rem!important;
+}
+
+.weui-count .weui-count__btn{
+	background-color: #eeeeee;
+	border-radius: 4px;
+	width: 0.56rem;
+	height: 0.56rem;
+	border:none;
+}
+.dot_mar{
+	margin-bottom: 2.5rem!important;
+}
+.price_time_dw{
+	font-size: 0.2rem;
+}

@@ -1,0 +1,96 @@
+/* 快捷下单 确认订单页面 */
+.kj_list{
+	margin-top:0.21rem;
+	padding: 0.3rem 0.27rem;
+	background-color:#fff;
+	box-shadow: 0px 0px 10px 0px 
+		rgba(0, 0, 0, 0.23);
+}
+.kj_text{
+	font-size: 0.24rem;
+	padding-top: 2px;
+}
+.kj_text>a{
+	color:#fff;
+}
+.kj_order_list{
+	display: flex;
+	flex-direction: row;
+	margin-top:0.3rem;
+}
+.kj_order_list>li{
+	list-style:none;
+	border-radius: 8px;
+	border: solid 1px #adadad;
+	padding: 0.17rem 0.4rem;
+	margin-right: 0.25rem;
+	font-size: 0.28rem;
+}
+.kj_order_list>li:nth-child(3){
+	padding: 0.17rem 0.2rem;
+}
+.kj_order_list>li:nth-child(2){
+	padding: 0.17rem 0.2rem;
+}
+.kj_order_list>li:last-child{
+	margin-right: 0;
+}
+
+.kj_order_active{
+	background-color: #ffb033;
+	border-radius: 8px;
+	color:#fff;
+}
+
+.order_fw_pc{
+	width:94%;
+	height:1.27rem;
+	margin-top:0.27rem;
+	border-radius: 4px;
+	border: solid 1px #eeeeee;
+	padding: 0.16rem 0.24rem;
+}
+.price_kj{
+	border-radius: 4px;
+	border: solid 1px #eeeeee;
+	padding: 0.16rem 0.24rem;
+	margin-top:0.22rem;
+	width:84%;
+}
+.kj_list>div:last-child{
+	margin-top:0.19rem;
+	font-size: 0.18rem;
+	color: #ffb033;
+}
+.kj_y{
+	font-size: 0.24rem;
+	color: #ff1400;
+	font-weight:700;
+}
+.kj_bor{
+	/* border-top: solid 1px #eeeeee; */
+	margin-top:0.22rem;
+	/* padding-top:0.22rem; */
+}
+
+.pd_posi{
+	position: fixed;
+	display: flex;
+	flex-direction: row;
+	background-color: #ffb033;
+	width:100%;
+	bottom:0rem;
+	color:#fff;
+	padding: 0rem 0.26rem;
+}
+.money{
+	font-size:0.24rem;
+	width:74%;
+}
+.money_num{
+	font-size:0.8rem;
+}
+.go_zf{
+	font-size: 0.30rem;
+	padding-top:0.4rem;
+}

@@ -1,0 +1,43 @@
+
+.my_list{
+	display: flex;
+	flex-direction: row;
+	background-color: #ffffff;
+	margin:  0.24rem;
+	padding: 0.13rem 0;
+	padding-left: 0.19rem;
+}
+.my_bor{
+	width: 1.14rem;
+	height: 1.13rem;
+	border: 3px solid  #ffb033;
+	border-radius: 50%;
+}
+.my_tou{
+	width: 1.14rem;
+	height: 1.13rem;
+	border-radius: 50%;
+}
+.my_name p{
+	font-size: 0.3rem;
+	margin-left: 0.25rem;
+	font-weight: 700;
+	margin-top: 0.4rem;
+}
+.tub{
+	margin-top: 0.2rem;
+	margin-left: 0.1rem;
+}
+.my_name{
+	margin-left: 0.16rem;
+	margin-top: -5px;
+}
+.my_ordername{
+	font-size: 0.24rem;
+	margin-left: 0.2rem;
+	width: 75%;
+	margin-top: 0.22rem;
+}
+.more{
+	margin-top: 0.14rem;
+}

@@ -48,6 +48,9 @@
 .Prepayment_price>div>span{
 	font-size: 0.18rem;
 }
+.Prepayment_price>div>.order_price{
+	font-size: 0.3rem;
+}
 #order_price{
 	font-size: 0.3rem; 
 }
@@ -103,7 +106,7 @@
 }
 
 .wx_num{
-	width: 61%;
+	width: 63%;
 }
 .order_remark{
 	width: 61%;
@@ -117,18 +120,21 @@
 }
 .go_zf{
 	margin-top: 0.2rem;
-	height: 0.97rem;
-	padding:0 0.22rem;
-	display:flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
+    height: 0.97rem;
+    padding: 0 0.22rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    width: 94%;
 }
 
 .go_zf>div>span:nth-child(1){
 	font-size: 0.26rem;
 }
-.#go_zf>div>span:nth-child(2){
+.go_zf>div>span:nth-child(2){
 	font-size: 0.24rem;
 }
 

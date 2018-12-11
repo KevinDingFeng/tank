@@ -1,0 +1,31 @@
+.my_order_list{
+	display: flex;
+	flex-direction: row;
+	background-color: #fff;
+}
+.my_order_list>li{
+	list-style:none;
+	width:50%;
+	text-align:center;
+	color: #202020;
+	font-size: 0.3rem;
+	font-weight:700;
+	padding:0.21rem 1.36rem;
+}
+
+.my_order_list_active{
+	color: #ffb033!important;
+}
+
+
+.span_nor{
+	margin-left: 10px;
+    border: 1px solid #3988ff;
+    border-radius: 8px;
+    padding: 0.05rem 0.15rem;
+    font-size: 0.24rem;
+}
+._dw{
+	font-size: 0.22rem!important;
+	color: #767676!important;
+}

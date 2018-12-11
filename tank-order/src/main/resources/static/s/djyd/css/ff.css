@@ -73,6 +73,7 @@
 	padding-left: 0.11rem;
 	padding-top: 0.19rem;
 	background-color: #FFFFFF;
+	height: 1.2rem;
 }
 .gods_content_price{
 	margin-bottom:0.08rem!important;
@@ -92,7 +93,8 @@
 	
 }
 .gods_content_jse{
-	margin-top: 5px;
+	margin-top: 0.20rem!important;
+	color: #999999;
 }
 .gods_content p{
 	
