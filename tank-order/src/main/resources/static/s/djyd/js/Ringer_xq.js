@@ -588,7 +588,7 @@ $(document).ready(function() {
 //		var _cc = bc_num;
 		var $input = $(e.currentTarget).parent().find('.weui-count__number');
 		var number = parseInt($input.val() || "0")-1; //- _cc
-		if(number <= MIN){
+		if(number < MIN){
 			number = MIN;
 			$.toast("数量不能少于1", "forbidden");
 		} 
