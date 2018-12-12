@@ -176,3 +176,12 @@ a{
 .price_time_dw{
 	font-size: 0.2rem;
 }
+.ds_tc{
+	overflow: hidden;
+	position: fixed;
+	top: -1;
+}
+
+
+
+

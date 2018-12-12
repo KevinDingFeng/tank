@@ -31,21 +31,13 @@ $(document).ready(function() {
 		$("#choose").click(function(){
 			$("#xq_cumtor").css("display","block");
 			$(".t_pop").css("display","block");
-			$('body').css({
-		        'overflow':'hidden',
-		        'position': 'fixed',
-		        'top': "-1"
-		    });
+			$('body').addClass("ds_tc");
 		})
 		//关闭弹窗
 		$("#btn_close").click(function(){
 			$("#xq_cumtor").css("display","none");
 			$(".t_pop").css("display","none");
-			$('body').css({
-		        'overflow':'auto',
-		        'position': 'static',
-		        'top': 'auto'
-		    });
+			$('body').removeClass("ds_tc");
 		})
 		
 		//点击二级 服务大类
@@ -54,7 +46,7 @@ $(document).ready(function() {
 			$(this).addClass("dl_active");
 			$(this).siblings().removeClass("dl_active");
 			var v1_code =$(this).attr("v1_code");
-			$(".pop_center").css("min-height","14rem");
+			/*$(".pop_center").css("min-height","14rem");*/
 			//获取第三级信息
 			get_san(v1_code);
 		})
@@ -223,16 +215,16 @@ $(document).ready(function() {
 						$(".pop_price").html(resp.data.quotedProduct.price+"元/人");
 						$(".zs_price").html(resp.data.quotedProduct.price);
 						qp_id = resp.data.quotedProduct.id;
-						var v1_code = $(".fw_dl>.dl_active").attr("v1_code");
-						if(v1_code == "10"){
-							$(".pop_center").css("min-height","13.5rem");
-						}else if(v1_code == "11"){
-							$(".pop_center").css("min-height","14rem");
-						}else if(v1_code == "12"){
-							$(".pop_center").css("min-height","14rem");
-						}else if(v1_code == "13"){
-							$(".pop_center").css("min-height","11rem");
-						}
+//						var v1_code = $(".fw_dl>.dl_active").attr("v1_code");
+//						if(v1_code == "10"){
+//							$(".pop_center").css("min-height","13.5rem");
+//						}else if(v1_code == "11"){
+//							$(".pop_center").css("min-height","14rem");
+//						}else if(v1_code == "12"){
+//							$(".pop_center").css("min-height","14rem");
+//						}else if(v1_code == "13"){
+//							$(".pop_center").css("min-height","11rem");
+//						}
 					}else{
 						$.toast(("价格获取失败"+resp.message));
 					}

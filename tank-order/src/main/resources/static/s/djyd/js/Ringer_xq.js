@@ -41,11 +41,7 @@ $(document).ready(function() {
 			$("#fw_choose").html(fw_er+" I "+fw_san+ fw_si)
 			_first="2"
 			$(".t_pop").css("display","block");
-			$('body').css({
-		        'overflow':'hidden',
-		        'position': 'fixed',
-		        'top': "-1"
-		    });
+			$('body').addClass("ds_tc");
 		})
 		//关闭弹窗
 		$("#btn_close").click(function(){
@@ -53,11 +49,7 @@ $(document).ready(function() {
 			$(".t_pop").css("display","none");
 			$(".dl_choose a").css("padding","0");
 			$(".dl_choose a").css("width","49%");
-			$('body').css({
-		        'overflow':'auto',
-		        'position': 'static',
-		        'top': 'auto'
-		    });
+			$('body').removeClass("ds_tc");
 		})
 		var coach = [];//教练
 		var v3_arr=[];//第三级
@@ -68,7 +60,6 @@ $(document).ready(function() {
 			document.title = '教学';
 			$("#c_type").html('教学');
 			$(".dl_choose").hide();
-			$(".pop_center").css("min-height","14rem")
 			getlist(_type);
 			//点击服务大类
 			$(".fw_dl").on("touchstart","div",function(e){
@@ -108,7 +99,6 @@ $(document).ready(function() {
 		}else if(_type == "11"){
 			document.title = '代练';
 			$("#c_type").html('代练');
-			$(".pop_center").css("min-height","12rem");
 			$("#xq_fw").html("即下即开 I 专业代练  I 安全无忧");
 			$(".dl_choose").show();
 			$("#class_biao").hide();
@@ -281,7 +271,6 @@ $(document).ready(function() {
 			document.title = '陪玩';
 			$("#c_type").html('陪玩');
 			$("#xq_fw").html("即开即下 I 专业陪玩  I 安全可靠");
-			$(".pop_center").css("min-height","12.2rem");
 			$("#class_biao").hide();
 			$(".dl_choose").hide();
 			getlist(_type);
@@ -377,7 +366,6 @@ $(document).ready(function() {
 			}else{
 				$(".sm_area").html($("#fw_si>.zl_active").attr("content"));
 			}
-			$(".pop_center").css("min-height","16rem");
 			var v3_code = $("#fw_si>.zl_active").attr("v4_code");//第三级code
 			var gods_id = $(".gods_list>.gods_active").attr("gods_id");//大神id
 			get_price(v3_code,gods_id);
@@ -420,17 +408,17 @@ $(document).ready(function() {
 						fw_si= "I"+fw_si
 					}
 					$("#fw_choose").html(fw_er+" I "+fw_san+ fw_si);
-					var v2_code = $(".fw_dl>.dl_active").attr("v2_code");
-					if(v2_code == "1101"){
-						$(".pop_center").css("min-height","14rem");
-					}else if(v2_code == "1105" ||v2_code == "1104" ||v2_code == "1106"){
-						$(".pop_center").css("min-height","12rem");
-					}else if(v2_code == "1102" ||v2_code == "1103"){
-						$(".pop_center").css("min-height","16rem");
-					}
-					if(_type =="12"){
-						$(".pop_center").css("min-height","14rem");
-					}
+//					var v2_code = $(".fw_dl>.dl_active").attr("v2_code");
+//					if(v2_code == "1101"){
+//						$(".pop_center").css("min-height","14rem");
+//					}else if(v2_code == "1105" ||v2_code == "1104" ||v2_code == "1106"){
+//						$(".pop_center").css("min-height","12rem");
+//					}else if(v2_code == "1102" ||v2_code == "1103"){
+//						$(".pop_center").css("min-height","16rem");
+//					}
+//					if(_type =="12"){
+//						$(".pop_center").css("min-height","14rem");
+//					}
 				}
 			}
 		})
