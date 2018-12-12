@@ -98,7 +98,7 @@ $(document).ready(function() {
 			})
 		}else if(_type == "11"){
 			document.title = '代练';
-			$("#c_type").html('代练');
+			$("#c_type").html('主播代练');
 			$("#xq_fw").html("即下即开 I 专业代练  I 安全无忧");
 			$(".dl_choose").show();
 			$("#class_biao").hide();
@@ -158,6 +158,7 @@ $(document).ready(function() {
 				_type = $(this).attr("code");
 				if(_type == "11"){
 					getlist(_type);
+					$("#c_type").html('主播代练');
 					//点击服务大类
 					$(".fw_dl").on("touchstart","div",function(e){
 						e.stopPropagation();
@@ -212,6 +213,7 @@ $(document).ready(function() {
 					})
 				}else if(_type == "12"){
 					getlist(_type);
+					$("#c_type").html('其他代练');
 					//点击服务大类
 					$(".fw_dl").on("touchstart","div",function(e){
 						e.stopPropagation();
