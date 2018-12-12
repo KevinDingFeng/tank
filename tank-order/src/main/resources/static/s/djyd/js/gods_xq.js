@@ -22,6 +22,7 @@ $(document).ready(function() {
 	var v3_arr=[];//第三级
 	var v4_arr=[];//第四级
 	var arr_course=[];//第四级
+	var _first="1";
 	init();
 	function init(){
 		get_xx(gods_id,qp_id)
@@ -30,14 +31,29 @@ $(document).ready(function() {
 		//点击选择
 		$("#choose").click(function(){
 			$("#xq_cumtor").css("display","block");
+			//服务大类名字
+			var fw_er = $(".fw_dl>.dl_active").html();
+			//服务子类名字三级
+			var fw_san = $("#fw_san>.zl_active").html();
+			//服务子类名字四级
+			var fw_si =$("#fw_si>.zl_active").html();
+			if(fw_si == undefined || fw_si == "" || fw_si == null){
+				fw_si="";
+			}else{
+				fw_si= "I"+fw_si
+			}
+			$("#fw_choose").html(fw_er+" I "+fw_san+ fw_si)
+			_first="2"
 			$(".t_pop").css("display","block");
 			$('body').addClass("ds_tc");
+			$("#viedo_sq").hide();
 		})
 		//关闭弹窗
 		$("#btn_close").click(function(){
 			$("#xq_cumtor").css("display","none");
 			$(".t_pop").css("display","none");
 			$('body').removeClass("ds_tc");
+			$("#viedo_sq").show();
 		})
 		
 		//点击二级 服务大类
@@ -102,6 +118,41 @@ $(document).ready(function() {
 			}
 			window.location.href="../djyd/order_Prepayment.html?others=gods&num="+_num+"&qpId="+_qpId+"&course_id="+course_id;
 		})
+		
+		//立即下单
+		$("#go_money_1").click(function(){
+			if(_first=='1'){
+				$("#xq_cumtor").css("display","block");
+				//服务大类名字
+				var fw_er = $(".fw_dl>.dl_active").html();
+				//服务子类名字三级
+				var fw_san = $("#fw_san>.zl_active").html();
+				//服务子类名字四级
+				var fw_si =$("#fw_si>.zl_active").html();
+				if(fw_si == undefined || fw_si == "" || fw_si == null){
+					fw_si="";
+				}else{
+					fw_si= "I"+fw_si
+				}
+				$("#fw_choose").html(fw_er+" I "+fw_san+ fw_si)
+				_first="2"
+				$(".t_pop").css("display","block");
+				$('body').addClass("ds_tc");
+			}else{
+				var _qpId = qp_id;//服务报价Id
+				//数量
+				var _num = $("#timeStart").val();
+				//课程id
+				var _cc = $("#class_name").css("display");
+				if(_cc == "block"){
+					var course_id = $(".fw_class>.class_active").attr("course_id");
+				}else{
+					var course_id = "";
+				}
+				window.location.href="../djyd/order_Prepayment.html?others=gods&num="+_num+"&qpId="+_qpId+"&course_id="+course_id;
+			}
+		})
+		
 		//三级信息
 		function get_san(v1_code){
 			var show_list_v2 = "";

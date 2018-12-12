@@ -628,29 +628,40 @@ $(document).ready(function() {
 	})
 	//下单
 	$("#go_money").click(function(){
-		if(_first=='1'){
-			$.toast("请先选择服务", "forbidden");
-			return;
+		var qpId = _qpId;//服务报价Id
+		//数量
+		var _num = $("#timeStart").val();
+		//课程id
+		var _cc = $("#class_ds").css("display");
+		if(_cc == "block"){
+			var course_id = $(".fw_class>.class_active").attr("course_id");
 		}else{
-			var qpId = _qpId;//服务报价Id
-			//数量
-			var _num = $("#timeStart").val();
-			//课程id
-			var _cc = $("#class_ds").css("display");
-			if(_cc == "block"){
-				var course_id = $(".fw_class>.class_active").attr("course_id");
-			}else{
-				var course_id = "";
-			}
-			debugger
-			window.location.href="../djyd/order_Prepayment.html?others=others&num="+_num+"&qpId="+_qpId+"&course_id="+course_id;
+			var course_id = "";
 		}
+		debugger
+		window.location.href="../djyd/order_Prepayment.html?others=others&num="+_num+"&qpId="+_qpId+"&course_id="+course_id;
 	})
 	//下单
 	$("#go_money_1").click(function(){
 		if(_first=='1'){
-			$.toast("请先选择服务", "forbidden");
-			return;
+			$("#xq_cumtor").css("display","block");
+			$(".dl_choose a").css("padding","0 47px");
+			$(".dl_choose a").css("width","12%");
+			//服务大类名字
+			var fw_er = $(".fw_dl>.dl_active").html();
+			//服务子类名字三级
+			var fw_san = $("#fw_san>.zl_active").html();
+			//服务子类名字四级
+			var fw_si =$("#fw_si>.zl_active").html();
+			if(fw_si == undefined || fw_si == "" || fw_si == null){
+				fw_si="";
+			}else{
+				fw_si= "I"+fw_si
+			}
+			$("#fw_choose").html(fw_er+" I "+fw_san+ fw_si)
+			_first="2"
+			$(".t_pop").css("display","block");
+			$('body').addClass("ds_tc");
 		}else{
 			var qpId = _qpId;//服务报价Id
 			//数量
